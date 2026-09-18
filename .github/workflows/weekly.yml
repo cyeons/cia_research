@@ -1,0 +1,29 @@
+name: weekly-research-brief
+on:
+  schedule:
+    - cron: "0 23 * * 0"        # 매주 월요일 08:00 KST
+  workflow_dispatch:            # 수동 실행 (테스트용)
+permissions:
+  contents: write
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python weekly.py
+        env:
+          MAIL_TO:           ${{ secrets.MAIL_TO }}
+          GMAIL_APP_PW:      ${{ secrets.GMAIL_APP_PW }}
+          KCI_KEY:           ${{ secrets.KCI_KEY }}
+          GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY }}
+      - name: 아카이브 커밋
+        run: |
+          git config user.name  github-actions
+          git config user.email github-actions@github.com
+          git add docs
+          git diff --staged --quiet || git commit -m "brief $(date +%F)"
+          git push
