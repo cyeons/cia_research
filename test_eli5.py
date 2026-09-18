@@ -17,6 +17,8 @@ def test_slug():
     assert eli5.slug("https://doi.org/10.1371/journal.pone.0345347") == "journal.pone.0345347"
     assert eli5.slug("C:/p/Wing 2006 (final).pdf") == "Wing_2006__final_"
     assert eli5.slug("https://example.com/") == "example.com"
+    # 퍼센트 인코딩된 한글 주소가 읽을 수 있는 파일명이 되어야 한다
+    assert eli5.slug("https://ko.wikipedia.org/wiki/%EC%83%81%EB%8C%80%EC%84%B1%EC%9D%B4%EB%A1%A0") == "상대성이론"
 
 
 def test_url_uses_webfetch_pdf_uses_read():
@@ -63,6 +65,22 @@ def test_missing_cli_and_failures_exit():
     assert "boom" in _exits(lambda: eli5.run_claude("q"))
     _stub_run(rc=0, stdout="   ", stderr="why")
     assert "비었습니다" in _exits(lambda: eli5.run_claude("q"))
+
+
+def test_prompt_goes_through_stdin_not_argv():
+    """회귀: 멀티라인 프롬프트를 argv로 주면 claude.CMD가 첫 줄에서 잘라버린다.
+
+    조용히 잘리기 때문에(에러 없음) 지시 대부분이 사라진 채 실행되고,
+    엉뚱한 응답이 나온다. 실제로 한 번 당했다.
+    """
+    seen = []
+    _stub_run(seen=seen)
+    multi = "첫 줄\n둘째 줄 <h2>꺾쇠</h2>\n셋째 줄"
+    eli5.run_claude(multi)
+    cmd, kw = seen[0]
+    assert kw["input"] == multi                                  # stdin으로 온전히
+    assert not any("둘째 줄" in c for c in cmd)                   # argv엔 흔적도 없어야
+    assert cmd[cmd.index("-p") + 1].startswith("--")             # -p 뒤에 프롬프트를 붙이지 않는다
 
 
 if __name__ == "__main__":

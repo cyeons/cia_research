@@ -6,7 +6,7 @@
 로컬 Claude Code(`claude -p`)를 헤드리스로 부른다. 구독으로 처리되므로 API 키가 필요 없다.
 PDF는 Claude Code의 Read가, 웹 주소는 WebFetch가 읽는다 — 파싱 라이브러리도 필요 없다.
 """
-import os, re, shutil, subprocess, sys, webbrowser
+import os, re, shutil, subprocess, sys, urllib.parse, webbrowser
 from pathlib import Path
 
 from weekly import render          # 메일 브리핑과 같은 인쇄용 스타일을 그대로 쓴다
@@ -63,10 +63,13 @@ def run_claude(prompt):
     exe = shutil.which("claude")
     if not exe:
         sys.exit("`claude` 명령을 찾을 수 없습니다. Claude Code가 설치되고 PATH에 있어야 합니다.")
+    # 프롬프트는 반드시 stdin으로. 윈도우의 claude.CMD 셔임을 거치면 argv로 준
+    # 멀티라인 문자열이 첫 줄에서 잘린다(조용히, 에러 없이). 그러면 지시 대부분이
+    # 사라진 채로 실행돼 엉뚱한 응답이 나온다.
     r = subprocess.run(
-        [exe, "-p", prompt, "--output-format", "text", "--model", MODEL,
+        [exe, "-p", "--output-format", "text", "--model", MODEL,
          "--max-turns", MAX_TURNS, "--allowed-tools", "Read,WebFetch"],
-        capture_output=True, text=True, encoding="utf-8", errors="replace")
+        input=prompt, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode != 0:
         sys.exit(f"claude 실행 실패 (exit {r.returncode}):\n{(r.stderr or r.stdout)[:1500]}")
     out = re.sub(r"^\s*```(?:html)?\s*|\s*```\s*$", "", r.stdout).strip()
@@ -76,8 +79,9 @@ def run_claude(prompt):
 
 
 def slug(src):
-    base = src.rstrip("/").rsplit("/", 1)[-1].removesuffix(".pdf") or "paper"
-    return re.sub(r"[^\w.-]", "_", base)[:60]
+    # 한글 주소는 퍼센트 인코딩돼 있다. 풀지 않으면 파일명이 _EC_83_81... 이 된다.
+    base = urllib.parse.unquote(src).rstrip("/").rsplit("/", 1)[-1].removesuffix(".pdf") or "paper"
+    return re.sub(r"[^\w.-]", "_", base, flags=re.UNICODE)[:60]
 
 
 def main():
