@@ -199,16 +199,49 @@ def gemini(system, prompt):
     return re.sub(r"^\s*```(?:html)?\s*|\s*```\s*$", "", text)
 
 
-PRINT_CSS = """
-  body{font-family:-apple-system,'Malgun Gothic',sans-serif;line-height:1.65;
-       max-width:760px;margin:0 auto;padding:24px;color:#1a1a1a}
-  h2{margin-top:2em;padding-bottom:.3em;border-bottom:2px solid #eee}
-  table{border-collapse:collapse;width:100%}
-  td,th{border:1px solid #ddd;padding:6px 10px;text-align:left}
-  a{color:#0645ad}
-  /* 브라우저 Ctrl+P -> PDF 저장용. 논문 항목이 페이지 경계에서 잘리지 않게. */
+PAGE_CSS = """
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
   @page{margin:2cm}
-  @media print{a{color:#000}li,tr{break-inside:avoid}h2{break-after:avoid}}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
 """
 
 
@@ -217,7 +250,7 @@ def render(fragment, archive_url=None):
     back = f'<p style="font-size:.9em"><a href="{archive_url}">웹에서 보기 / PDF로 저장</a></p>' if archive_url else ""
     return (f'<!doctype html><html lang="ko"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>논문 브리핑 {date.today()}</title><style>{PRINT_CSS}</style></head>'
+            f'<title>논문 브리핑 {date.today()}</title><style>{PAGE_CSS}</style></head>'
             f'<body><h1>컴퓨터교육·AI교육 주간 브리핑</h1>'
             f'<p style="color:#666">{date.today()}</p>{back}{fragment}</body></html>')
 
@@ -231,7 +264,7 @@ def archive(doc):
     items = "".join(f'<li><a href="{n}">{n[:-5]}</a></li>' for n in weeks)
     with open("docs/index.html", "w", encoding="utf-8") as f:
         f.write(f'<!doctype html><html lang="ko"><head><meta charset="utf-8">'
-                f'<title>논문 브리핑 아카이브</title><style>{PRINT_CSS}</style></head>'
+                f'<title>논문 브리핑 아카이브</title><style>{PAGE_CSS}</style></head>'
                 f'<body><h1>주간 브리핑 아카이브</h1><ul>{items}</ul></body></html>')
 
 

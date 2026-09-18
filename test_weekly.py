@@ -35,6 +35,8 @@ def test_render_is_standalone_and_utf8_safe():
     doc = weekly.render("<h2>이번 주 흐름</h2>", "https://x.example/2026-01-01.html")
     assert doc.startswith("<!doctype html>") and 'charset="utf-8"' in doc
     assert "이번 주 흐름" in doc and "@page" in doc          # 브라우저 PDF 저장용
+    assert "prefers-color-scheme" in doc                   # 어두운 배경에서도 읽히게
+    assert "var(--" not in doc                             # Gmail이 CSS 변수를 제거한다
     assert "https://x.example/2026-01-01.html" in doc
     assert "href" not in weekly.render("<p>x</p>")            # 링크 없으면 배너도 없음
 
