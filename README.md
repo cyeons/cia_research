@@ -47,6 +47,16 @@ SDK를 안 쓰므로 설치할 패키지가 없다.
    - `KCI_KEY` — https://www.kci.go.kr 에서 OpenAPI 키 신청 (없으면 국내 섹션만 비고 나머지는 정상 동작)
 3. Actions 탭 → `weekly-research-brief` → Run workflow 로 1회 수동 테스트
 
+## 아카이브
+
+매주 `docs/YYYY-MM-DD.html`가 저장소에 커밋된다. `git pull` 받아 브라우저로 열면 되고,
+거기서 `Ctrl+P` → PDF로 저장.
+
+GitHub Pages는 **켜지 않았다**. 이 저장소는 비공개인데, Pages는 저장소가 비공개여도
+사이트를 인터넷에 공개하기 때문이다(접근 제한 Pages는 Enterprise 전용, 무료 플랜은
+비공개 저장소에서 Pages 자체가 안 된다). 그래도 쓰고 싶으면 Settings → Pages에서
+직접 켠 뒤 `PAGES_URL` 시크릿에 사이트 주소를 넣어라. 그러면 메일 상단에 링크가 붙는다.
+
 ## 로컬 확인
 
 의존성이 없다. 파이썬 3.10+ 만 있으면 된다.

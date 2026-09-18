@@ -236,12 +236,14 @@ def archive(doc):
 
 
 def pages_url():
-    """GitHub Actions에서만 자동으로 채워진다. 로컬 실행이면 None."""
-    repo = os.environ.get("GITHUB_REPOSITORY")
-    if not repo:
-        return None
-    owner, name = repo.split("/")
-    return f"https://{owner}.github.io/{name}/{date.today()}.html"
+    """웹 아카이브 링크. 기본은 끔.
+
+    GitHub Pages는 저장소가 비공개여도 사이트를 인터넷에 공개한다. 자동으로 켜지 않는다.
+    쓰려면 Pages를 직접 켠 뒤 PAGES_URL 시크릿에 사이트 주소를 넣어라.
+    끄더라도 docs/ 에는 계속 쌓이므로 git pull 받아 로컬에서 열면 된다.
+    """
+    base = os.environ.get("PAGES_URL", "").rstrip("/")
+    return f"{base}/{date.today()}.html" if base else None
 
 
 def send(doc):
