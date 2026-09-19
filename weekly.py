@@ -245,13 +245,13 @@ PAGE_CSS = """
 """
 
 
-def render(fragment, archive_url=None):
-    """조각 -> 독립 HTML 문서. 메일 본문과 아카이브 파일이 같은 걸 쓴다."""
+def render(fragment, archive_url=None, title="컴퓨터교육·AI교육 주간 브리핑"):
+    """조각 -> 독립 HTML 문서. 메일 본문, 아카이브, eli5 페이지가 같은 걸 쓴다."""
     back = f'<p style="font-size:.9em"><a href="{archive_url}">웹에서 보기 / PDF로 저장</a></p>' if archive_url else ""
     return (f'<!doctype html><html lang="ko"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>논문 브리핑 {date.today()}</title><style>{PAGE_CSS}</style></head>'
-            f'<body><h1>컴퓨터교육·AI교육 주간 브리핑</h1>'
+            f'<title>{title}</title><style>{PAGE_CSS}</style></head>'
+            f'<body><h1>{title}</h1>'
             f'<p style="color:#666">{date.today()}</p>{back}{fragment}</body></html>')
 
 

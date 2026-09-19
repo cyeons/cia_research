@@ -83,6 +83,26 @@ def test_prompt_goes_through_stdin_not_argv():
     assert cmd[cmd.index("-p") + 1].startswith("--")             # -p 뒤에 프롬프트를 붙이지 않는다
 
 
+def test_prompt_actually_contains_every_block():
+    """회귀: DIAGRAMS가 프롬프트 조립에서 빠진 채로 두 번 돌았다.
+
+    파일에 상수가 있는지 확인하는 것으로는 못 잡는다. 조립 결과를 봐야 한다.
+    """
+    p = eli5.build_prompt("https://doi.org/10.1/x")
+    for name, block in [("RULES", eli5.RULES), ("DIAGRAMS", eli5.DIAGRAMS),
+                        ("SECTIONS", eli5.SECTIONS)]:
+        assert block in p, f"{name}가 프롬프트에서 빠졌다"
+    assert "https://doi.org/10.1/x" in p                  # 읽을 대상
+    assert "반드시 <svg>" in p                             # 문자 도형 금지 조항
+    assert "최소 3개" in p                                 # 그림 개수 하한
+
+
+def test_split_title():
+    t, frag = eli5.split_title("<!--TITLE: 로봇으로 배운 아이들-->\n<h2>x</h2>", "대체")
+    assert t == "로봇으로 배운 아이들" and frag.strip() == "<h2>x</h2>"
+    assert eli5.split_title("<h2>x</h2>", "대체") == ("대체", "<h2>x</h2>")
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):

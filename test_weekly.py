@@ -39,6 +39,9 @@ def test_render_is_standalone_and_utf8_safe():
     assert "var(--" not in doc                             # Gmail이 CSS 변수를 제거한다
     assert "https://x.example/2026-01-01.html" in doc
     assert "href" not in weekly.render("<p>x</p>")            # 링크 없으면 배너도 없음
+    # 단일 논문 페이지에 "주간 브리핑" 제목이 붙으면 안 된다
+    solo = weekly.render("<p>x</p>", title="상대성이론 읽기")
+    assert "<h1>상대성이론 읽기</h1>" in solo and "주간 브리핑" not in solo
 
 
 def test_archive_writes_page_and_rebuilds_index(tmp="_t"):
