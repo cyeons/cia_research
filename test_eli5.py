@@ -52,7 +52,9 @@ def test_invocation_is_headless_and_utf8():
     assert eli5.run_claude("q") == "<h2>요약</h2>"      # 코드펜스 제거
     cmd, kw = seen[0]
     assert "-p" in cmd and "--allowed-tools" in cmd
-    assert cmd[cmd.index("--allowed-tools") + 1] == "Read,WebFetch"   # 쓰기 도구는 안 준다
+    tools = cmd[cmd.index("--allowed-tools") + 1]
+    assert "Skill" in tools          # 없으면 artifact-design을 부를 수단이 없다
+    assert "Write" not in tools and "Bash" not in tools      # 쓰기·실행 도구는 안 준다
     assert "--max-turns" in cmd                        # 긴 PDF도 끝까지, 단 무한은 아니게
     # 한국어 윈도우 기본 인코딩(cp949)으로 읽으면 한글이 깨진다.
     assert kw["encoding"] == "utf-8"
@@ -89,12 +91,13 @@ def test_prompt_actually_contains_every_block():
     파일에 상수가 있는지 확인하는 것으로는 못 잡는다. 조립 결과를 봐야 한다.
     """
     p = eli5.build_prompt("https://doi.org/10.1/x")
-    for name, block in [("RULES", eli5.RULES), ("DIAGRAMS", eli5.DIAGRAMS),
-                        ("SECTIONS", eli5.SECTIONS)]:
+    for name, block in [("DESIGN", eli5.DESIGN), ("RULES", eli5.RULES),
+                        ("DIAGRAMS", eli5.DIAGRAMS), ("SECTIONS", eli5.SECTIONS)]:
         assert block in p, f"{name}가 프롬프트에서 빠졌다"
     assert "https://doi.org/10.1/x" in p                  # 읽을 대상
     assert "반드시 <svg>" in p                             # 문자 도형 금지 조항
     assert "최소 3개" in p                                 # 그림 개수 하한
+    assert "artifact-design" in p                          # 디자인 스킬 로드 지시
 
 
 def test_split_title():

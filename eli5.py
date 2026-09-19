@@ -19,6 +19,25 @@ MAX_TURNS = "30"                   # 긴 PDF는 Read를 20쪽씩 여러 번 부�
 # 한 문장이다: "big pictures and few words". 그래서 그림 섹션을 맨 앞에 놓고
 # 주 산출물로 삼는다. 뒤의 학술 층은 그 다음이다.
 
+DESIGN = """# 먼저 할 일 — 디자인
+Skill 도구로 `artifact-design` 스킬을 로드하고, 그 지침대로 이 페이지를 디자인해라.
+글을 쓰기 전에 먼저 한다.
+
+- 이 논문의 주제에서 끌어낸 팔레트 4~6색과 짝지은 글꼴을 정해라.
+  조각 맨 앞에 Google Fonts <link>와 <style> 블록을 직접 써라.
+- 색은 :root에 토큰으로 정의하고 @media (prefers-color-scheme: dark)로 다시 정의해라.
+  두 배경 모두 설계해라. 단순히 뒤집지 마라.
+- .key / .num / .callout / .warn / figure / figcaption 클래스가 이미 있다.
+  네 팔레트에 맞게 다시 스타일링해라.
+- 본문 너비는 한 줄 65자 안팎. 제목에 text-wrap: balance.
+- 인쇄용 @media print 규칙은 이미 들어 있다. 덮어쓰지 마라.
+- SVG 안의 currentColor가 네 본문 색을 물려받도록 색 토큰을 맞춰라.
+- 흔한 AI 기본값은 피해라: 크림색 배경+세리프+테라코타, 보라-파랑 그라디언트,
+  Inter/Space Grotesk, 이모지 섹션 마커, 전부 가운데 정렬, 모든 블록에 같은 둥근 카드.
+
+아티팩트로 발행하지 마라. HTML 조각만 출력해라."""
+
+
 RULES = """너는 초등 컴퓨터교육·AI교육을 공부하는 대학원생의 논문 읽기 도우미다.
 논문을 '요약'하지 말고 '이해시켜라'.
 
@@ -133,7 +152,7 @@ def build_prompt(src):
     한 번 DIAGRAMS를 빠뜨린 채로 돌아간 적이 있다. 파일에 상수가 있는지가 아니라
     프롬프트에 들어갔는지를 확인해야 한다. 그래서 조립을 함수로 빼서 테스트한다.
     """
-    return "\n\n".join([RULES, DIAGRAMS, source_instruction(src), SECTIONS])
+    return "\n\n".join([DESIGN, RULES, DIAGRAMS, source_instruction(src), SECTIONS])
 
 
 def run_claude(prompt):
@@ -145,7 +164,7 @@ def run_claude(prompt):
     # 사라진 채로 실행돼 엉뚱한 응답이 나온다.
     r = subprocess.run(
         [exe, "-p", "--output-format", "text", "--model", MODEL,
-         "--max-turns", MAX_TURNS, "--allowed-tools", "Read,WebFetch"],
+         "--max-turns", MAX_TURNS, "--allowed-tools", "Read,WebFetch,Skill"],
         input=prompt, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode != 0:
         sys.exit(f"claude 실행 실패 (exit {r.returncode}):\n{(r.stderr or r.stdout)[:1500]}")
