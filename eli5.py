@@ -4,15 +4,30 @@
     python eli5.py https://doi.org/10.1371/journal.pone.0345347
 
 로컬 Claude Code(`claude -p`)를 헤드리스로 부른다. 구독으로 처리되므로 API 키가 필요 없다.
-PDF는 Claude Code의 Read가, 웹 주소는 WebFetch가 읽는다 — 파싱 라이브러리도 필요 없다.
+웹 주소는 WebFetch가 읽는다. PDF는 우리가 PyMuPDF로 직접 텍스트를 뽑아 프롬프트에 넣는다
+(Claude Code의 Read 도구에 맡기지 않는다 — 아래 참고).
 """
 import os, re, shutil, subprocess, sys, urllib.parse, webbrowser
 from pathlib import Path
 
+try:
+    import fitz  # pymupdf. pip install pymupdf, 관리자 권한 불필요.
+except ImportError:
+    fitz = None
+
 from weekly import render          # 메일 브리핑과 같은 인쇄용 스타일을 그대로 쓴다
 
 MODEL = "opus"
-MAX_TURNS = "30"                   # 긴 PDF는 Read를 20쪽씩 여러 번 부른다
+MAX_TURNS = "20"
+
+# PDF를 왜 Read 도구가 아니라 우리가 직접 뽑는가:
+#   1) Claude Code의 Read 도구는 PDF를 페이지 이미지로 렌더링하는 데 pdftoppm(poppler)이
+#      필요하다. 관리자 권한 없는 환경(choco install도 막힘)에는 없을 수 있다.
+#   2) 이 대체 경로로 pdftotext를 시도해도, Windows Git/MSYS2에 흔히 딸려오는 버전은
+#      2017년 xpdf 4.00이라 한글 CID 폰트 매핑을 못 읽는다 — 한글이 통째로 사라진다
+#      (실제로 겪음: 96,447자를 뽑았는데 한글이 0글자였다).
+#   3) PyMuPDF(pip, 관리자 권한 불필요)는 둘 다 필요 없고 한글도 정확히 뽑는다.
+# 전문을 통째로 프롬프트에 넣으므로, 페이지를 나눠 여러 번 Read할 필요도 없어진다.
 
 # 설계 메모: 이전 버전은 학술 섹션 7개를 글로 꽉 채우도록 지시해서, 그림이 비집고
 # 들어갈 자리가 없었다. anthropics/claude-plugins-community 의 eli5 스킬은 전체가
@@ -35,7 +50,10 @@ Skill 도구로 `artifact-design` 스킬을 로드하고, 그 지침대로 이 �
 - 흔한 AI 기본값은 피해라: 크림색 배경+세리프+테라코타, 보라-파랑 그라디언트,
   Inter/Space Grotesk, 이모지 섹션 마커, 전부 가운데 정렬, 모든 블록에 같은 둥근 카드.
 
-아티팩트로 발행하지 마라. HTML 조각만 출력해라."""
+아티팩트로 발행하지 마라. HTML 조각만 출력해라.
+
+스킬 로드가 "Unknown skill" 등으로 실패해도 절대 멈추지 마라. 그 경우 이 문서에 적힌
+지침(팔레트/글꼴/다크모드/클래스 재스타일링)을 네가 직접 따라 계속 진행해라."""
 
 
 RULES = """너는 초등 컴퓨터교육·AI교육을 공부하는 대학원생의 논문 읽기 도우미다.
@@ -133,8 +151,20 @@ SECTIONS = """논문을 다 읽은 뒤 아래 순서대로 쓴다. 한국어.
 반복 인용되는 핵심 문헌 3~6개를 <ul>로, 각각 이 논문에서 어떤 역할인지 한 줄씩."""
 
 
+def extract_pdf_text(path):
+    """PyMuPDF로 PDF 전문을 뽑는다. 이유는 파일 상단 주석 참고."""
+    if fitz is None:
+        sys.exit("pymupdf가 설치돼 있지 않습니다. `pip install pymupdf` 후 다시 실행하세요.")
+    pages = fitz.open(str(path))
+    text = "\n".join(p.get_text() for p in pages)
+    if len(text.strip()) < 200:
+        sys.exit(f"PDF에서 텍스트가 거의 안 나왔습니다({len(text.strip())}자). "
+                 f"스캔본이라 텍스트 층이 없을 수 있습니다: {path}")
+    return text
+
+
 def source_instruction(src):
-    """원문을 어떻게 읽을지 지시하는 한 줄."""
+    """원문을 준비한다. URL은 WebFetch에 맡기고, PDF는 텍스트를 직접 뽑아 통째로 준다."""
     if src.startswith(("http://", "https://")):
         return f"WebFetch로 다음 주소의 논문을 가져와 전문을 읽어라: {src}"
     path = Path(src)
@@ -142,8 +172,8 @@ def source_instruction(src):
         sys.exit(f"파일이 없습니다: {src}")
     if path.suffix.lower() != ".pdf":
         sys.exit(f"PDF가 아닙니다: {src} (PDF 파일이나 http(s) 주소를 주세요)")
-    return (f"Read 도구로 다음 PDF를 읽어라: {path.resolve()}\n"
-            f"10쪽이 넘으면 pages 인자로 20쪽씩 나눠 끝까지 읽어라. 일부만 읽고 요약하지 마라.")
+    text = extract_pdf_text(path)
+    return f"다음은 논문 원문 전체다(PDF에서 텍스트로 추출함). 이 내용만 근거로 삼아라:\n\n{text}"
 
 
 def build_prompt(src):
@@ -164,7 +194,7 @@ def run_claude(prompt):
     # 사라진 채로 실행돼 엉뚱한 응답이 나온다.
     r = subprocess.run(
         [exe, "-p", "--output-format", "text", "--model", MODEL,
-         "--max-turns", MAX_TURNS, "--allowed-tools", "Read,WebFetch,Skill"],
+         "--max-turns", MAX_TURNS, "--allowed-tools", "WebFetch,Skill"],
         input=prompt, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode != 0:
         sys.exit(f"claude 실행 실패 (exit {r.returncode}):\n{(r.stderr or r.stdout)[:1500]}")

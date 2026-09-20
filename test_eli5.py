@@ -21,13 +21,41 @@ def test_slug():
     assert eli5.slug("https://ko.wikipedia.org/wiki/%EC%83%81%EB%8C%80%EC%84%B1%EC%9D%B4%EB%A1%A0") == "상대성이론"
 
 
-def test_url_uses_webfetch_pdf_uses_read():
+def test_url_uses_webfetch():
     assert "WebFetch" in eli5.source_instruction("https://doi.org/10.1/x")
+
+
+class _FakePage:
+    def __init__(self, text): self._text = text
+    def get_text(self): return self._text
+
+
+def _stub_fitz(pages_text):
+    eli5.fitz = type("F", (), {"open": staticmethod(lambda path: [_FakePage(t) for t in pages_text])})
+
+
+def test_pdf_text_extracted_directly_not_delegated_to_read():
+    """회귀: Claude Code의 Read 도구는 PDF 렌더링에 pdftoppm(poppler)이 필요한데
+    관리자 권한 없는 환경엔 없을 수 있다. 대체 경로인 pdftotext도(이 PC에 흔한
+    2017년 xpdf 4.00) 한글 CID 매핑을 못 읽어 한글이 통째로 사라진다(실측:
+    96,447자 추출 중 한글 0자). PyMuPDF로 우리가 직접 뽑아 프롬프트에 통째로 넣는다."""
+    _stub_fitz(["초등학교 정보교육 실험 결과 " * 20, " 두 번째 페이지 내용 " * 20])
     with tempfile.TemporaryDirectory() as d:
         p = Path(d, "a.pdf"); p.write_bytes(b"%PDF-1.4 fake")
         ins = eli5.source_instruction(str(p))
-    assert "Read" in ins and "pages" in ins      # 긴 PDF를 잘라 읽으라는 지시가 살아있어야 한다
-    assert str(Path(p).resolve()) in ins         # 상대경로면 claude가 못 찾는다
+    assert "초등학교 정보교육 실험 결과" in ins and "두 번째 페이지 내용" in ins
+    assert "Read 도구" not in ins and "pages 인자" not in ins   # Read에 위임하지 않는다
+
+
+def test_pdf_extraction_guards_near_empty_scans():
+    """스캔본이라 텍스트 층이 없으면 몇 글자만 나온다 - 그걸로 요약하면 지어내는 것과 같다."""
+    _stub_fitz(["x"])
+    assert "텍스트가 거의 안" in _exits(lambda: eli5.extract_pdf_text("dummy.pdf"))
+
+
+def test_pdf_extraction_without_pymupdf_fails_loudly():
+    eli5.fitz = None
+    assert "pymupdf가 설치돼 있지 않습니다" in _exits(lambda: eli5.extract_pdf_text("dummy.pdf"))
 
 
 def test_bad_inputs_fail_loudly():

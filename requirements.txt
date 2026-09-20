@@ -1,0 +1,4 @@
+# eli5.py의 로컬 PDF 읽기 전용. weekly.py는 stdlib만 쓴다.
+# pip install(관리자 권한 불필요)로 되고, 한글 PDF 텍스트 추출이 정확하다 —
+# 이 PC의 pdftotext(xpdf 2017년판)는 한글 CID 매핑을 못 읽어 한글이 통째로 사라진다.
+pymupdf
