@@ -15,16 +15,26 @@ YEAR_AGO = (date.today() - timedelta(days=365)).isoformat()
 
 # 검색 기준: 최신성이 아니라 정확성. 정확하다 = 초등학교 교사가 읽고 수업·생활지도에
 # 옮길 거리가 있다. 세 조건을 모두 만족해야 한다(AND):
-#   TOPIC   무엇을 다루나 — AI/디지털 수업, AI 윤리, 디지털 과몰입
+#   TOPIC   무엇을 다루나 — AI/디지털 수업, AI 윤리, 디지털 과몰입,
+#           사이버불링·온라인안전, 미디어 리터러시·허위정보, 지능형 튜터링
 #   LEVEL   누구를 다루나 — 초등·K-12 (대학·성인 제외)
 #   CONTEXT 어떤 관점인가 — 교실·수업·교사 (이게 없으면 같은 주제라도 보건 연구가 온다:
 #           과몰입 검색 상위가 비만·충치·자세였다. 교사에게 시사점이 없다.)
-TOPIC = ('("computational thinking" OR "programming education" OR "coding education" '
-         'OR "AI literacy" OR "AI education" OR "artificial intelligence education" '
-         'OR "generative AI" OR "computer science education" OR "educational robotics" '
-         'OR "AI ethics" OR "algorithmic bias" OR "digital citizenship" '
-         'OR "screen time" OR "digital addiction" OR "smartphone addiction" '
-         'OR "problematic internet use" OR "digital wellbeing")')
+# 주제를 하나의 OR 덩어리로 묶으면 생성형 AI가 relevance를 독점해서 나머지가
+# 상위에 한 편도 안 뜬다(실측: 사이버불링·미디어리터러시를 넣어도 상위 14편에 0편).
+# 그래서 갈래별로 따로 뽑아 합친다. 매주 세 축이 모두 보장된다.
+THEMES = {
+    "수업": ('("computational thinking" OR "programming education" OR "coding education" '
+             'OR "AI literacy" OR "AI education" OR "artificial intelligence education" '
+             'OR "generative AI" OR "computer science education" OR "educational robotics" '
+             'OR "intelligent tutoring" OR "adaptive learning" OR "learning analytics")'),
+    "윤리·정보판별": ('("AI ethics" OR "algorithmic bias" OR "digital citizenship" '
+                  'OR "media literacy" OR misinformation OR deepfake OR "fake news")'),
+    "웰빙·안전": ('("screen time" OR "digital addiction" OR "smartphone addiction" '
+               'OR "problematic internet use" OR "digital wellbeing" '
+               'OR cyberbullying OR "online safety" OR "digital safety" OR "online risk")'),
+}
+TOPIC = "(" + " OR ".join(t.strip("()") for t in THEMES.values()) + ")"   # trending용 합본
 LEVEL = ('(elementary OR "primary school" OR "primary education" OR "K-12" '
          'OR schoolchildren OR pupils)')
 CONTEXT = ('(classroom OR teaching OR curriculum OR instruction OR teacher '
@@ -115,38 +125,48 @@ def _load_seen():
         return []
 
 
-def papers(n=25):
-    """정확도 순으로 n편. 이미 보낸 것은 뺀다."""
+def papers(per_theme=8):
+    """갈래별로 정확도 순. 이미 보낸 것은 뺀다.
+
+    한 번에 합쳐 뽑으면 생성형 AI가 상위를 독점해 윤리·웰빙 축이 한 편도 안 뜬다.
+    """
     fields = ("id,doi,title,publication_year,cited_by_count,referenced_works,"
               "abstract_inverted_index,primary_location,open_access,best_oa_location")
     since = (date.today() - timedelta(days=PAPER_WINDOW_DAYS)).isoformat()
-    # 중복 제거로 빠지는 만큼 넉넉히 받는다.
-    r = oa(filter=f"from_publication_date:{since},title_and_abstract.search:{SEARCH}",
-           select=fields, per_page=n * 3, sort="relevance_score:desc")
-
     seen = set(_load_seen())
     out = []
-    for w in r["results"]:
-        if w["id"] in seen:
+
+    for theme, topic in THEMES.items():
+        q = f"{topic} AND {LEVEL} AND {CONTEXT} {EXCLUDE}"
+        try:
+            got = oa(filter=f"from_publication_date:{since},title_and_abstract.search:{q}",
+                     select=fields, per_page=per_theme * 3, sort="relevance_score:desc")["results"]
+        except Exception as e:
+            print(f"[warn] 논문 수집 실패({theme}): {e}", file=sys.stderr)
             continue
-        loc = w.get("primary_location") or {}
-        w["venue"] = ((loc.get("source") or {}).get("display_name")) or ""
-        w["abstract"] = unabstract(w.pop("abstract_inverted_index", None))
-        w["links"] = links_for(w)
-        out.append(w)
-        if len(out) >= n:
-            break
+        picked = 0
+        for w in got:
+            if w["id"] in seen or picked >= per_theme:
+                continue
+            loc = w.get("primary_location") or {}
+            w["theme"] = theme
+            w["venue"] = ((loc.get("source") or {}).get("display_name")) or ""
+            w["abstract"] = unabstract(w.pop("abstract_inverted_index", None))
+            w["links"] = links_for(w)
+            seen.add(w["id"])
+            out.append(w); picked += 1
 
     if not out:      # 1년치를 다 돌았다. 기억을 비우고 처음부터.
         print("[warn] 후보가 모두 소진됐다 — seen 목록을 비운다", file=sys.stderr)
         os.makedirs("docs", exist_ok=True)
         with open(SEEN_PAPERS_PATH, "w", encoding="utf-8") as f:
             json.dump({"ids": []}, f)
-        return papers(n)
+        return papers(per_theme)
 
-    # 병합을 먼저 끝낸다. open(...,"w")는 여는 순간 파일을 비우므로,
+    # seen 에는 이번에 고른 것까지 이미 들어 있다(루프에서 add 했다).
+    # open(...,"w")는 여는 순간 파일을 비우므로 병합을 먼저 끝낸다 -
     # 그 안에서 _load_seen()을 부르면 빈 파일을 읽어 기억이 매주 리셋된다.
-    merged = (list(seen) + [w["id"] for w in out])[-SEEN_KEEP:]
+    merged = (_load_seen() + [w["id"] for w in out])[-SEEN_KEEP:]
     os.makedirs("docs", exist_ok=True)
     with open(SEEN_PAPERS_PATH, "w", encoding="utf-8") as f:
         json.dump({"ids": merged}, f)
@@ -319,7 +339,7 @@ def keris_report():
 def summarize(trends, papers, founds, domestic, revs, keris):
     data = {
         "이번주_급상승_토픽(lift=평소대비배수)": trends,
-        "논문_해외(정확도순_최근1년)": [{k: p[k] for k in ("title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
+        "논문_해외(정확도순_최근1년)": [{k: p[k] for k in ("theme", "title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
                      for p in papers[:25]],
         "신규논문_국내(최근30일_초록없음)": domestic,
         "공통인용_문헌(이론적배경_후보)": founds,
@@ -349,6 +369,9 @@ def summarize(trends, papers, founds, domestic, revs, keris):
    (나) 주제가 AI/디지털 활용 수업, AI 윤리, 디지털 과몰입 중 하나에 실제로 닿아 있는가.
    (다) <b>시사점이 있는가</b> — 수업 설계·생활지도·학교 규칙 중 무엇이든 "그래서 나는 무엇을 다르게 할 수 있나"에 답이 되는가.
         현상만 기술하고 끝나는 연구, 시사점이 "더 많은 연구가 필요하다"뿐인 연구는 버려라.
+   <b>갈래를 고르게 섞어라</b>. 각 논문에 theme 필드가 있다(수업 / 윤리·정보판별 / 웰빙·안전).
+   세 갈래에서 최소 1편씩은 넣어라 — 수업 논문만 다섯 편이면 실패다. 해당 갈래에 기준 통과작이
+   없으면 그때만 빠뜨려도 된다.
    다섯 편을 억지로 채우지 마라. 기준을 통과하는 게 3편뿐이면 3편만 써라.
    편당 아래 3줄 구조를 지켜라:
    - <b>제목</b>(링크) — 저널, 연도. 열람 링크를 PDF/본문/DOI 순으로 붙여라.
