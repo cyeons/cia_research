@@ -1,0 +1,143 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터교육·AI교육 주간 브리핑</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-09-20</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-09-20.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
+<p>이번 주 급상승 토픽 중 'Training (meteorology)'(lift 8.3)은 수치상 가장 높은 상승을 보였으나, 기상 훈련 관련 개념으로 컴퓨터·AI 교육 연구 맥락과는 거리가 먼 키워드 매칭상의 우연(노이즈)으로 해석하는 것이 타당합니다. 반면 실제 이번 주 신규 논문들과 밀접하게 맞물리며 학술적 맥락을 형성하는 주요 토픽은 다음과 같습니다.</p>
+<ul>
+  <li><strong>Exploratory factor analysis (lift 7.8) 및 Likert scale (lift 6.5)</strong>: AI 도입에 따른 학습자·교사의 심리적 반응(불안, 의존도, 수용도 등)을 측정하기 위한 척도 개발 및 타당화 연구가 급증했습니다. 이란 영어 강사의 AI 불안 척도를 검증한 연구나 방글라데시 학생들의 생성형 AI 수용도 설문 데이터셋 등에서 5점 리커트 척도와 탐색적·확인적 요인분석, 구조방정식 모형이 집중적으로 활용되고 있습니다.</li>
+  <li><strong>Learning analytics (lift 6.8)</strong>: 생성형 AI와 대형언어모델(LLM)을 단순 챗봇으로 두지 않고, 학습 관리 시스템(LMS) 내 지식 추적(Knowledge Tracing) 및 이벤트 로그 분석과 결합하려는 시도가 나타났습니다. 온라인 프로그래밍 교육에서 학습자의 형성평가 로그를 분석해 LLM 튜터의 비계를 적응형으로 제공하는 연구가 대표적입니다.</li>
+  <li><strong>Comprehension (lift 6.3) 및 Generative model (lift 3.0)</strong>: 생성형 AI 기술 자체(생성 모델)를 이해하거나 이를 매개로 복잡한 개념을 학습자의 눈높이에 맞게 '이해(Comprehension)'시키는 교육적 번역 연구가 주목받았습니다. 소외계층 아동을 대상으로 스토리텔링 애니메이션을 제작해 생성형 AI 개념 이해를 돕는 SERT 프레임워크 연구 등이 이에 해당합니다.</li>
+</ul>
+
+<h2>읽을 만한 신규 논문 5편</h2>
+
+<p>
+  <b><a href="https://siducat.org/index.php/jpi/article/download/2781/1871">Designing a Socioecology-Based Coding Curriculum for Preservice Elementary Teachers: Computational Thinking, Measurement, Geometry, and Climate Mitigation</a></b> — JPI Jurnal Pustaka Indonesia, 2026.<br>
+  <b>쉽게 말하면</b>: 기후변화 문제를 해결하는 코딩 수업을 만들기 위해 초등 예비교사들을 위한 측정·도형 융합 교육과정을 설계해 보았습니다. 환경 문제 해결과 컴퓨팅 사고력을 함께 기를 수 있는 수업 목표와 도구들을 체계적으로 정리해 제시했습니다.<br>
+  <b>연구적 의미</b>: 사회생태학적 관점과 초등 수학(측정·도형) 및 컴퓨팅 사고력을 결합한 질적 문헌고찰 기반의 교육과정 프레임워크 설계 연구로, 실제 교실 현장 적용을 통한 실증적 효과성 검증이 후속 과제로 요구됩니다.
+</p>
+
+<p>
+  <b><a href="https://doi.org/10.1145/3846379">Co-creating Generative Artificial Intelligence education resources using the ‘Storytelling Empirical Research Translation’ (SERT) approach</a> (유료·도서관 프록시 필요)</b> — ACM Transactions on Computing Education, 2026.<br>
+  <b>쉽게 말하면</b>: 소외계층 중학생 18명에게 어려운 생성형 AI 연구 내용을 애니메이션 동화로 만드는 활동에 직접 참여하게 해보았습니다. 아이들은 AI를 수동적으로 배우는 데 그치지 않고 자신의 생각을 이야기로 표현하며 AI 개념을 훨씬 깊이 있게 이해했습니다.<br>
+  <b>연구적 의미</b>: 질적 참여 설계 및 SERT(스토리텔링 기반 연구 번역) 방법론을 활용하여 소수자 학습자의 생성형 AI 개념 이해와 주체성을 분석한 연구로, 소규모 표본(18명)에 기반한 탐색적 설계라는 점을 감안할 필요가 있습니다.
+</p>
+
+<p>
+  <b><a href="https://arxiv.org/pdf/2609.18072">Teaching AI, Robotics, & Community: A Hubs-Based K-12 Education Framework for Reaching Rural Schools</a></b> — arXiv (Cornell University), 2026.<br>
+  <b>쉽게 말하면</b>: 멘토가 부족한 시골 학교들을 돕기 위해 대학생 멘토가 중심이 되는 거점형 로봇·AI 교육 모델을 만들어 3개 학교 팀에 시범 운영해 보았습니다. 학생들의 프로그래밍 지식과 실습 기회가 크게 늘어났고 대학생 멘토들의 지도 역량과 보람도 꽤 높아졌습니다.<br>
+  <b>연구적 의미</b>: 대학-지역 연계 거점(ARC) 모델의 초기 파일럿 평가(리커트 설문)와 인디애나주 공립학교 대상 공간 마르코프 모델 시뮬레이션을 병행하여, 농촌 및 교육 취약지역 K-12 AI·로보틱스 교육의 지리적 확장 가능성을 실증적으로 제안했습니다.
+</p>
+
+<p>
+  <b><a href="https://doi.org/10.1080/00313831.2026.2733206">Digital programming in mathematics education: a systematic scoping review</a></b> — Scandinavian Journal of Educational Research, 2026.<br>
+  <b>쉽게 말하면</b>: 학교 수학 시간에 프로그래밍을 어떻게 가르쳐왔는지 확인하기 위해 2006년 이후 발표된 초·중등 관련 논문 90편을 꼼꼼히 모아 분석했습니다. 대부분 블록 코딩 도구를 써서 기하 영역에 집중해 가르쳤고, 프로그래밍은 주로 컴퓨팅 사고력을 기르는 맥락에서 다뤄졌습니다.<br>
+  <b>연구적 의미</b>: EPPI-Reviewer 및 이중맹검 절차를 거친 엄밀한 체계적 스코핑 리뷰로, K-12 수학 교육 내 프로그래밍 도입이 블록 기반 언어와 기하 영역에 편중되어 있음을 밝혀 교육 내용 다변화의 필요성을 학술적으로 시사합니다.
+</p>
+
+<p>
+  <b><a href="https://link.springer.com/content/pdf/10.1007/s44217-026-02172-8.pdf">Adaptive large language model scaffolding supports online programming education through learning analytics and knowledge tracing</a></b> — Discover Education, 2026.<br>
+  <b>쉽게 말하면</b>: 온라인 코딩 학습을 돕기 위해 학생 357명을 대상으로 학습 기록을 분석해 맞춤형 조언을 건네는 AI 튜터를 써보게 했습니다. AI 튜터의 도움을 받은 학생들은 연습 문제를 더 적극적으로 풀고 든든한 지원을 받는다고 느꼈지만, 최종 시험 성적 자체는 일반 학생들과 비교해 차이가 뚜렷하지 않았습니다.<br>
+  <b>연구적 의미</b>: 지식 요소 추적 및 로지스틱 사건사 분석을 접목한 준실험(Quasi-experimental) 혼합연구로, 교사가 통제하는 LLM 비계가 형성적 학습 참여와 만족도는 개선하지만 학업성취도(총괄평가)에 미치는 주효과는 미미(p = .127)하다는 엄밀한 한계를 보고합니다.
+</p>
+
+<h2>이론적 배경 후보</h2>
+<p>여러 신규 연구들이 공통으로 인용하는 문헌들은 해당 분야 연구자들이 연구 설계와 문제 정의 시 공유하는 '공통 전제'이자 표준적인 학술 기반을 뜻합니다. 이번 주 공통 인용 빈도가 높은 문헌들은 다음과 같습니다.</p>
+
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 14px;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th>문헌</th>
+      <th>연도</th>
+      <th>공동인용 수</th>
+      <th>어떤 이론적 역할</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://doi.org/10.1145/1118178.1118215">Computational thinking</a></td>
+      <td>2006</td>
+      <td>3</td>
+      <td>컴퓨팅 사고력(CT)의 개념적 정의를 확립한 기초 문헌으로, 프로그래밍 및 수학·환경 융합 교육과정의 목표를 정당화하는 필수 전제로 인용됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1191/1478088706qp063oa">Using thematic analysis in psychology</a></td>
+      <td>2006</td>
+      <td>3</td>
+      <td>참여 관찰, 성찰 저널, 인터뷰 등 질적 자료를 체계적으로 범주화·코딩하기 위한 표준 질적 주제 분석 방법론의 근거로 사용됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1207/s15430421tip4102_2">Becoming a Self-Regulated Learner: An Overview</a></td>
+      <td>2002</td>
+      <td>2</td>
+      <td>AI 도구 활용 환경에서 학습자의 메타인지와 비판적 규제(계획-모니터링-평가) 과정을 규명하는 자기조절학습의 이론적 프레임워크 제공.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1186/s41239-019-0171-0">Systematic review of research on artificial intelligence applications in higher education – where are the educators?</a></td>
+      <td>2019</td>
+      <td>2</td>
+      <td>교육 환경 내 AI 적용 흐름을 비판적으로 조망하고, 기술 중심 논의를 넘어선 교육학적 관점의 연구 필요성을 뒷받침하는 배경 문헌.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1016/j.lindif.2023.102274">ChatGPT for good? On opportunities and challenges of large language models for education</a></td>
+      <td>2023</td>
+      <td>2</td>
+      <td>교육 현장에서 대형언어모델(LLM)이 제공하는 학습 지원 기회와 인지적 외주화, 윤리적 과제 등 이중적 특성을 정립하는 데 참조됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1186/s41239-023-00411-8">Students’ voices on generative AI: perceptions, benefits, and challenges in higher education</a></td>
+      <td>2023</td>
+      <td>2</td>
+      <td>생성형 AI를 실제 사용하는 학습자의 주관적 수용 태도, 유익성, 우려 요인을 파악하는 인식 조사 연구의 선행 비교 모델로 인용됨.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>국내 동향</h2>
+<p>최근 30일간 발표된 국내 학술지(한국정보교육학회 15편, 한국컴퓨터교육학회 5편) 논문의 제목과 학회명에서 확인되는 핵심 동향은 다음과 같습니다.</p>
+<ul>
+  <li><strong>초등 교실 맞춤형 평가 도구 및 플랫폼 개발 집중</strong>: 해외 연구가 이론적 프레임워크 제안이나 대규모 종단 데이터셋 분석에 치중된 것과 달리, 국내 연구는 초등 현장에 즉각 투입 가능한 도구 개발 연구가 뚜렷합니다. <a href="https://doi.org/10.14352/jkaie.2026.30.4.851">초등학교 정보교육에서 Creative Computational Thinking 기반 평가도구 적용 사례 연구</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.877">초등학생의 생성형 AI 리터러시 함양을 위한 교육적 미들웨어 AL-G 개발 및 타당화</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.867">2022 개정 교육과정 기반의 생성형 AI 활용 초등 데이터 전처리 교육 프로그램 개발 및 적용 가능성 탐색</a> 등이 대표적입니다.</li>
+  <li><strong>사회정서역량, 특수교육, 생태 감수성으로의 다변화</strong>: <a href="https://doi.org/10.14352/jkaie.2026.30.4.741">초등학생의 인공지능 및 디지털 기기 활용 빈도와 사회정서역량 간의 관계</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.725">발달장애 학생 대상 생성형 AI 윤리 자기점검 도구(AI-SEE) 개발</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.709">반려견 감정 인식 교보재를 활용한 AI 리터러시 및 생태적 감수성 통합 교육 프로그램 설계</a>, <a href="https://doi.org/10.32431/kace.2026.29.8.004">탄소중립 행동의 습관 형성 과정을 지원하는 AI 기반 온라인 도구 개발</a>처럼 기술 습득을 넘어 정서, 포용 교육, 기후·생태 등 타 교과 및 사회적 가치와의 융합 프로그램 개발이 두드러집니다.</li>
+  <li><strong>컴퓨팅 사고력의 개념적 재구조화 및 메타분석</strong>: 전통적인 SW·CT 교육 효과를 총괄 검토하는 <a href="https://doi.org/10.32431/kace.2026.29.8.002">국내 SW 교육이 K―12 학습자의 컴퓨팅 사고력에 미치는 효과 : 메타분석적 접근을 중심으로</a>와 더불어, AI 시대의 역량을 새롭게 재정의하려는 <a href="https://doi.org/10.32431/kace.2026.29.8.010">AI 시대의 핵심 역량에 대한 탐구: 컴퓨팅사고력에서 AI 맥락 다관점 메타인지로의 이동</a>과 같은 이론적 담론 논문도 발표되었습니다.</li>
+  <li><strong>교사 지원 및 실천 연구</strong>: 교원 행정 부담을 줄이기 위한 <a href="https://doi.org/10.14352/jkaie.2026.30.4.825">sLLM 기반 교사 업무용 AI 서비스(AMOND) 설계 및 개발</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.893">정보 교과 수업 모형 분류 체계의 탐색과 이를 적용한 인벤토리 구축</a>, <a href="https://doi.org/10.32431/kace.2026.29.8.011">AI 교육에 대한 교육 주체별 요구사항 분석 및 미래 교육과정 개선 방향 탐색</a> 등 현장 교사의 실행력과 교육과정 안착을 뒷받침하는 연구들이 고르게 게재되었습니다. 그 외에도 <a href="https://doi.org/10.14352/jkaie.2026.30.4.763">초등 디지털 포렌식 언플러그드 교육 프로그램의 교수설계 정교화 및 적용 효과 분석</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.691">인공지능의 창의성과 과학 연구 주체성에 대한 초등 정보·과학 영재 학생 인식 분석 : 언어 네트워크 분석을 중심으로</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.807">초등 전기 탐구 내 주도성 함양 및 과학적 개념변화를 위한 테크놀로지 향상 학습환경(TELE) 설계 및 타당화</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.837">중학생의 데이터 리터러시 및 기술적 태도 함양을 위한 실생활 데이터 기반 기술교과 AI 융합 교육 프로그램 개발 및 적용</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.775">고등학교 기술 교과를 위한 컴퓨터 비전 활용 인공지능 로봇 교육 프로그램 개발 및 적용</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.791">DMGT 모형 기반 중학교 정보 영재의 재능 발달 과정 탐색 : 기능성 게임 창작 교육 프로그램을 중심으로</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.751">지역사회 연계 프로젝트 학습 기반 AI 융합 교육이 중학생의 AI 리터러시에 미치는 효과</a>, <a href="https://doi.org/10.32431/kace.2026.29.8.001">고급 프로그래밍 수업에서 생성형 AI 활용에 대한 학생 인식과 프로젝트 참여 사례 연구</a> 등이 확인됩니다.</li>
+</ul></body></html>
