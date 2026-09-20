@@ -42,49 +42,45 @@
     figure,li,tr{break-inside:avoid} h2{break-after:avoid}
   }
 </style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-09-20</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-09-20.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
-<p>이번 주 급상승 토픽 중 두드러진 흐름은 <strong>'척도 개발 및 측정 도구의 집중'</strong>, <strong>'Learning analytics(학습 분석)'</strong>, 그리고 <strong>'Comprehension(개념 이해)'</strong>과 <strong>'Generative model(생성형 모델)'</strong>의 결합입니다.</p>
+<p>이번 주 급상승 토픽 데이터에서는 수업 현장 적용 및 평가와 관련된 키워드가 두드러집니다.</p>
 <ul>
-  <li><strong>Exploratory factor analysis (lift 7.8), Likert scale (lift 6.5), Structural equation modeling (lift 2.9)</strong>: 통계 기법 관련 키워드가 대거 급상승했습니다. 이는 컴퓨팅·AI 교육 분야 자체의 새로운 이론적 조류라기보다는, 이번 주 수집된 해외 연구 및 데이터셋(예: 방글라데시 대학생 대상 GenAI 수용도 조사, 이란 영어 강사의 AI 불안 척도 타당화 연구 등)에 5점 리커트 척도 기반 설문과 탐색적 요인분석(EFA)·구조방정식(SEM)을 활용한 척도 타당화 논문이 몰리면서 나타난 기술적 현상입니다.</li>
-  <li><strong>Learning analytics (lift 6.8)</strong>: 온라인 프로그래밍 교육에서 대규모 언어 모델(LLM)을 활용할 때, 지식 추적(knowledge tracing)과 학습 로그 분석을 결합하여 개별 학생의 학습 과정을 적응형으로 지원하려는 연구(예: <i>Discover Education</i>의 적응형 LLM 스캐폴딩 연구)와 맞물려 상승했습니다.</li>
-  <li><strong>Comprehension (lift 6.3) 및 Generative model (lift 3.0)</strong>: 단순한 코딩 생성을 넘어, 생성형 AI의 기본 원리를 학생들이 어떻게 이해(comprehension)하도록 가르칠 것인가에 대한 관심이 반영되었습니다. 특히 스토리텔링 기반 애니메이션을 활용해 소외계층 청소년에게 생성형 AI 개념 이해를 돕는 연구(ACM TOCE) 등이 이 흐름을 뒷받침합니다.</li>
-  <li><i>참고</i>: Training (meteorology, lift 8.3)과 Citizen journalism (lift 6.0) 등은 수집된 문서(시민 감사 백서 등) 내 단어 중복 매칭에 따른 일시적 노이즈(우연한 급상승)로 판단됩니다.</li>
+  <li><strong>Formative assessment (형성평가, lift 3.6배):</strong> 이번 주 가장 높은 상승폭을 보였습니다. 신규 리뷰 및 프로그래밍 연구들에서 생성형 AI가 학생들의 코딩 오류나 개념 이해 과정에 실시간 피드백을 제공하는 대화형 형성평가 도구로 주목받으면서 관련 논의가 집중된 결과로 해석됩니다.</li>
+  <li><strong>Technology integration (테크놀로지 통합, lift 3.2배):</strong> 기기나 소프트웨어의 단순 도입을 넘어 실제 초등 교실의 교수학습 설계와 교육과정 맥락에 디지털 기술을 어떻게 통합할 것인가에 대한 연구가 증가했습니다. 초등 교사의 실제 수업 실행 양상이나 교사 테크놀로지 수용 요인을 다룬 논문들이 다수 발표된 맥락과 맞닿아 있습니다.</li>
+  <li><strong>Thematic analysis (주제 분석, lift 1.8배):</strong> 질적 연구 방법론의 명칭으로, 최근 AI 도입 초기 단계에서 교사의 인식, 실행 저해요인, 인터뷰 등을 범주화하는 질적·혼합 연구가 몰리면서 빈도가 상승했습니다. 이는 교육적 개념의 부상이라기보다는 면담 기반 탐색 연구들이 다수 포함되며 나타난 연구 방법론상의 일시적 집계 현상으로 보입니다.</li>
 </ul>
 
 <h2>큰 그림 — 리뷰·메타분석</h2>
-<p>K-12 및 유·초등 컴퓨팅 교육과의 직접적 관련성, 저널의 학술적 신뢰도, 체계적 문헌고찰(PRISMA 등) 기준의 구체성을 바탕으로 2편을 엄선했습니다. (비즈니스 중심의 e-커머스 리뷰는 제외)</p>
+<p>초등 및 K-12 맥락에 유의미하며 검색 DB와 선정 기준이 구체적인 체계적 문헌고찰 1편을 선별했습니다. (나머지 수록 문헌 중 일부는 특정 국가에 한정된 소규모 분석이거나 일반 서술적 리뷰로 제외했습니다.)</p>
+<ul>
+  <li><a href="https://doi.org/10.1016/j.heliyon.2026.e45423">Characteristics and psychometric properties of computational thinking assessments in children and adolescents: A systematic review</a> — Heliyon, 2026, 인용 0회
+    <p><strong>무엇을 정리했나:</strong> PRISMA 지침에 따라 7개 주요 학술 DB(Web of Science, Science Direct 등)에서 아동·청소년 대상 컴퓨팅 사고력(CT) 평가도구를 다룬 64편의 연구(65개 도구)를 추출해 계량심리학적 타당성을 종합 분석했습니다. 분석 결과, 초등학생을 대상으로 한 도구가 가장 많았음에도 불구하고 타당도나 신뢰도 근거를 모두 갖춘 도구는 절반 수준(각각 56%)에 불과해 교육 현장에서 검증되지 않은 평가 도구가 무분별하게 사용되고 있음을 지적하며 신뢰성 있는 도구 정립의 시급성을 결론으로 제시했습니다.</p>
+  </li>
+</ul>
 
-<p><strong><a href="https://doi.org/10.1002/jcal.70326">Assessing Computational Thinking in Early Childhood: A Systematic Review of Instruments, Constructs and Psychometric Evidence</a></strong> (유료·도서관 프록시 필요) — Journal of Computer Assisted Learning, 2026, 피인용 0회<br>
-<strong>무엇을 정리했나</strong>: PRISMA 지침에 따라 3~8세 유아 및 초기 초등 학습자의 컴퓨팅 사고력(CT)을 측정한 30건의 연구(28편 논문)를 분석하여 측정 구인, 시행 방식, 심리측정학적 근거(신뢰도·타당도·공정성)를 체계적으로 검토했습니다. 대다수 도구가 알고리즘과 순차 구조에 치우친 지필 선택형 형태였으며, 내용·구인 타당도는 개선되었으나 준거 타당도와 평가의 공정성에 대한 검증은 여전히 크게 부족하다는 점을 지적했습니다.</p>
-
-<p><strong><a href="https://doi.org/10.1016/j.heliyon.2026.e45423">Characteristics and psychometric properties of computational thinking assessments in children and adolescents: A systematic review</a></strong> — Heliyon, 2026, 피인용 0회<br>
-<strong>무엇을 정리했나</strong>: 주요 6개 학술 DB에서 K-12 아동·청소년 대상 CT 평가 도구를 다룬 64개 연구(65개 도구)를 PRISMA 프로토콜에 따라 분석하고 측정 속성을 종합했습니다. 초등학생을 대상으로 한 설문지 및 과제 기반 루브릭이 주를 이루었으나, 전체 연구의 56%만이 신뢰도나 타당도 근거를 보고했을 정도로 여전히 표준 심리측정 기준을 충족하지 못하는 도구가 많아 평가 도구의 엄밀한 타당화가 시급하다고 결론지었습니다.</p>
-
-<h2>읽을 만한 신규 논문 5편</h2>
-
-<p><strong><a href="https://doi.org/10.1145/3846379">Co-creating Generative Artificial Intelligence education resources using the ‘Storytelling Empirical Research Translation’ (SERT) approach</a></strong> (유료·도서관 프록시 필요) — ACM Transactions on Computing Education, 2026.<br>
-<strong>쉽게 말하면</strong>: 소외계층 중학생 18명과 함께 애니메이션 카툰을 제작하는 창작 활동을 진행하여 청소년이 생성형 AI를 어떻게 이해하고 반응하는지 살펴보았습니다. 학생들은 수동적으로 지식을 배우는 대신 이야기를 직접 만들면서 생성형 AI의 복잡한 개념을 훨씬 친숙하고 명확하게 받아들였습니다.<br>
-<strong>연구적 의미</strong>: 아동·청소년을 AI 교육 콘텐츠의 단순 소비자가 아닌 공동 설계자로 참여시키는 질적 방법론(SERT)을 제안했으며, 표본 규모(18명)는 작으나 포용적 AI 리터러시 설계를 위한 구체적 실행 사례를 제공합니다.</p>
-
-<p><strong><a href="https://link.springer.com/content/pdf/10.1007/s44217-026-02172-8.pdf">Adaptive large language model scaffolding supports online programming education through learning analytics and knowledge tracing</a></strong> — Discover Education, 2026.<br>
-<strong>쉽게 말하면</strong>: 온라인 프로그래밍 수업을 듣는 학생 357명을 대상으로 지식 추적 기반의 맞춤형 대규모 언어 모델(LLM) 튜터를 제공하고 일반 학습 환경과 비교했습니다. LLM 튜터를 사용한 학생들은 형성 평가 연습에 더 활발히 참여하고 지원을 잘 받는다고 느꼈지만, 최종 시험 성적에서는 통계적으로 유의미한 차이가 나타나지 않았습니다.<br>
-<strong>연구적 의미</strong>: 준실험설계(quasi-experimental)를 기반으로 대규모 로그 데이터를 정밀 분석하여, LLM 보조 튜터가 형성적 실습과 학습 동기에는 기여하지만 최종 학업 성취도 평가의 직접적인 권위나 대체 수단이 되어서는 안 된다는 설계적 시사점을 줍니다.</p>
-
-<p><strong><a href="https://arxiv.org/pdf/2609.18072">Teaching AI, Robotics, & Community: A Hubs-Based K-12 Education Framework for Reaching Rural Schools</a></strong> — arXiv, 2026.<br>
-<strong>쉽게 말하면</strong>: 전문 멘토가 부족한 농촌 학교를 위해 대학생 멘토를 파견하고 거점 학교를 육성하는 로봇·AI 교육 모델을 시범 운영했습니다. 시범 적용 결과 초·중·고 학생들의 프로그래밍 지식과 실습 기회가 크게 늘어났으며, 멘토링을 맡은 대학생들의 지도 자신감도 함께 향상되었습니다.<br>
-<strong>연구적 의미</strong>: 단일 대학 적용 사례(3개 팀)에 대한 기술통계 및 마르코프 모델 시뮬레이션을 결합하여, 교육 격차가 큰 농촌 K-12 환경에서 지속 가능한 AI·로봇 멘토링 거점망을 확장하는 정책적·구조적 프레임워크를 제안했습니다.</p>
-
-<p><strong><a href="https://doi.org/10.1080/00313831.2026.2733206">Digital programming in mathematics education: a systematic scoping review</a></strong> — Scandinavian Journal of Educational Research, 2026.<br>
-<strong>쉽게 말하면</strong>: 초·중등 수학교육에서 디지털 프로그래밍을 어떻게 접목하고 있는지 알아보기 위해 2006년 이후 발표된 90편의 연구를 분석했습니다. 연구의 대부분은 블록 기반 코딩 도구를 사용하고 있었으며, 수학 교과 중에서도 주로 도형과 기하 영역에 프로그래밍이 집중되어 있었습니다.<br>
-<strong>연구적 의미</strong>: K-12 수학과 프로그래밍 융합 교육이 컴퓨팅 사고력(CT) 담론과 강하게 결합되어 있음을 실증적으로 정리했으며, 기하 외 다른 수학 영역(수와 연산, 대수 등)으로의 불균형한 연구 확장을 요구하는 기초 자료가 됩니다.</p>
-
-<p><strong><a href="https://siducat.org/index.php/jpi/article/download/2781/1871">Designing a Socioecology-Based Coding Curriculum for Preservice Elementary Teachers: Computational Thinking, Measurement, Geometry, and Climate Mitigation</a></strong> — JPI Jurnal Pustaka Indonesia, 2026.<br>
-<strong>쉽게 말하면</strong>: 예비 초등교사들이 기후변화 같은 환경 문제를 코딩으로 다룰 수 있도록 컴퓨팅 사고력과 초등 수학(측정·기하)을 결합한 교육과정을 설계했습니다. 교원 양성 단계에서 환경 문제 해결과 프로그래밍 교육을 통합하여 교사의 융합 수업 역량을 기르는 모델을 제시했습니다.<br>
-<strong>연구적 의미</strong>: 사회생태적 문제(기후 위기)와 초등 교과 연계 코딩을 예비교사 교육과정 수준에서 통합 설계한 개념적 프레임워크이나, 실제 초등 교실 적용 및 효과성 검증은 후속 연구 과제로 남아 있습니다.</p>
+<h2>읽을 만한 논문 5편</h2>
+<p>초등학교 교실 적용 가능성, AI/디지털 활용 및 윤리, 구체적 수업·생활지도 시사점을 충족하는 연구 4편을 선별했습니다. (요건에 부합하지 않는 중등 대상 연구, 일반 이론 논문 등은 제외했습니다.)</p>
+<ul>
+  <li><a href="https://doi.org/10.1016/j.compedu.2025.105473">Adaptive vs. planned metacognitive scaffolding for computational thinking: Evidence from generative AI-supported programming in elementary education</a> (유료·도서관 프록시 필요) — Computers & Education, 2025
+    <p><strong>쉽게 말하면:</strong> 초등학생들의 생성형 AI 활용 프로그래밍 수업에서 교사가 사전에 정해둔 메타인지 스캐폴딩과 AI가 상황에 맞춰 즉각 제공하는 적응형 스캐폴딩이 컴퓨팅 사고력 향상에 어떤 차이를 내는지 비교했습니다. 학생의 문제 해결 흐름에 맞춰 AI가 메타인지를 자극했을 때 프로그래밍 문제 해결력 차이가 꽤 컸습니다.</p>
+    <p><strong>교실에 주는 시사점:</strong> 초등 블록 코딩이나 AI 프로그래밍 수업 시 정형화된 학습지 중심의 일괄 안내보다는, 학생이 막히는 지점에서 스스로 오류를 점검하도록 유도하는 프롬프트 기반의 적응형 질문을 교실 활동에 배치할 필요가 있습니다. (단, 본 연구는 유료 논문으로 구체적인 실험 대상 규모와 표본 조건에 대한 추가 원문 검증이 필요합니다.)</p>
+  </li>
+  <li><a href="https://stemeducationjournal.springeropen.com/counter/pdf/10.1186/s40594-025-00574-y">AI literacy and gender equity in elementary education: A quasi-experimental study of a STEAM–PBL–AIoT course with questionnaire validation</a> — International Journal of STEM Education, 2025
+    <p><strong>쉽게 말하면:</strong> 초등학교 5학년 학생 109명을 대상으로 단순 AIoT 기술 습득 중심 수업과 프로젝트 기반(STEAM-PBL-AIoT) AI 리터러시 수업을 각각 적용하여 성별에 따른 역량 격차 변화를 관찰했습니다. 사전 검사에서는 남학생의 점수가 높았으나, 실생활 문제 해결형 프로젝트 수업을 받은 여학생들의 역량이 크게 오르면서 성별 격차가 완전히 해소되었습니다.</p>
+    <p><strong>교실에 주는 시사점:</strong> 초등 AI 교육 설계 시 기능 습득이나 단순 기기 조작 위주의 활동을 지양하고, 감성·윤리·실생활 문제를 융합한 프로젝트 기반(PBL) 설계를 도입하면 여학생들의 AI 효능감과 참여도를 유의미하게 끌어올릴 수 있습니다.</p>
+  </li>
+  <li><a href="https://doi.org/10.1016/j.compedu.2025.105510">Teacher-led robot intervention in early primary school classrooms improves pupil and teacher outcomes</a> — Computers & Education, 2025
+    <p><strong>쉽게 말하면:</strong> 만 4~7세 초등 저학년 학생 430명과 교사 17명을 대상으로 교구 로봇만 투입한 학급과 교사 연수를 병행한 학급을 나누어 프로그래밍 예측 및 디버깅 능력을 측정했습니다. 단순 교구 투입 학급과 달리, 교사 연수가 함께 지원된 학급에서만 학생들의 디버깅 및 문제 해결 능력이 비교 집단 대비 뚜렷하게 향상되었습니다.</p>
+    <p><strong>교실에 주는 시사점:</strong> 저학년 로봇 프로그래밍 교육의 성패는 교구의 질보다 교사의 발문과 디버깅 지도 역량에 달려 있으므로, 교구 구입 이전에 교내 교원학습공동체를 통한 발문 연수가 선행되어야 함을 보여줍니다.</p>
+  </li>
+  <li><a href="https://jamanetwork.com/journals/jamanetworkopen/articlepdf/2839927/li_2025_oi_251025_1759501441.96679.pdf">Screen Time and Standardized Academic Achievement Tests in Elementary School</a> — JAMA Network Open, 2025
+    <p><strong>쉽게 말하면:</strong> 캐나다 초등 3학년(3,322명) 및 6학년(2,084명) 아동의 유아기부터 누적된 스크린 이용 시간과 표준 학업성취도 평가 간의 장기적 관계를 추적했습니다. 하루 스크린 노출 시간이 1시간 늘어날 때마다 초등 3학년 읽기·수학 및 6학년 수학에서 표준 성취 수준 이상에 도달할 확률이 약 9~10%씩 일관되게 감소했습니다.</p>
+    <p><strong>교실에 주는 시사점:</strong> 학급 생활지도 및 학부모 상담 시 디지털 기기 활용 수업과 별개로 일상적인 미디어·비디오 게임 스크린 타임 관리가 기초 학력 형성에 직결됨을 객관적 지표로 안내하는 근거로 활용할 수 있습니다. (단, 스크린 타임이 부모 보고식으로 측정되어 측정 오차가 존재할 수 있습니다.)</p>
+  </li>
+</ul>
 
 <h2>이론적 배경 후보</h2>
-<p>여러 신규 논문이 공통으로 인용하고 있는 아래 문헌들은 현재 초등 및 K-12 AI·컴퓨팅 교육 연구가 입각해 있는 이론적 전제와 연구 방법의 공통 토대입니다.</p>
-
-<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 0.9em;">
+<p>아래 문헌들은 이번 주 다수의 신규 논문들이 연구의 이론적 근거로 동시에 인용한 공통인용 문헌입니다. 여러 논문이 동시에 인용했다는 점은 이들 문헌이 초등·K-12 AI 및 컴퓨팅 교육 분야에서 현재 공유되고 있는 공통 전제이자 핵심 연구 프레임워크임을 뜻합니다.</p>
+<table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%;">
   <thead>
     <tr style="background-color: #f2f2f2;">
       <th>문헌</th>
@@ -95,69 +91,46 @@
   </thead>
   <tbody>
     <tr>
-      <td><a href="https://doi.org/10.1145/1118178.1118215">Computational thinking</a></td>
-      <td>2006</td>
-      <td>3</td>
-      <td>Wing(2006)의 기고문으로, 프로그래밍 및 AI 융합 교육의 핵심 목표 구인인 '컴퓨팅 사고력'의 학술적 당위성과 기본 정의를 제공하는 기초 문헌</td>
-    </tr>
-    <tr>
-      <td><a href="https://doi.org/10.1191/1478088706qp063oa">Using thematic analysis in psychology</a></td>
-      <td>2006</td>
-      <td>3</td>
-      <td>Braun & Clarke의 질적 주제분석 표준 지침으로, 인터뷰, 반성 저널, 서술형 설문 등 학생·교사의 질적 교육 데이터를 코딩하고 범주화하는 질적 방법론적 근거</td>
-    </tr>
-    <tr>
-      <td><a href="https://doi.org/10.1207/s15430421tip4102_2">Becoming a Self-Regulated Learner: An Overview</a></td>
-      <td>2002</td>
-      <td>2</td>
-      <td>Zimmerman의 자기조절학습(SRL) 이론으로, LLM 및 AI 튜터 환경에서 학생이 주도적으로 계획-점검-평가하는 메타인지적 학습 조절 모델의 이론적 기틀</td>
-    </tr>
-    <tr>
-      <td><a href="https://doi.org/10.1186/s41239-019-0171-0">Systematic review of research on artificial intelligence applications in higher education – where are the educators?</a></td>
-      <td>2019</td>
-      <td>2</td>
-      <td>교육 분야 AI 적용 연구에서 교육학적 관점의 부재를 비판한 기념비적 리뷰로, 기술 도입 시 교육적·인간 중심 맥락을 고려해야 한다는 문제의식 제공</td>
-    </tr>
-    <tr>
-      <td><a href="https://doi.org/10.1016/j.lindif.2023.102274">ChatGPT for good? On opportunities and challenges of large language models for education</a></td>
+      <td><a href="https://doi.org/10.30935/cedtech/13417">ChatGPT: Revolutionizing student achievement in the electronic magnetism unit for eleventh-grade students in Emirates schools</a></td>
       <td>2023</td>
-      <td>2</td>
-      <td>LLM의 교육적 기회(개별화 튜터링 등)와 도전 과제(환각, 의존도, 비판적 사고 저하)를 체계화하여 생성형 AI 교육 도입의 배경 논리로 빈번히 인용</td>
+      <td>4회</td>
+      <td>생성형 AI가 교과 성취도 향상에 미치는 긍정적 효과를 실증하는 대표적 초기 실험 연구로 인용됨</td>
     </tr>
     <tr>
-      <td><a href="https://doi.org/10.1186/s41239-023-00411-8">Students’ voices on generative AI: perceptions, benefits, and challenges in higher education</a></td>
+      <td><a href="https://doi.org/10.1016/j.edurev.2017.09.003">Demystifying computational thinking</a></td>
+      <td>2017</td>
+      <td>3회</td>
+      <td>초·중등 교육에서 컴퓨팅 사고력의 개념적 정의와 핵심 역량 요소를 규정하는 기본 토대 문헌으로 기능</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1111/ejed.12599">A systematic review of ChatGPT use in K‐12 education</a></td>
       <td>2023</td>
-      <td>2</td>
-      <td>학습자 관점에서 생성형 AI 활용 경험과 수용 태도를 실증한 연구로, AI 리터러시 및 학생 인식 조사 연구의 비교 준거로 활용</td>
+      <td>3회</td>
+      <td>K-12 환경에서 ChatGPT 도입 시 나타나는 기회 요인과 윤리·인지적 부작용을 제시하는 배경 근거로 활용</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1109/access.2020.2988510">Artificial Intelligence in Education: A Review</a></td>
+      <td>2020</td>
+      <td>3회</td>
+      <td>교육 분야 AI(AIED) 시스템의 유형과 교육적 역할 분류를 위한 포괄적 개념적 기초를 제공</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1016/j.caeai.2023.100195">Systematic review of research on artificial intelligence in K-12 education (2017–2022)</a></td>
+      <td>2023</td>
+      <td>3회</td>
+      <td>생성형 AI 대두 직전까지의 K-12 AI 교육 연구 지형과 교육과정 연계 실태를 조망하는 기준점으로 인용</td>
     </tr>
   </tbody>
 </table>
 
 <h2>국내 동향</h2>
-<p>한국정보교육학회와 한국컴퓨터교육학회의 최근 게재 논문 목록에서는 <strong>'초등 현장 맞춤형 평가 도구 및 교육용 미들웨어 개발'</strong>, <strong>'생성형 AI와 교과 융합(데이터 전처리, 기술, 환경)'</strong>, <strong>'AI 시대 역량 담론(CT에서 메타인지로의 확장)'</strong>이 두드러집니다. 해외 연구가 LLM 스캐폴딩과 일반적 척도 개발에 머문 것에 비해, 국내 연구는 초등교실 맞춤형 시스템 개발(AL-G 미들웨어, 교사용 sLLM AMOND) 및 특수교육(발달장애 윤리 도구), 메타분석 등 현장 적용과 포용성에 집중하는 차별성을 보입니다.</p>
+<p>이번 주 한국정보교육학회와 한국컴퓨터교육학회에는 총 20편의 신규 연구가 게재되었습니다. 제목과 학회명을 중심으로 살펴본 국내 연구 경향은 다음과 같습니다.</p>
 <ul>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.851">초등학교 정보교육에서 Creative Computational Thinking 기반 평가도구 적용 사례 연구</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.741">초등학생의 인공지능 및 디지털 기기 활용 빈도와 사회정서역량 간의 관계</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.825">sLLM 기반 교사 업무용 AI 서비스(AMOND) 설계 및 개발</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.837">중학생의 데이터 리터러시 및 기술적 태도 함양을 위한 실생활 데이터 기반 기술교과 AI 융합 교육 프로그램 개발 및 적용</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.725">발달장애 학생 대상 생성형 AI 윤리 자기점검 도구(AI-SEE) 개발</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.763">초등 디지털 포렌식 언플러그드 교육 프로그램의 교수설계 정교화 및 적용 효과 분석</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.877">초등학생의 생성형 AI 리터러시 함양을 위한 교육적 미들웨어 AL-G 개발 및 타당화</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.691">인공지능의 창의성과 과학 연구 주체성에 대한 초등 정보·과학 영재 학생 인식 분석 : 언어 네트워크 분석을 중심으로</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.893">정보 교과 수업 모형 분류 체계의 탐색과 이를 적용한 인벤토리 구축</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.709">반려견 감정 인식 교보재를 활용한 AI 리터러시 및 생태적 감수성 통합 교육 프로그램 설계</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.775">고등학교 기술 교과를 위한 컴퓨터 비전 활용 인공지능 로봇 교육 프로그램 개발 및 적용</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.791">DMGT 모형 기반 중학교 정보 영재의 재능 발달 과정 탐색 : 기능성 게임 창작 교육 프로그램을 중심으로</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.807">초등 전기 탐구 내 주도성 함양 및 과학적 개념변화를 위한 테크놀로지 향상 학습환경(TELE) 설계 및 타당화</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.867">2022 개정 교육과정 기반의 생성형 AI 활용 초등 데이터 전처리 교육 프로그램 개발 및 적용 가능성 탐색</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.14352/jkaie.2026.30.4.751">지역사회 연계 프로젝트 학습 기반 AI 융합 교육이 중학생의 AI 리터러시에 미치는 효과</a> (한국정보교육학회)</li>
-  <li><a href="https://doi.org/10.32431/kace.2026.29.8.011">AI 교육에 대한 교육 주체별 요구사항 분석 및 미래 교육과정 개선 방향 탐색</a> (한국컴퓨터교육학회)</li>
-  <li><a href="https://doi.org/10.32431/kace.2026.29.8.010">AI 시대의 핵심 역량에 대한 탐구: 컴퓨팅사고력에서 AI 맥락 다관점 메타인지로의 이동</a> (한국컴퓨터교육학회)</li>
-  <li><a href="https://doi.org/10.32431/kace.2026.29.8.002">국내 SW 교육이 K―12 학습자의 컴퓨팅 사고력에 미치는 효과 : 메타분석적 접근을 중심으로</a> (한국컴퓨터교육학회)</li>
-  <li><a href="https://doi.org/10.32431/kace.2026.29.8.004">탄소중립 행동의 습관 형성 과정을 지원하는 AI 기반 온라인 도구 개발</a> (한국컴퓨터교육학회)</li>
-  <li><a href="https://doi.org/10.32431/kace.2026.29.8.001">고급 프로그래밍 수업에서 생성형 AI 활용에 대한 학생 인식과 프로젝트 참여 사례 연구</a> (한국컴퓨터교육학회)</li>
+  <li><strong>현장 밀착형 실천 도구 및 미들웨어 개발:</strong> 해외 연구가 교수-학습 프레임워크나 전반적 수용 의도 분석에 치중된 반면, 국내 연구는 초등 교실에 즉시 투입 가능한 실물 도구 개발 연구가 두드러집니다. 대표적으로 초등학생용 생성형 AI 리터러시 교육용 미들웨어 개발을 다룬 <a href="https://doi.org/10.14352/jkaie.2026.30.4.877">AL-G 개발 및 타당화</a> 연구와 교사 행정 부담 경감을 위한 <a href="https://doi.org/10.14352/jkaie.2026.30.4.825">sLLM 기반 교사 업무용 AI 서비스(AMOND) 설계 및 개발</a>이 눈에 띕니다.</li>
+  <li><strong>사회정서 및 특수교육 등 포용적 AI 교육으로의 확장:</strong> 기술 습득 중심을 넘어 학생의 심리·정서와 포용적 관점을 다룬 연구가 다수 등장했습니다. <a href="https://doi.org/10.14352/jkaie.2026.30.4.741">초등학생의 기기 활용 빈도와 사회정서역량 간의 관계</a> 연구나, 취약 계층을 위한 <a href="https://doi.org/10.14352/jkaie.2026.30.4.725">발달장애 학생 대상 생성형 AI 윤리 자기점검 도구(AI-SEE) 개발</a>이 대표적입니다.</li>
+  <li><strong>2022 개정 교육과정 연계 및 데이터 리터러시 강조:</strong> 실과 및 정보 교육과정 적용 흐름에 맞추어 <a href="https://doi.org/10.14352/jkaie.2026.30.4.867">2022 개정 교육과정 기반 생성형 AI 활용 초등 데이터 전처리 교육 프로그램</a> 및 <a href="https://doi.org/10.14352/jkaie.2026.30.4.851">Creative Computational Thinking 기반 평가도구 적용 사례</a> 등 교육과정 성취기준을 구체화하는 연구가 집중되었습니다.</li>
 </ul>
 
 <h2>KERIS 디지털교육 동향</h2>
-<p>최신호는 여전히 224호입니다: <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=96765bf0efa87496c7500738e9d7b383&dwlTy=pblcte">[통권 224호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (39.7MB)</p>
+<p>최신호는 여전히 224호입니다. <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=96765bf0efa87496c7500738e9d7b383&dwlTy=pblcte">[통권 224호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (39.7MB)</p>
 <p>정독하려면 내려받아 eli5.py에 넣으세요.</p></body></html>
