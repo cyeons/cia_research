@@ -134,6 +134,20 @@ def test_split_title():
     assert eli5.split_title("<h2>x</h2>", "대체") == ("대체", "<h2>x</h2>")
 
 
+def test_sections_branch_by_document_type():
+    """회귀: 섹션 틀이 '단일 연구 논문'만 전제하면, 동향 리포트·매거진을 넣었을 때
+    끝에 실린 논문 한두 편만 정리하고 본문(정책 동향, 국가별 사례)을 통째로 빠뜨린다.
+    실제로 KERIS 40쪽 매거진에서 그렇게 됐다 - 추출은 멀쩡했고(36,940자 전부 전달)
+    프롬프트가 '누구에게 몇 명 얼마 동안' 표를 요구한 게 원인이었다."""
+    p = eli5.build_prompt("https://doi.org/10.1/x")
+    assert "단일 연구 논문" in p and "여러 주제를 모은 문서" in p   # 분기 자체가 있어야
+    assert "A의 틀로 쓰면 실패" in p                               # 잘못된 쪽을 명시
+    for section in ("이 문서가 다루는 지형", "반복되는 흐름", "눈에 띄는 것"):
+        assert section in p, f"B 전용 섹션 {section}가 없다"
+    for section in ("어떤 연구인가", "연구적 위치"):
+        assert section in p, f"A 전용 섹션 {section}가 없다"
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):
