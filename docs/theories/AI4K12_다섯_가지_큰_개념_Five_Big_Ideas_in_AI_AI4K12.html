@@ -1,0 +1,405 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI4K12 다섯 가지 큰 개념</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>AI4K12 다섯 가지 큰 개념</h1><p style="color:#666">2026-09-20</p>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@300;400;600&display=swap">
+<style>
+:root{
+  --bg:#eceee7;
+  --surface:#e1e5db;
+  --line:#c2c9bc;
+  --ink:#1b2624;
+  --ink-soft:#57635d;
+  --accent:#2f6b58;
+  --accent-2:#8c5f12;
+  --key-wash:rgba(47,107,88,.18);
+  --font-display:"Gowun Batang",Batang,"Nanum Myeongjo",serif;
+  --font-body:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  --font-ui:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  --font-num:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121616;
+    --surface:#1a2021;
+    --line:#38403e;
+    --ink:#dde3dc;
+    --ink-soft:#97a29a;
+    --accent:#74c3a3;
+    --accent-2:#d9a441;
+    --key-wash:rgba(116,195,163,.18);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121616;
+  --surface:#1a2021;
+  --line:#38403e;
+  --ink:#dde3dc;
+  --ink-soft:#97a29a;
+  --accent:#74c3a3;
+  --accent-2:#d9a441;
+  --key-wash:rgba(116,195,163,.18);
+}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-weight:300;
+  font-size:17px;
+  line-height:1.78;
+  margin:0 auto;
+  max-width:39rem;
+  padding-block:2.5rem 4rem;
+  padding-left:20px;
+  padding-right:20px;
+  text-underline-offset:.22em;
+}
+h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:1.6rem;
+  line-height:1.4;
+  text-wrap:balance;
+  margin:3.2rem 0 .1rem;
+  padding-top:.9rem;
+  border-top:1px solid var(--line);
+}
+h2:first-of-type{margin-top:1.4rem}
+h3{
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:1.02rem;
+  letter-spacing:.02em;
+  text-wrap:balance;
+  margin:2rem 0 .2rem;
+  color:var(--accent);
+}
+p{margin:.9rem 0}
+ul{margin:.9rem 0;padding-left:1.1rem}
+li{margin:.55rem 0}
+li::marker{color:var(--accent)}
+a{color:var(--accent);text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+strong{font-weight:600}
+.key{
+  background:linear-gradient(transparent 58%,var(--key-wash) 58%,var(--key-wash) 94%,transparent 94%);
+  font-weight:400;
+  padding:0 .1em;
+}
+.num{
+  font-family:var(--font-num);
+  font-weight:500;
+  font-size:.94em;
+  letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;
+}
+.callout{
+  font-family:var(--font-display);
+  font-size:1.22rem;
+  line-height:1.62;
+  text-wrap:balance;
+  margin:1.4rem 0;
+  padding:.1rem 0 .1rem 1.1rem;
+  border-left:4px solid var(--accent);
+  color:var(--ink);
+}
+.warn{
+  margin:1.4rem 0;
+  padding:.85rem 1rem;
+  background:var(--surface);
+  border-top:2px solid var(--accent-2);
+  font-size:.96rem;
+  line-height:1.7;
+}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:1.4rem 0;
+  font-size:.96rem;
+}
+th,td{
+  text-align:left;
+  padding:.5rem .6rem .5rem 0;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+th{font-weight:600;color:var(--ink-soft);font-size:.82rem;letter-spacing:.06em}
+td:first-child{white-space:nowrap;font-weight:400}
+figure{
+  margin:2.2rem 0;
+  padding:0;
+  color:var(--ink);
+}
+figure svg{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  color:var(--ink);
+  overflow:visible;
+}
+figure svg text{font-family:var(--font-ui);fill:currentColor}
+figcaption{
+  margin-top:.7rem;
+  padding-top:.5rem;
+  border-top:1px solid var(--line);
+  color:var(--ink-soft);
+  font-size:.88rem;
+  line-height:1.6;
+  text-wrap:pretty;
+}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 720 330" role="img" aria-label="바깥 세상의 소리와 그림이 인식으로 들어가고, 표현과 추론을 거쳐 사람에게 말과 행동으로 나가며, 기계학습이 가운데를 고쳐 준다. 이 모두가 사회라는 큰 테두리 안에 들어 있다.">
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,1 10,5 0,9" fill="currentColor"/>
+    </marker>
+    <marker id="a1g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,1 10,5 0,9" fill="#2da44e"/>
+    </marker>
+  </defs>
+
+  <rect x="10" y="10" width="700" height="300" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="7 6" opacity="0.45"/>
+  <text x="360" y="36" text-anchor="middle" font-size="15" opacity="0.75">사회적 영향</text>
+
+  <text x="105" y="52" text-anchor="middle" font-size="14">소리 · 그림 · 글</text>
+  <line x1="105" y1="60" x2="105" y2="96" stroke="currentColor" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="40" y="100" width="130" height="58" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="105" y="135" text-anchor="middle" font-size="16">인식</text>
+
+  <text x="232" y="92" text-anchor="middle" font-size="14">본 것을 기호로</text>
+  <line x1="175" y1="129" x2="288" y2="129" stroke="currentColor" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="295" y="100" width="130" height="58" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="360" y="135" text-anchor="middle" font-size="16">표현과 추론</text>
+
+  <text x="487" y="92" text-anchor="middle" font-size="14">말 · 행동으로</text>
+  <line x1="430" y1="129" x2="543" y2="129" stroke="currentColor" stroke-width="1.6" marker-end="url(#a1)"/>
+
+  <rect x="550" y="100" width="130" height="58" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="615" y="124" text-anchor="middle" font-size="15">자연스러운</text>
+  <text x="615" y="146" text-anchor="middle" font-size="15">상호작용</text>
+
+  <line x1="615" y1="96" x2="615" y2="60" stroke="currentColor" stroke-width="1.6" marker-end="url(#a1)"/>
+  <text x="615" y="52" text-anchor="middle" font-size="14">사람에게</text>
+
+  <rect x="295" y="212" width="130" height="52" fill="none" stroke="#2da44e" stroke-width="2.4"/>
+  <text x="360" y="243" text-anchor="middle" font-size="16" fill="#2da44e">기계학습</text>
+  <line x1="360" y1="210" x2="360" y2="162" stroke="#2da44e" stroke-width="2" marker-end="url(#a1g)"/>
+  <text x="378" y="192" font-size="14" fill="#2da44e">데이터로 고치기</text>
+</svg>
+<figcaption>다섯 개는 나란한 목록이 아니라 하나의 흐름이다. 사람들이 흔히 'AI'라고 부르는 것은 초록색 칸 하나뿐이다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 330" role="img" aria-label="다섯 개념을 가로로 네 학년대와 교차시킨 표. 오른쪽으로 갈수록 각 칸의 점이 커진다.">
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,1 10,5 0,9" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <text x="242" y="42" text-anchor="middle" font-size="14" opacity="0.8">K–2</text>
+  <text x="372" y="42" text-anchor="middle" font-size="14" opacity="0.8">3–5</text>
+  <text x="502" y="42" text-anchor="middle" font-size="14" opacity="0.8">6–8</text>
+  <text x="632" y="42" text-anchor="middle" font-size="14" opacity="0.8">9–12</text>
+
+  <text x="165" y="83" text-anchor="end" font-size="14">인식</text>
+  <text x="165" y="131" text-anchor="end" font-size="14">표현과 추론</text>
+  <text x="165" y="179" text-anchor="end" font-size="14">기계학습</text>
+  <text x="165" y="227" text-anchor="end" font-size="14">자연스러운 상호작용</text>
+  <text x="165" y="275" text-anchor="end" font-size="14">사회적 영향</text>
+
+  <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4">
+    <rect x="180" y="55" width="125" height="44"/><rect x="310" y="55" width="125" height="44"/><rect x="440" y="55" width="125" height="44"/><rect x="570" y="55" width="125" height="44"/>
+    <rect x="180" y="103" width="125" height="44"/><rect x="310" y="103" width="125" height="44"/><rect x="440" y="103" width="125" height="44"/><rect x="570" y="103" width="125" height="44"/>
+    <rect x="180" y="151" width="125" height="44"/><rect x="310" y="151" width="125" height="44"/><rect x="440" y="151" width="125" height="44"/><rect x="570" y="151" width="125" height="44"/>
+    <rect x="180" y="199" width="125" height="44"/><rect x="310" y="199" width="125" height="44"/><rect x="440" y="199" width="125" height="44"/><rect x="570" y="199" width="125" height="44"/>
+    <rect x="180" y="247" width="125" height="44"/><rect x="310" y="247" width="125" height="44"/><rect x="440" y="247" width="125" height="44"/><rect x="570" y="247" width="125" height="44"/>
+  </g>
+
+  <g fill="currentColor" opacity="0.75">
+    <circle cx="242" cy="77" r="4"/><circle cx="372" cy="77" r="6"/><circle cx="502" cy="77" r="8.5"/><circle cx="632" cy="77" r="11"/>
+    <circle cx="242" cy="125" r="4"/><circle cx="372" cy="125" r="6"/><circle cx="502" cy="125" r="8.5"/><circle cx="632" cy="125" r="11"/>
+    <circle cx="242" cy="173" r="4"/><circle cx="372" cy="173" r="6"/><circle cx="502" cy="173" r="8.5"/><circle cx="632" cy="173" r="11"/>
+    <circle cx="242" cy="221" r="4"/><circle cx="372" cy="221" r="6"/><circle cx="502" cy="221" r="8.5"/><circle cx="632" cy="221" r="11"/>
+    <circle cx="242" cy="269" r="4"/><circle cx="372" cy="269" r="6"/><circle cx="502" cy="269" r="8.5"/><circle cx="632" cy="269" r="11"/>
+  </g>
+
+  <text x="437" y="306" text-anchor="middle" font-size="14" fill="#3b82f6">학년이 올라갈수록 같은 개념을 더 깊이</text>
+  <line x1="190" y1="318" x2="684" y2="318" stroke="#3b82f6" stroke-width="2" marker-end="url(#a2)"/>
+</svg>
+<figcaption>학년마다 다른 것을 가르치는 게 아니라, 같은 다섯 개를 네 번 다시 만난다. 칸 스무 개가 곧 "언제 무엇을"의 답이다. 학년 표기는 미국 기준이다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 215" role="img" aria-label="사진이 숫자 표로 바뀌고 계산을 거쳐 고양이라는 답이 나오지만, 뜻은 모른다고 적혀 있다.">
+  <defs>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,1 10,5 0,9" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <text x="115" y="46" text-anchor="middle" font-size="14">사람이 보는 것</text>
+  <rect x="60" y="60" width="110" height="110" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  <g fill="currentColor" opacity="0.35">
+    <rect x="82" y="82" width="22" height="22"/><rect x="104" y="82" width="22" height="22"/><rect x="126" y="82" width="22" height="22"/>
+    <rect x="82" y="104" width="22" height="22"/><rect x="126" y="104" width="22" height="22"/>
+    <rect x="104" y="126" width="22" height="22"/>
+  </g>
+  <g stroke="currentColor" stroke-width="0.8" opacity="0.4">
+    <line x1="82" y1="60" x2="82" y2="170"/><line x1="104" y1="60" x2="104" y2="170"/><line x1="126" y1="60" x2="126" y2="170"/><line x1="148" y1="60" x2="148" y2="170"/>
+    <line x1="60" y1="82" x2="170" y2="82"/><line x1="60" y1="104" x2="170" y2="104"/><line x1="60" y1="126" x2="170" y2="126"/><line x1="60" y1="148" x2="170" y2="148"/>
+  </g>
+
+  <text x="220" y="105" text-anchor="middle" font-size="14">숫자로</text>
+  <line x1="182" y1="118" x2="258" y2="118" stroke="currentColor" stroke-width="1.6" marker-end="url(#a3)"/>
+
+  <text x="322" y="46" text-anchor="middle" font-size="14">기계가 보는 것</text>
+  <g font-size="14" opacity="0.85">
+    <text x="270" y="82">0 0 34 90</text>
+    <text x="270" y="106">0 88 200 210</text>
+    <text x="270" y="130">12 190 240 60</text>
+    <text x="270" y="154">0 0 30 0</text>
+  </g>
+
+  <text x="428" y="105" text-anchor="middle" font-size="14">계산</text>
+  <line x1="392" y1="118" x2="466" y2="118" stroke="currentColor" stroke-width="1.6" marker-end="url(#a3)"/>
+
+  <rect x="480" y="90" width="170" height="56" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  <text x="565" y="126" text-anchor="middle" font-size="17">"고양이"</text>
+  <text x="565" y="180" text-anchor="middle" font-size="15" fill="#d29922">뜻은 모른다</text>
+</svg>
+<figcaption>기계는 그림을 숫자 덩어리로만 받는다. 답이 맞았다고 해서 고양이가 무엇인지 아는 것은 아니다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 235" role="img" aria-label="2019년 논문은 887편, 2020년 논문은 220편에게 인용되었다는 가로 막대 두 개.">
+  <text x="42" y="36" font-size="14" opacity="0.8">다른 논문이 인용한 횟수</text>
+
+  <text x="185" y="98" text-anchor="end" font-size="14">2019 · 큰 개념 제안</text>
+  <rect x="200" y="70" width="400" height="44" fill="#3b82f6"/>
+  <text x="612" y="98" font-size="15">887편</text>
+  <text x="200" y="134" font-size="13" opacity="0.7">이 표본 안에서 함께 인용 25편</text>
+
+  <text x="185" y="178" text-anchor="end" font-size="14">2020 · 어디서 시작하나</text>
+  <rect x="200" y="150" width="99" height="44" fill="currentColor" opacity="0.35"/>
+  <text x="311" y="178" font-size="15">220편</text>
+  <text x="200" y="214" font-size="13" opacity="0.7">이 표본 안에서 함께 인용 13편</text>
+</svg>
+<figcaption>두 편 중 2019년 글이 압도적으로 많이 불린다. 이 분야에서 "AI4K12"라고 하면 사실상 이 한 편을 가리킨다.</figcaption>
+</figure>
+
+<h2>한 문장으로</h2>
+
+<div class="callout">모든 아이가 알아야 할 AI를 다섯 덩어리로 자르고, 유치원부터 고등학교까지 언제 무엇을 배울지 적어 둔 지도.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+
+<p>이 틀이 답하려는 질문은 하나다. <strong>"AI를 가르치라는데, 도대체 무엇을 가르치라는 말인가?"</strong></p>
+
+<p>식단표를 생각하면 쉽다. "잘 먹여라"는 말만으로는 아무것도 못 한다. 탄수화물·단백질·채소처럼 <span class="key">무엇을 몇 가지로 나눌지</span> 정해야 비로소 식단을 짤 수 있다. 이 틀은 AI 수업의 그 영양소 목록이다.</p>
+
+<p>이 틀이 나오기 전에도 AI 수업은 있었다. 다만 학교마다 고른 활동이 제각각이라, 3학년에서 한 것을 6학년에서 또 하는 일이 흔했다. 무엇이 빠졌는지, 무엇이 겹쳤는지 아무도 말할 수 없었다.</p>
+
+<table>
+  <tr><th>다섯 덩어리</th><th>한 줄로</th></tr>
+  <tr><td>인식</td><td>기계는 센서로 세상을 받아들인다</td></tr>
+  <tr><td>표현과 추론</td><td>받아들인 것을 나름의 모형으로 만들어 따져 본다</td></tr>
+  <tr><td>기계학습</td><td>데이터를 먹고 스스로 고쳐 나간다</td></tr>
+  <tr><td>자연스러운 상호작용</td><td>사람과 주고받으려면 훨씬 많은 것이 필요하다</td></tr>
+  <tr><td>사회적 영향</td><td>좋게도 나쁘게도 사람들의 삶을 바꾼다</td></tr>
+</table>
+
+<h2>어디서 나왔나</h2>
+
+<p>2019년 미국에서 나왔다. 투렛츠키(Touretzky)와 동료 연구자들이 <a href="https://doi.org/10.1609/aaai.v33i01.33019795">"모든 아이가 AI에 대해 무엇을 알아야 하는가"</a>라는 글에서 다섯 덩어리를 처음 제시했다.</p>
+
+<p>혼자 만든 것이 아니라, 미국의 인공지능 학회와 컴퓨터과학 교사 단체가 함께 꾸린 모임의 결과물이다. 연구자와 현장 교사가 같이 앉았다는 점이 중요하다.</p>
+
+<p>이듬해에는 <a href="http://infoscience.epfl.ch/record/287254">어디서부터 시작할 것인가</a>를 다룬 후속 글이 나왔다. 목록만으로는 교실이 움직이지 않는다는 것을 스스로 인정한 셈이다.</p>
+
+<h2>초등 교실에서는</h2>
+
+<p>이 틀은 수업 방법이 아니라 <strong>점검표</strong>로 쓸 때 가장 쓸모 있다.</p>
+
+<ul>
+  <li><strong>새 도구를 켤 때, 켜자마자 묻게 하라.</strong> "이건 지금 무엇으로 보고 있지?" 카메라인지 마이크인지 글자인지를 아이가 직접 짚게 한다. 그게 '인식'이다.</li>
+  <li><strong>학습을 가르칠 땐 데이터를 아이가 모으게 하라.</strong> 교사가 준비한 깨끗한 데이터로 잘 되는 걸 보여 주면 아무것도 안 남는다. 아이들이 모은 삐뚤어진 사진으로 <span class="key">틀리는 장면</span>을 봐야 배운다.</li>
+  <li><strong>'사회적 영향'을 마지막 차시로 몰지 마라.</strong> 활동이 끝날 때마다 3분씩, "이게 널리 쓰이면 누가 편해지고 누가 곤란해질까"를 묻는다. 한 번 몰아서 하면 도덕 시간 부록이 된다.</li>
+  <li><strong>말을 잘한다는 인상을 일부러 깨라.</strong> 챗봇에게 엉뚱하고 구체적인 것(우리 반 급식 메뉴 같은 것)을 물어 보게 한다. 유창함과 앎이 다르다는 걸 설명이 아니라 실패로 보여 준다.</li>
+</ul>
+
+<div class="warn">다섯 개를 다섯 차시로 쪼개 하나씩 진도 나가고 싶어진다. 원래 그림(첫 번째 그림)을 보면 이것들은 한 흐름의 부분들이다. 쪼개 놓으면 아이 머릿속에서 다시 붙지 않는다.</div>
+
+<h2>이 이론으로 연구한다면</h2>
+
+<ul>
+  <li><strong>우리 교과서에는 다섯 중 무엇이 들어 있나?</strong> 초등 실과·정보 단원을 다섯 덩어리로 분류해 빈칸을 찾는 내용 분석. 분류 기준은 <a href="https://doi.org/10.1609/aaai.v33i01.33019795">2019년 원문</a>을 그대로 딛고 선다.</li>
+  <li><strong>초등 아이들이 '인식'과 '이해'를 구분할 수 있나?</strong> 세 번째 그림이 말하는 그 구분을, 몇 학년부터 잡아내는지 보는 연구. 학년대별 기대 수준은 원문의 학년 구분을 기준선으로 쓴다.</li>
+  <li><strong>교사는 어디서 막히나?</strong> 다섯 덩어리 중 교사가 가장 가르치기 어렵다고 답하는 지점을 찾는 조사. <a href="http://infoscience.epfl.ch/record/287254">"어디서 시작하나"</a>가 같은 질문을 먼저 다뤘으니 여기에 붙인다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+
+<ul>
+  <li><strong>이건 목록이지 수업 방법이 아니다.</strong> 무엇을 가르칠지는 말해 주지만, 어떻게 가르칠지는 한 줄도 말해 주지 않는다. "AI4K12에 따라 수업을 설계했다"는 문장은 대개 근거가 비어 있다.</li>
+  <li><strong>미국 학교 기준이다.</strong> 학년 구분도 교과 구조도 우리와 다르다. 그대로 옮겨 붙이면 초등 5~6학년 자리가 특히 어긋난다.</li>
+  <li><strong>다섯 개는 자를 수 있는 선이 아니다.</strong> 나누기 위해 나눈 것이지, 실제 AI가 다섯 조각으로 돌아가는 것은 아니다.</li>
+</ul>
+
+<h2>근거 문헌</h2>
+
+<ul>
+  <li><a href="https://doi.org/10.1609/aaai.v33i01.33019795">Envisioning AI for K-12: What Should Every Child Know about AI?</a> — 2019년, 전체 인용 <span class="num">887편</span>, 이 표본에서 공동인용 <span class="num">25편</span>. 다섯 덩어리를 처음 제시한 원문. 여기만 인용해도 된다.</li>
+  <li><a href="http://infoscience.epfl.ch/record/287254">Broadening artificial intelligence education in K-12</a> — 2020년, 전체 인용 <span class="num">220편</span>, 이 표본에서 공동인용 <span class="num">13편</span>. 목록을 실제 학교로 들여올 때의 출발점을 다룬 후속 글.</li>
+</ul>
+
+<div class="warn">이 두 편 말고 다른 저자·연도·문서(학년별 세부 성취기준 문서 등)는 위 자료에 들어 있지 않다. 필요하면 따로 확인해야 한다.</div></body></html>

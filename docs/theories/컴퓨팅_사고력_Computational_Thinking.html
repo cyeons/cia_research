@@ -1,0 +1,275 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨팅 사고력, 모두의 기초 소양</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨팅 사고력, 모두의 기초 소양</h1><p style="color:#666">2026-09-20</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#eceee9; --surface:#f7f8f5; --ink:#1a221f; --muted:#5a6660;
+  --line:#cbd2cc; --accent:#0f6b60; --mark:#a8701a;
+  --hl:rgba(212,160,60,.35); --warn-bg:#f3ecdd;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121715; --surface:#1a211e; --ink:#e2e7e3; --muted:#96a49d;
+    --line:#2c3733; --accent:#59c2b1; --mark:#d29922;
+    --hl:rgba(210,153,34,.26); --warn-bg:#24211a;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121715; --surface:#1a211e; --ink:#e2e7e3; --muted:#96a49d;
+  --line:#2c3733; --accent:#59c2b1; --mark:#d29922;
+  --hl:rgba(210,153,34,.26); --warn-bg:#24211a;
+}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;
+  font-weight:400; font-size:17px; line-height:1.85;
+  max-width:44rem; margin-inline:auto;
+  padding-block:2.5rem; padding-inline:20px;
+}
+h2{
+  font-family:'Gowun Batang',serif; font-weight:700;
+  font-size:1.5rem; line-height:1.4; text-wrap:balance;
+  margin:3.2rem 0 1rem; letter-spacing:-.01em;
+}
+h2:first-of-type{margin-top:.5rem}
+h2::before{content:""; display:block; width:2.25rem; height:2px; background:var(--mark); margin-bottom:.75rem}
+h3{font-size:.95rem; font-weight:600; color:var(--muted); letter-spacing:.02em; margin:2rem 0 .5rem}
+p{margin:0 0 1rem}
+ul{padding-left:1.15rem; margin:0 0 1rem}
+li{margin-bottom:.7rem}
+li::marker{color:var(--accent)}
+a{color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px}
+strong{font-weight:600}
+.key{background:linear-gradient(to top,var(--hl) .62em,transparent .62em); padding:0 .12em; font-weight:600}
+.num{font-family:'IBM Plex Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; font-weight:500; color:var(--accent)}
+.callout{
+  border-left:3px solid var(--accent); padding:.2rem 0 .2rem 1.1rem;
+  margin:1.4rem 0; font-family:'Gowun Batang',serif; font-size:1.25rem; line-height:1.6;
+}
+.warn{
+  border-left:3px solid var(--mark); background:var(--warn-bg);
+  padding:.85rem 1.1rem; margin:1.4rem 0; font-size:.96rem; line-height:1.7;
+}
+figure{
+  margin:1.8rem 0; padding:1.4rem .4rem 1.1rem;
+  background:var(--surface); border-block:1px solid var(--line);
+  overflow-x:auto;
+}
+figure svg{display:block; width:100%; max-width:100%; height:auto; color:var(--ink); font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif}
+figcaption{margin-top:.9rem; padding-inline:.6rem; font-size:.875rem; line-height:1.7; color:var(--muted)}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 720 190" role="img" aria-label="엉킨 문제를 쪼개고, 덜 중요한 것을 지우고, 줄을 세워 따라 하면 되는 절차로 바꾸는 네 단계">
+<defs><marker id="m1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><polygon points="0,0 9,4.5 0,9" fill="currentColor"/></marker></defs>
+<text x="176" y="54" text-anchor="middle" font-size="13" fill="currentColor">쪼개기</text>
+<text x="356" y="54" text-anchor="middle" font-size="13" fill="currentColor">지우기</text>
+<text x="536" y="54" text-anchor="middle" font-size="13" fill="currentColor">줄 세우기</text>
+<rect x="16" y="72" width="140" height="76" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="196" y="72" width="140" height="76" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="376" y="72" width="140" height="76" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="556" y="72" width="140" height="76" rx="3" fill="none" stroke="#d29922" stroke-width="2.5"/>
+<text x="86" y="116" text-anchor="middle" font-size="15" fill="currentColor">엉킨 문제</text>
+<text x="266" y="116" text-anchor="middle" font-size="15" fill="currentColor">작은 문제들</text>
+<text x="446" y="104" text-anchor="middle" font-size="14" fill="currentColor">중요한 것만</text>
+<text x="446" y="126" text-anchor="middle" font-size="14" fill="currentColor">남은 문제</text>
+<text x="626" y="104" text-anchor="middle" font-size="14" fill="currentColor">따라 하면 되는</text>
+<text x="626" y="126" text-anchor="middle" font-size="15" fill="currentColor">절차</text>
+<line x1="160" y1="110" x2="186" y2="110" stroke="currentColor" stroke-width="1.5" marker-end="url(#m1)"/>
+<line x1="340" y1="110" x2="366" y2="110" stroke="currentColor" stroke-width="1.5" marker-end="url(#m1)"/>
+<line x1="520" y1="110" x2="546" y2="110" stroke="currentColor" stroke-width="1.5" marker-end="url(#m1)"/>
+</svg>
+<figcaption>이 사고법이 내놓는 것은 답 하나가 아니라, 다음 사람이 그대로 따라 할 수 있는 절차다.</figcaption>
+</figure>
+
+<p>그래서 "풀었니?"가 아니라 "네가 어떻게 했는지 옆 사람이 그대로 할 수 있겠니?"가 질문이 된다.</p>
+
+<figure>
+<svg viewBox="0 0 720 260" role="img" aria-label="마트 줄 고르기, 가방 미리 싸기, 장갑 되짚어 찾기가 각각 컴퓨터에서 쓰는 생각과 같다는 대응표">
+<defs><marker id="m2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><polygon points="0,0 9,4.5 0,9" fill="currentColor"/></marker></defs>
+<text x="16" y="36" font-size="13" fill="currentColor" opacity="0.7">하루 속 장면</text>
+<text x="430" y="36" font-size="13" fill="currentColor" opacity="0.7">같은 생각을 쓰는 곳</text>
+<line x1="16" y1="48" x2="704" y2="48" stroke="currentColor" stroke-width="1" opacity="0.25"/>
+<rect x="16" y="68" width="300" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="430" y="68" width="274" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="97" font-size="15" fill="currentColor">마트에서 짧은 줄 고르기</text>
+<text x="446" y="97" font-size="15" fill="currentColor">어느 쪽이 빠를지 따져 보기</text>
+<text x="366" y="62" text-anchor="middle" font-size="12" fill="currentColor">고르기</text>
+<line x1="322" y1="92" x2="414" y2="92" stroke="currentColor" stroke-width="1.5" marker-end="url(#m2)"/>
+<rect x="16" y="128" width="300" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="430" y="128" width="274" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="157" font-size="15" fill="currentColor">아침에 가방 미리 싸기</text>
+<text x="446" y="157" font-size="15" fill="currentColor">쓸 것을 미리 꺼내 두기</text>
+<text x="366" y="122" text-anchor="middle" font-size="12" fill="currentColor">미리 두기</text>
+<line x1="322" y1="152" x2="414" y2="152" stroke="currentColor" stroke-width="1.5" marker-end="url(#m2)"/>
+<rect x="16" y="188" width="300" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="430" y="188" width="274" height="48" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="32" y="217" font-size="15" fill="currentColor">잃어버린 장갑 되짚어 찾기</text>
+<text x="446" y="217" font-size="15" fill="currentColor">막히면 갈림길로 되돌아가기</text>
+<text x="366" y="182" text-anchor="middle" font-size="12" fill="currentColor">되돌아가기</text>
+<line x1="322" y1="212" x2="414" y2="212" stroke="currentColor" stroke-width="1.5" marker-end="url(#m2)"/>
+</svg>
+<figcaption>윙이 든 예들이다. 컴퓨터가 하는 생각이 아니라, 사람이 이미 하고 있는 생각에 이름을 붙인 것이다.</figcaption>
+</figure>
+
+<p>새로 배우는 무언가가 아니라, <span class="key">이미 하던 생각</span>을 꺼내서 말로 적게 하는 일에 가깝다.</p>
+
+<figure>
+<svg viewBox="0 0 720 300" role="img" aria-label="코드만 가르칠 때는 새 문제에서 막히고, 생각 도구를 가르칠 때는 어떤 문제에도 같은 방법이 쓰이는 구조 비교">
+<defs><marker id="m3" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><polygon points="0,0 9,4.5 0,9" fill="currentColor"/></marker></defs>
+<rect x="16" y="32" width="336" height="252" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+<rect x="368" y="32" width="336" height="252" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+<text x="184" y="60" text-anchor="middle" font-size="14" fill="currentColor">코드만 가르칠 때</text>
+<text x="536" y="60" text-anchor="middle" font-size="14" fill="currentColor">생각 도구를 가르칠 때</text>
+<rect x="40" y="90" width="104" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="196" y="90" width="104" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="92" y="114" text-anchor="middle" font-size="14" fill="currentColor">문제 A</text>
+<text x="248" y="114" text-anchor="middle" font-size="14" fill="currentColor">코드 A</text>
+<text x="170" y="82" text-anchor="middle" font-size="12" fill="currentColor">만들기</text>
+<line x1="148" y1="109" x2="186" y2="109" stroke="currentColor" stroke-width="1.5" marker-end="url(#m3)"/>
+<rect x="40" y="150" width="104" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="196" y="150" width="104" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="92" y="174" text-anchor="middle" font-size="14" fill="currentColor">문제 B</text>
+<text x="248" y="175" text-anchor="middle" font-size="16" fill="currentColor">?</text>
+<text x="170" y="142" text-anchor="middle" font-size="12" fill="currentColor">안 통함</text>
+<line x1="148" y1="169" x2="186" y2="169" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#m3)"/>
+<text x="170" y="232" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.75">코드는 그 문제에서 끝난다</text>
+<rect x="384" y="84" width="66" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="384" y="126" width="66" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="384" y="168" width="66" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="417" y="104" text-anchor="middle" font-size="13" fill="currentColor">문제 A</text>
+<text x="417" y="146" text-anchor="middle" font-size="13" fill="currentColor">문제 B</text>
+<text x="417" y="188" text-anchor="middle" font-size="13" fill="currentColor">문제 C</text>
+<text x="478" y="72" text-anchor="middle" font-size="12" fill="currentColor">어떤 문제든</text>
+<line x1="452" y1="99" x2="496" y2="138" stroke="currentColor" stroke-width="1.5" marker-end="url(#m3)"/>
+<line x1="452" y1="141" x2="496" y2="141" stroke="currentColor" stroke-width="1.5" marker-end="url(#m3)"/>
+<line x1="452" y1="183" x2="496" y2="146" stroke="currentColor" stroke-width="1.5" marker-end="url(#m3)"/>
+<rect x="506" y="96" width="110" height="92" rx="3" fill="none" stroke="#d29922" stroke-width="2.5"/>
+<text x="561" y="124" text-anchor="middle" font-size="14" fill="currentColor">쪼개고</text>
+<text x="561" y="146" text-anchor="middle" font-size="14" fill="currentColor">지우고</text>
+<text x="561" y="168" text-anchor="middle" font-size="14" fill="currentColor">줄 세우고</text>
+<text x="637" y="130" text-anchor="middle" font-size="12" fill="currentColor">어디든</text>
+<line x1="620" y1="142" x2="652" y2="142" stroke="currentColor" stroke-width="1.5" marker-end="url(#m3)"/>
+<text x="660" y="147" font-size="14" fill="currentColor">해결</text>
+<text x="536" y="232" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.75">생각은 다음 문제로 따라간다</text>
+</svg>
+<figcaption>이 이론이 노리는 차이는 결과물의 완성도가 아니라, 다음 문제에 무엇이 남느냐다.</figcaption>
+</figure>
+
+<p>같은 수업을 해도 무엇을 남길지를 정하면 과제 모양이 달라진다.</p>
+
+<figure>
+<svg viewBox="0 0 700 200" role="img" aria-label="윙 2006년 글은 7386회, 그로버와 피 2013년 글은 2493회 인용되었다는 막대 비교">
+<text x="16" y="30" font-size="13" fill="currentColor" opacity="0.7">다른 논문들이 인용한 횟수</text>
+<line x1="182" y1="58" x2="182" y2="176" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+<text x="170" y="92" text-anchor="end" font-size="13" fill="currentColor">윙 (2006)</text>
+<rect x="182" y="68" width="440" height="36" fill="#d29922"/>
+<text x="632" y="92" font-size="14" fill="currentColor">7,386</text>
+<text x="170" y="152" text-anchor="end" font-size="13" fill="currentColor">그로버·피 (2013)</text>
+<rect x="182" y="128" width="149" height="36" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.5"/>
+<text x="341" y="152" font-size="14" fill="currentColor">2,493</text>
+</svg>
+<figcaption>세 쪽짜리 짧은 글 하나가 이 분야의 출발점 노릇을 하고 있다.</figcaption>
+</figure>
+
+<p>이 분야에서 이 말을 꺼낼 때, 거의 항상 <span class="num">7,386번</span> 인용된 그 짧은 글에서 시작한다.</p>
+
+<h2>한 문장으로</h2>
+
+<div class="callout">컴퓨터를 다루는 기술이 아니라, 문제를 쪼개고 핵심만 남겨 차례를 만드는 생각하는 방법을 모든 아이에게 가르치자는 제안.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+
+<p>이 이론이 답하려는 질문은 하나다. <strong>프로그래머가 되지 않을 아이에게 이걸 왜 가르치나?</strong></p>
+
+<p>요리에 비유하면 이렇다. 한 끼를 맛있게 차리는 것과, 누가 읽어도 같은 맛이 나오게 조리법을 쓰는 것은 다른 일이다. 앞은 오늘 저녁이 걸린 일이고, 뒤는 내일도 남는 일이다.</p>
+
+<p>이 말이 나오기 전에는 컴퓨터 교육을 <span class="key">기계 다루는 법</span>으로밖에 설명하지 못했다. 그러면 컴퓨터가 쉬워질수록 가르칠 이유가 줄어든다. 윙은 가르칠 것을 기계에서 생각으로 옮겨 놓았다.</p>
+
+<h2>어디서 나왔나</h2>
+
+<p>2006년, 제넷 윙이 컴퓨터 학회지에 <a href="https://doi.org/10.1145/1118178.1118215">세 쪽짜리 글</a>을 실었다. 당시 컴퓨터과학은 "프로그램 짜는 기술"로만 여겨지고 있었고, 그는 그 틀을 밀어내려 했다.</p>
+
+<p>주장은 단순했다. 읽기·쓰기·셈하기에 <strong>컴퓨팅 사고력을 하나 더 넣자</strong>는 것. 전공자용이 아니라 모든 아이의 기초 소양이라는 말이었다.</p>
+
+<p>7년 뒤 그로버와 피가 <a href="https://doi.org/10.3102/0013189x12463051">K-12 현장이 실제로 어디까지 왔는지</a>를 점검했다. 말은 퍼졌는데 교실에서 무엇을 가르치고 무엇으로 재는지는 아직 흐릿하다는 진단이었다.</p>
+
+<p>그 사이에 누가 무슨 말을 보탰는지는 이 자료에 없다.</p>
+
+<h2>초등 교실에서는</h2>
+
+<ul>
+<li><strong>과제를 낼 때 답이 아니라 순서를 제출하게 하라.</strong> 종이에 적은 순서를 짝에게 주고 그대로 해 보게 한다. 짝이 멈추는 자리가 빠진 단계다.</li>
+<li><strong>큰 주제를 던질 때 먼저 세 조각으로 나누게 하라.</strong> "우리 반 알림 앱 만들기" 대신 "무엇을 적나 / 누가 보나 / 언제 지우나"를 각각 다른 종이에 쓰게 한다.</li>
+<li><strong>컴퓨터 없이 하는 시간을 따로 두어라.</strong> 급식 줄 서는 규칙, 사물함 정리 차례, 술래 정하는 방법을 절차로 적게 한다. 이 이론이 말하는 것은 사람의 생각이지 기계의 작동이 아니다.</li>
+<li><strong>작품이 완성되지 않아도 다시 쓸 수 있으면 인정하라.</strong> 지난주에 만든 덩어리를 이번 문제에 가져다 쓴 아이가 이 이론이 말하는 성공이다.</li>
+</ul>
+
+<div class="warn">결과물 완성도로만 점수를 주면, 아이들은 빨리 작동하는 것을 베껴 오는 쪽이 이득이라고 배운다. 이 이론이 기르려는 것과 정반대 방향이다.</div>
+
+<h2>이 이론으로 연구한다면</h2>
+
+<ul>
+<li><strong>'쪼개기'를 따로 가르치면 다른 교과에도 옮겨 가는가?</strong> 윙이 <a href="https://doi.org/10.1145/1118178.1118215">모든 분야의 기초라고 주장한 대목</a>을 딛되, 실제 전이 증거가 얼마나 있는지는 <a href="https://doi.org/10.3102/0013189x12463051">K-12 현황 정리</a>에서 확인하고 들어가야 한다.</li>
+<li><strong>초등에서 이것을 무엇으로 재야 하는가?</strong> 코드 결과물 말고 무엇을 보면 되는지가 열려 있다. 평가 도구가 얇다는 지적이 <a href="https://doi.org/10.3102/0013189x12463051">2013년 정리</a>의 핵심 중 하나다.</li>
+<li><strong>교사들은 이 말을 무슨 뜻으로 쓰고 있는가?</strong> <a href="https://doi.org/10.1145/1118178.1118215">원문의 정의</a>와 현장의 쓰임을 나란히 놓고 보는 연구가 가능하다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+
+<ul>
+<li><strong>이름만 바꾼 코딩 수업이 되기 쉽다.</strong> 윙은 프로그래밍이 아니라 개념이라고 못 박았는데, 실제 수업은 블록 조립으로 되돌아가는 일이 흔하다.</li>
+<li><strong>정의가 사람마다 다르다.</strong> 무엇을 가리키는지 합의가 없으면 두 연구의 점수를 나란히 놓고 비교할 수 없다. 2013년 정리가 문제 삼은 지점이다.</li>
+<li><strong>만능 사고법처럼 쓰지 마라.</strong> 원문도 수학적·공학적 사고를 <strong>보완</strong>한다고 했지 대체한다고 하지 않았다.</li>
+</ul>
+
+<h2>근거 문헌</h2>
+
+<ul>
+<li><a href="https://doi.org/10.1145/1118178.1118215">Computational thinking</a> (<a href="http://repositorio.udes.edu.co/bitstreams/652075c0-eb2c-46ee-b13d-297b37bb68db/download">전문</a>) — 2006년, 이 표본에서 공동인용 <span class="num">11편</span>. 개념을 처음 내건 세 쪽짜리 글. 이론적 배경의 출발점.</li>
+<li><a href="https://doi.org/10.3102/0013189x12463051">Computational Thinking in K–12</a> — 2013년, 이 표본에서 공동인용 <span class="num">10편</span>. 학교 현장의 상태를 점검한 정리. 유료 열람. 한계와 빈틈을 짚을 때 딛는 문헌.</li>
+</ul></body></html>

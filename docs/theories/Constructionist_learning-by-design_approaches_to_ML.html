@@ -1,0 +1,358 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>만들면서 배우는 기계학습</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>만들면서 배우는 기계학습</h1><p style="color:#666">2026-09-20</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#f1f3ee;
+  --surface:#e6ebe3;
+  --ink:#1b2621;
+  --ink-soft:#57655d;
+  --rule:#ccd5cb;
+  --moss:#2f6b4a;
+  --slate:#2f5a86;
+  --chalk:#ecd75b;
+  --amber:#8c5f12;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141a18;
+    --surface:#1e2522;
+    --ink:#dde5df;
+    --ink-soft:#98a69d;
+    --rule:#2e3a35;
+    --moss:#76c397;
+    --slate:#8fb5dd;
+    --chalk:#5b4d10;
+    --amber:#d9ad5c;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141a18;
+  --surface:#1e2522;
+  --ink:#dde5df;
+  --ink-soft:#98a69d;
+  --rule:#2e3a35;
+  --moss:#76c397;
+  --slate:#8fb5dd;
+  --chalk:#5b4d10;
+  --amber:#d9ad5c;
+}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans KR","Malgun Gothic",system-ui,sans-serif;
+  font-size:1.0625rem;
+  line-height:1.8;
+  max-width:50rem;
+  margin-inline:auto;
+  padding-inline:20px;
+  padding-block:2.5rem 5rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.1rem;
+}
+h2{
+  font-family:"Gowun Batang","Batang",serif;
+  font-weight:700;
+  font-size:1.55rem;
+  line-height:1.4;
+  text-wrap:balance;
+  margin:2.6rem 0 .2rem;
+  max-width:24em;
+}
+h2:first-of-type{margin-top:.5rem}
+h2::before{
+  content:"";
+  display:block;
+  width:2.2rem;
+  height:3px;
+  background:var(--moss);
+  margin-bottom:.9rem;
+}
+h3{
+  font-family:"Gowun Batang","Batang",serif;
+  font-weight:700;
+  font-size:1.15rem;
+  margin:1.4rem 0 0;
+  text-wrap:balance;
+}
+p,ul{margin:0;max-width:38em}
+ul{padding-left:1.1em;display:flex;flex-direction:column;gap:.6rem}
+li::marker{color:var(--moss)}
+a{color:var(--slate);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--moss);outline-offset:3px}
+strong{font-weight:600}
+
+.key{
+  background:var(--chalk);
+  color:var(--ink);
+  padding:.05em .3em;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+.num{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-weight:500;
+  font-size:.95em;
+  color:var(--slate);
+  letter-spacing:.01em;
+}
+.callout{
+  max-width:38em;
+  background:var(--surface);
+  border-left:4px solid var(--moss);
+  padding:1rem 1.2rem;
+  font-family:"Gowun Batang","Batang",serif;
+  font-size:1.2rem;
+  line-height:1.65;
+  text-wrap:balance;
+}
+.warn{
+  max-width:38em;
+  border-left:2px dashed var(--amber);
+  padding:.2rem 0 .2rem 1.1rem;
+  color:var(--ink);
+  font-size:.98rem;
+}
+figure{
+  margin:1.2rem 0;
+  padding:1.2rem 0 0;
+  border-top:1px solid var(--rule);
+  overflow-x:auto;
+  color:var(--ink);
+}
+figure svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-width:520px;
+  font-family:"IBM Plex Sans KR","Malgun Gothic",sans-serif;
+}
+figcaption{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:.8rem;
+  line-height:1.6;
+  color:var(--ink-soft);
+  margin-top:.7rem;
+  max-width:44em;
+}
+figcaption::before{content:"— "}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 700 200" role="img" aria-label="규칙을 적어 넣는 방식과 예시를 모아 넣는 방식의 비교">
+<defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,0 10,5 0,10" fill="currentColor"></polygon></marker></defs>
+<text x="24" y="34" font-size="16" font-weight="600" fill="currentColor">규칙을 적어 준다</text>
+<rect x="24" y="70" width="120" height="74" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="84" y="113" font-size="16" text-anchor="middle" fill="currentColor">규칙</text>
+<line x1="156" y1="107" x2="206" y2="107" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"></line>
+<text x="181" y="95" font-size="14" text-anchor="middle" fill="currentColor">넣는다</text>
+<rect x="224" y="70" width="102" height="74" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="275" y="113" font-size="16" text-anchor="middle" fill="currentColor">기계</text>
+<text x="175" y="172" font-size="14" text-anchor="middle" fill="currentColor" opacity="0.7">시키는 대로만</text>
+<line x1="350" y1="20" x2="350" y2="185" stroke="currentColor" stroke-width="1" opacity="0.3"></line>
+<text x="376" y="34" font-size="16" font-weight="600" fill="currentColor">예시를 모아 준다</text>
+<rect x="376" y="70" width="46" height="34" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<rect x="430" y="70" width="46" height="34" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<rect x="376" y="110" width="46" height="34" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<rect x="430" y="110" width="46" height="34" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="426" y="172" font-size="14" text-anchor="middle" fill="currentColor" opacity="0.7">내가 모은 예시</text>
+<line x1="492" y1="107" x2="546" y2="107" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"></line>
+<text x="519" y="95" font-size="14" text-anchor="middle" fill="currentColor">보여 준다</text>
+<rect x="560" y="70" width="116" height="74" rx="3" fill="none" stroke="#2da44e" stroke-width="2.5"></rect>
+<text x="618" y="113" font-size="16" text-anchor="middle" fill="currentColor">기계</text>
+<text x="618" y="172" font-size="14" text-anchor="middle" fill="#2da44e">규칙이 생긴다</text>
+</svg>
+<figcaption>기계학습은 사람이 규칙을 써 주는 게 아니라, 예시를 잔뜩 보고 기계가 스스로 규칙을 만드는 일이다. 이 뒤집힘을 모르면 그다음이 전부 막힌다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 300" role="img" aria-label="데이터 모으기, 가르치기, 시켜 보기, 데이터 고치기가 돌아가는 순환 고리">
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,0 10,5 0,10" fill="currentColor"></polygon></marker></defs>
+<rect x="90" y="44" width="160" height="58" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="170" y="79" font-size="16" text-anchor="middle" fill="currentColor">데이터 모으기</text>
+<rect x="450" y="44" width="160" height="58" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="530" y="79" font-size="16" text-anchor="middle" fill="currentColor">기계 가르치기</text>
+<rect x="450" y="198" width="160" height="58" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="530" y="233" font-size="16" text-anchor="middle" fill="currentColor">시켜 보기</text>
+<rect x="90" y="198" width="160" height="58" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="170" y="233" font-size="16" text-anchor="middle" fill="currentColor">데이터 고치기</text>
+<line x1="250" y1="73" x2="444" y2="73" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"></line>
+<text x="347" y="60" font-size="14" text-anchor="middle" fill="currentColor">예시를 준다</text>
+<line x1="530" y1="102" x2="530" y2="192" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"></line>
+<text x="544" y="152" font-size="14" text-anchor="start" fill="currentColor">규칙이 나온다</text>
+<line x1="450" y1="227" x2="256" y2="227" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"></line>
+<text x="353" y="214" font-size="14" text-anchor="middle" fill="currentColor">틀린 답을 본다</text>
+<line x1="170" y1="198" x2="170" y2="108" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"></line>
+<text x="156" y="152" font-size="14" text-anchor="end" fill="currentColor">예시를 바꾼다</text>
+<text x="350" y="146" font-size="16" text-anchor="middle" fill="#2da44e">여기서</text>
+<text x="350" y="168" font-size="16" text-anchor="middle" fill="#2da44e">배운다</text>
+</svg>
+<figcaption>한 바퀴가 아니라 여러 바퀴가 핵심이다. 기계가 틀린 답을 내면 학생은 코드가 아니라 자기가 모은 데이터를 고치러 돌아간다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 230" role="img" aria-label="세 학생이 각각 예시, 판단, 채점 역할을 맡아 기계 한 대를 흉내 내는 교실 역할극">
+<defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,0 10,5 0,10" fill="currentColor"></polygon></marker></defs>
+<circle cx="115" cy="44" r="13" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+<circle cx="350" cy="44" r="13" fill="none" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="585" cy="44" r="13" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+<rect x="30" y="72" width="170" height="64" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="115" y="110" font-size="16" text-anchor="middle" fill="currentColor">예시 담당</text>
+<rect x="265" y="72" width="170" height="64" rx="3" fill="none" stroke="#3b82f6" stroke-width="2.5"></rect>
+<text x="350" y="110" font-size="16" text-anchor="middle" fill="currentColor">판단 담당</text>
+<rect x="500" y="72" width="170" height="64" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="585" y="110" font-size="16" text-anchor="middle" fill="currentColor">채점 담당</text>
+<line x1="204" y1="104" x2="259" y2="104" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"></line>
+<text x="231" y="92" font-size="14" text-anchor="middle" fill="currentColor">사진</text>
+<line x1="439" y1="104" x2="494" y2="104" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"></line>
+<text x="466" y="92" font-size="14" text-anchor="middle" fill="currentColor">답</text>
+<path d="M585 136 C585 192 350 192 350 142" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"></path>
+<text x="467" y="212" font-size="14" text-anchor="middle" fill="currentColor">틀렸다고 알려 준다</text>
+</svg>
+<figcaption>컴퓨터를 켜기 전에 사람이 기계 노릇을 해 본다. 파란 자리에 앉은 학생은 곧 "나한테는 사진밖에 안 왔는데"라고 말하게 된다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 280" role="img" aria-label="설명만 들을 때와 직접 만들 때, 잘못 알고 있던 생각이 드러나는지 비교">
+<defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><polygon points="0,0 10,5 0,10" fill="currentColor"></polygon></marker></defs>
+<text x="24" y="34" font-size="16" font-weight="600" fill="currentColor">설명만 듣기</text>
+<circle cx="170" cy="92" r="34" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+<text x="170" y="98" font-size="14" text-anchor="middle" fill="currentColor">머릿속</text>
+<line x1="170" y1="128" x2="170" y2="164" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar4)"></line>
+<text x="182" y="152" font-size="14" text-anchor="start" fill="currentColor">확인 없이</text>
+<rect x="90" y="172" width="160" height="50" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 5"></rect>
+<text x="170" y="203" font-size="15" text-anchor="middle" fill="currentColor">그대로 남는다</text>
+<line x1="350" y1="20" x2="350" y2="262" stroke="currentColor" stroke-width="1" opacity="0.3"></line>
+<text x="376" y="34" font-size="16" font-weight="600" fill="currentColor">직접 만들기</text>
+<circle cx="525" cy="86" r="30" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+<text x="525" y="92" font-size="14" text-anchor="middle" fill="currentColor">머릿속</text>
+<line x1="525" y1="118" x2="525" y2="146" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar4)"></line>
+<text x="537" y="138" font-size="14" text-anchor="start" fill="currentColor">만들어 본다</text>
+<rect x="445" y="154" width="160" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+<text x="525" y="182" font-size="15" text-anchor="middle" fill="currentColor">기계가 틀린다</text>
+<line x1="525" y1="202" x2="525" y2="228" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar4)"></line>
+<text x="525" y="256" font-size="16" text-anchor="middle" fill="#2da44e">생각이 드러난다</text>
+</svg>
+<figcaption>이 이론이 만들기를 고집하는 진짜 이유. 잘못 알고 있던 생각은 설명을 들을 때는 숨어 있다가, 내가 만든 기계가 엉뚱한 답을 낼 때 처음 밖으로 나온다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 260" role="img" aria-label="근거 문헌 네 편의 전체 인용 횟수 막대 비교">
+<line x1="240" y1="32" x2="240" y2="234" stroke="currentColor" stroke-width="1" opacity="0.4"></line>
+<text x="228" y="60" font-size="14" text-anchor="end" fill="currentColor">데이터로 설계하기 · 2021</text>
+<rect x="240" y="40" width="380" height="30" fill="#2da44e"></rect>
+<text x="630" y="61" font-size="14" fill="currentColor">134</text>
+<text x="228" y="112" font-size="14" text-anchor="end" fill="currentColor">오개념의 변화 · 2023</text>
+<rect x="240" y="92" width="281" height="30" fill="currentColor" opacity="0.3"></rect>
+<text x="531" y="113" font-size="14" fill="currentColor">99</text>
+<text x="228" y="164" font-size="14" text-anchor="end" fill="currentColor">역할극 수업 · 2021</text>
+<rect x="240" y="144" width="224" height="30" fill="currentColor" opacity="0.3"></rect>
+<text x="474" y="165" font-size="14" fill="currentColor">79</text>
+<text x="228" y="216" font-size="14" text-anchor="end" fill="currentColor">초등 기계학습 · 2021</text>
+<rect x="240" y="196" width="184" height="30" fill="currentColor" opacity="0.3"></rect>
+<text x="434" y="217" font-size="14" fill="currentColor">65</text>
+<text x="240" y="252" font-size="14" fill="currentColor" opacity="0.65">지금까지 인용된 횟수</text>
+</svg>
+<figcaption>네 편 모두 2021년 이후에 나왔는데 벌써 이만큼 인용됐다. 아주 젊고 아주 빠르게 퍼지는 중인 분야라는 뜻이다.</figcaption>
+</figure>
+
+<h2>한 문장으로</h2>
+<div class="callout">기계학습은 설명을 들어서가 아니라, 내가 모은 데이터로 기계를 직접 가르쳐 보고 틀리는 경험에서 이해된다.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+<p>이 이론이 답하려는 질문은 하나다. <strong>눈에 보이지도 않는 기계학습을 아이들이 어떻게 이해하게 되는가.</strong></p>
+<p>자전거를 생각해 보면 쉽다. 균형 잡는 법을 아무리 잘 설명해도 탈 수 있게 되지는 않는다. 몇 번 넘어져 봐야 몸이 안다.</p>
+<p>이 이론은 기계학습도 그렇다고 본다. <span class="key">직접 만들어 보다가 틀리는 자리</span>에서 이해가 생긴다는 것이다.</p>
+<p>이전에는 이 점을 설명하지 못했다. 설명을 잘하면 이해할 거라고 봤는데, <a href="https://doi.org/10.1007/s10639-023-11600-3">중학생들이 실제로 어떻게 생각하는지 살펴본 연구</a>는 아이들이 설명을 듣고도 기계가 사람처럼 생각하고 느낀다고 믿는다는 것을 보여 준다.</p>
+
+<h2>어디서 나왔나</h2>
+<p>뿌리는 1980년대 시모어 페퍼트(Seymour Papert)가 내놓은 <span class="key">만들면서 배운다</span>는 생각이다. 다만 이 생각의 원문은 이 표본 자료에 들어 있지 않다.</p>
+<p>이 표본에 있는 네 편은 전부 <span class="num">2021년</span> 이후에 나왔다. 2020년 무렵 인공지능을 학교에서 가르치자는 요구가 갑자기 커졌고, 가르칠 방법이 마땅치 않았기 때문이다.</p>
+<p>그때 나온 답이 "만들게 하자"였다. <a href="https://doi.org/10.1016/j.ijcci.2021.100281">중학생이 데이터를 모아 직접 설계하게 한 연구</a>와 <a href="https://doi.org/10.1016/j.ijcci.2021.100415">초등학교에서 기계학습을 가르친 연구</a>가 같은 해에 나란히 나왔다.</p>
+<p>누가 주도했는지, 어느 나라 교실이었는지는 이 자료에 없다.</p>
+
+<h2>초등 교실에서는</h2>
+<div class="callout">교사가 준비한 데이터를 쓰는 순간, 이 수업은 그냥 버튼 누르기가 된다.</div>
+
+<h3>데이터를 교사가 주지 마라</h3>
+<p>가위바위보를 알아맞히는 기계를 만든다면, 사진을 교사가 미리 찍어 두지 마라. 학생이 자기 손으로 <span class="num">한 종류에 30장씩</span> 찍게 하라.</p>
+<p>직접 찍어야 "왜 내 기계는 자꾸 보를 가위라고 하지"라는 질문이 자기 것이 된다.</p>
+
+<h3>일부러 틀리게 만든 뒤에 고치게 하라</h3>
+<p>처음부터 잘 되는 예제를 주면 배울 게 없다. 한쪽만 잔뜩 모으거나 어두운 데서 찍은 데이터를 먼저 쓰게 하라.</p>
+<p>기계가 엉뚱한 답을 낸 다음에 <strong>"코드 말고 데이터를 고쳐 봐"</strong>라고 말하라.</p>
+
+<h3>컴퓨터를 켜기 전에 역할극부터</h3>
+<p>세 명이 한 조가 되어 한 명은 사진을 넘기고, 한 명은 분류하고, 한 명은 채점하게 하라. <a href="https://doi.org/10.1007/s13218-021-00733-7">역할극으로 인공지능을 가르친 연구</a>가 이 방식을 다룬다.</p>
+<p>분류를 맡은 학생이 "정보가 이것뿐이라 더는 못 하겠다"고 말하는 순간이 수업의 핵심이다.</p>
+
+<h3>"기계가 왜 그랬을까"를 묻고, 답하지 마라</h3>
+<p>학생이 물어보면 설명해 주고 싶어진다. 참고 <strong>"네가 준 사진들을 다시 보자"</strong>로 돌려보내라.</p>
+
+<div class="warn">아이들은 기계가 "안다", "좋아한다", "속상하다"는 말을 자연스럽게 쓴다. 이 말을 그대로 두면 오해가 굳는다. 들릴 때마다 "그럼 그 기계는 무엇을 보고 그렇게 말했을까"로 바꿔 물어라.</div>
+
+<h2>이 이론으로 연구한다면</h2>
+<ul>
+<li><strong>직접 모은 데이터와 주어진 데이터는 이해를 다르게 만드는가?</strong> 같은 수업을 데이터 출처만 바꿔 비교하면 된다. <a href="https://doi.org/10.1016/j.ijcci.2021.100281">데이터 기반 설계 연구</a>를 딛고 서라.</li>
+<li><strong>역할극을 먼저 하고 도구를 쓰면, 도구부터 쓸 때와 무엇이 달라지는가?</strong> <a href="https://doi.org/10.1007/s13218-021-00733-7">역할극 연구</a>와 <a href="https://doi.org/10.1016/j.ijcci.2021.100415">초등 기계학습 수업 연구</a>를 나란히 놓아라.</li>
+<li><strong>만들기 수업을 하고 나면 "기계가 생각한다"는 믿음이 정말 줄어드는가?</strong> <a href="https://doi.org/10.1007/s10639-023-11600-3">오개념 연구</a>가 잰 생각들을 수업 전후로 다시 재면 된다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+<p><strong>만들었다고 이해한 것은 아니다.</strong> 요즘 도구는 버튼 몇 번이면 모델이 나온다. 손은 바빴지만 머리는 아무것도 안 한 수업이 될 수 있다.</p>
+<p><strong>활동만으로 오해가 저절로 고쳐지지는 않는다.</strong> <a href="https://doi.org/10.1007/s10639-023-11600-3">오개념 연구</a>는 아이들의 잘못된 생각이 꽤 질기다는 점을 보여 준다. 만들고 나서 같이 말로 정리하는 시간이 따로 필요하다.</p>
+<div class="warn">근거가 아직 얇다. 이 표본의 네 편은 전부 <span class="num">2021년</span> 이후이고, 대부분 소규모 수업 사례다. "만들기가 더 낫다"를 확정된 사실처럼 쓰지 마라.</div>
+
+<h2>근거 문헌</h2>
+<ul>
+<li><a href="https://doi.org/10.1016/j.ijcci.2021.100281">Machine learning for middle schoolers: Learning through data-driven design</a> — 2021년, 이 표본에서 공동인용 <span class="num">10편</span>. 학생이 데이터를 모아 직접 설계하는 방식의 뼈대를 세운 글.</li>
+<li><a href="https://doi.org/10.1007/s10639-023-11600-3">Exploring middle school students' common naive conceptions of Artificial Intelligence concepts</a> — 2023년, 공동인용 <span class="num">10편</span>. 아이들이 실제로 무엇을 잘못 알고 있는지, 그 생각이 어떻게 변하는지 살핀 글. 전문은 유료.</li>
+<li><a href="https://doi.org/10.1007/s13218-021-00733-7">Teaching Artificial Intelligence to K-12 Through a Role-Playing Game</a> — 2021년, 공동인용 <span class="num">10편</span>. 컴퓨터 없이 역할극으로 "지능이란 무엇인가"를 흔드는 수업. 전문은 유료.</li>
+<li><a href="https://doi.org/10.1016/j.ijcci.2021.100415">Teaching machine learning in elementary school</a> — 2021년, 공동인용 <span class="num">11편</span>. 초등학교 교실에 이 접근을 실제로 옮긴 사례. 이 표본에서 가장 자주 함께 인용된다. 전문은 유료.</li>
+</ul></body></html>

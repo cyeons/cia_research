@@ -1,0 +1,330 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 리터러시, 안을 열어 보는 힘</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>AI 리터러시, 안을 열어 보는 힘</h1><p style="color:#666">2026-09-20</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --paper:#edf0ea;
+  --card:#f8faf5;
+  --ink:#1a231f;
+  --ink-soft:#586760;
+  --rule:#c8d1c6;
+  --accent:#2f6b4f;
+  --accent-wash:#dbe8dc;
+  --amber:#7d5410;
+  --amber-wash:#f0e6d0;
+  --measure:38rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12181a;
+    --card:#1b2326;
+    --ink:#dde5df;
+    --ink-soft:#8fa099;
+    --rule:#2f3b39;
+    --accent:#6ec096;
+    --accent-wash:#1d3328;
+    --amber:#d9a94a;
+    --amber-wash:#2c2617;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12181a;
+  --card:#1b2326;
+  --ink:#dde5df;
+  --ink-soft:#8fa099;
+  --rule:#2f3b39;
+  --accent:#6ec096;
+  --accent-wash:#1d3328;
+  --amber:#d9a94a;
+  --amber-wash:#2c2617;
+}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+  font-size:17px;
+  line-height:1.75;
+  max-width:60rem;
+  margin-inline:auto;
+  padding-inline:20px;
+  padding-block:8px 48px;
+}
+h2,h3,p,ul,ol,table,.callout,.warn{max-width:var(--measure);margin-inline:auto}
+h2{
+  font-family:"Hahmlet",serif;
+  font-weight:700;
+  font-size:1.5rem;
+  line-height:1.4;
+  text-wrap:balance;
+  letter-spacing:-.01em;
+  margin:3rem auto .9rem;
+  padding-top:1rem;
+  border-top:1px solid var(--rule);
+}
+h2:first-of-type{margin-top:1rem}
+h3{
+  font-family:"Hahmlet",serif;
+  font-weight:500;
+  font-size:1.12rem;
+  text-wrap:balance;
+  margin:2rem auto .4rem;
+}
+p{margin:0 auto 1rem}
+ul{padding-left:1.1rem;margin:0 auto 1rem}
+li{margin-bottom:.7rem}
+li::marker{color:var(--accent)}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+strong{font-weight:600}
+.key{
+  background:linear-gradient(to top,var(--accent-wash) 52%,transparent 52%);
+  padding:0 .15em;
+  font-weight:500;
+}
+.num{
+  font-family:"IBM Plex Mono",monospace;
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+  color:var(--accent);
+}
+.callout{
+  font-family:"Hahmlet",serif;
+  font-size:1.2rem;
+  line-height:1.6;
+  text-wrap:balance;
+  background:var(--card);
+  border-left:3px solid var(--accent);
+  padding:1.1rem 1.3rem;
+  margin:1.4rem auto 1.6rem;
+}
+.warn{
+  font-size:.95rem;
+  line-height:1.65;
+  background:var(--amber-wash);
+  color:var(--ink);
+  border-left:3px solid var(--amber);
+  padding:.85rem 1.1rem;
+  margin:1.2rem auto;
+}
+figure{
+  color:var(--ink);
+  margin:2.2rem auto;
+  max-width:46rem;
+  overflow-x:auto;
+}
+figure svg{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+}
+figure svg text{fill:currentColor}
+figcaption{
+  color:var(--ink-soft);
+  font-size:.92rem;
+  line-height:1.6;
+  max-width:var(--measure);
+  margin:.7rem auto 0;
+  padding-top:.5rem;
+  border-top:1px solid var(--rule);
+}
+table{border-collapse:collapse;font-size:.95rem;display:block;overflow-x:auto}
+th,td{border-bottom:1px solid var(--rule);padding:.5rem .7rem;text-align:left}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 680 300" role="img" aria-label="왼쪽은 물음표만 들어 있는 상자에 질문을 넣고 답을 받는 모습, 오른쪽은 같은 상자를 열어 데이터에서 규칙을 찾아 답을 내놓는 세 단계를 보여 준다">
+<defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<text x="24" y="34" font-size="15" font-weight="600">그냥 쓸 때</text>
+<rect x="70" y="110" width="160" height="100" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="150" y="178" font-size="44" text-anchor="middle">?</text>
+<line x1="20" y1="160" x2="62" y2="160" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+<text x="20" y="146" font-size="15">질문</text>
+<line x1="230" y1="160" x2="286" y2="160" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+<text x="236" y="146" font-size="15">답</text>
+<text x="24" y="262" font-size="15">왜 그 답인지 모른다</text>
+<line x1="330" y1="20" x2="330" y2="280" stroke="currentColor" stroke-width="1" stroke-dasharray="4 5" opacity="0.4"/>
+<text x="380" y="34" font-size="15" font-weight="600">안을 볼 때</text>
+<rect x="380" y="60" width="160" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="460" y="90" font-size="15" text-anchor="middle">데이터</text>
+<line x1="460" y1="106" x2="460" y2="130" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+<text x="552" y="124" font-size="15">모아서</text>
+<rect x="380" y="132" width="160" height="46" rx="4" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="460" y="162" font-size="15" text-anchor="middle">규칙 찾기</text>
+<line x1="460" y1="178" x2="460" y2="202" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar1)"/>
+<text x="552" y="196" font-size="15">맞춰 본다</text>
+<rect x="380" y="204" width="160" height="46" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="460" y="234" font-size="15" text-anchor="middle">답 내놓기</text>
+<text x="380" y="282" font-size="15">어디서 틀릴지 짐작한다</text>
+</svg>
+<figcaption>AI 리터러시는 상자를 더 잘 쓰는 능력이 아니라, 상자 뚜껑을 열어 본 사람의 능력이다. 안을 본 사람은 답이 틀릴 자리를 미리 짐작한다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 300" role="img" aria-label="네 개의 계단이 왼쪽에서 오른쪽으로 높아진다. 알기, 쓰기, 따져보고 만들기, 윤리로 판단하기 순서다">
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<text x="30" y="24" font-size="15" font-weight="600">점점 깊어진다</text>
+<line x1="30" y1="42" x2="668" y2="42" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+<rect x="30" y="200" width="150" height="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="105" y="228" font-size="15" text-anchor="middle">알기</text>
+<rect x="190" y="160" width="150" height="100" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="265" y="188" font-size="15" text-anchor="middle">쓰기</text>
+<rect x="350" y="120" width="150" height="140" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="425" y="148" font-size="15" text-anchor="middle">따져보고 만들기</text>
+<rect x="510" y="80" width="150" height="180" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="585" y="108" font-size="15" text-anchor="middle">윤리로 판단하기</text>
+<line x1="20" y1="260" x2="680" y2="260" stroke="currentColor" stroke-width="1.5"/>
+<text x="105" y="284" font-size="14" text-anchor="middle" opacity="0.75">무엇인지</text>
+<text x="265" y="284" font-size="14" text-anchor="middle" opacity="0.75">써 보기</text>
+<text x="425" y="284" font-size="14" text-anchor="middle" opacity="0.75">고쳐 보기</text>
+<text x="585" y="284" font-size="14" text-anchor="middle" opacity="0.75">누가 손해인지</text>
+</svg>
+<figcaption>흩어져 있던 정의를 <span class="num">2021</span>년 리뷰 논문이 네 갈래로 묶었다. 맨 오른쪽 칸은 맨 마지막에 붙이는 덤이 아니라 가장 높은 칸이다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 320" role="img" aria-label="같은 AI 앱을 쓰는 두 수업을 나란히 비교한다. 왼쪽은 결과만 보고 그대로 믿어 이유를 모르고, 오른쪽은 데이터를 열고 누가 손해인지 물어 고쳐 쓸 수 있게 된다">
+<defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<text x="40" y="34" font-size="15" font-weight="600">도구만 쓰면</text>
+<rect x="40" y="60" width="230" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="155" y="91" font-size="15" text-anchor="middle">AI 앱을 써 본다</text>
+<line x1="155" y1="110" x2="155" y2="153" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+<text x="165" y="138" font-size="15">결과만 본다</text>
+<rect x="40" y="155" width="230" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="155" y="186" font-size="15" text-anchor="middle">잘 된다고 느낀다</text>
+<line x1="155" y1="205" x2="155" y2="248" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+<text x="165" y="233" font-size="15">그대로 믿는다</text>
+<rect x="40" y="250" width="230" height="55" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="155" y="283" font-size="15" text-anchor="middle">왜 그런지 모른다</text>
+<line x1="335" y1="20" x2="335" y2="305" stroke="currentColor" stroke-width="1" stroke-dasharray="4 5" opacity="0.4"/>
+<text x="400" y="34" font-size="15" font-weight="600">안을 열면</text>
+<rect x="400" y="60" width="230" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="515" y="91" font-size="15" text-anchor="middle">AI 앱을 써 본다</text>
+<line x1="515" y1="110" x2="515" y2="153" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+<text x="525" y="138" font-size="15">데이터를 연다</text>
+<rect x="400" y="155" width="230" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="515" y="186" font-size="15" text-anchor="middle">틀린 경우를 모은다</text>
+<line x1="515" y1="205" x2="515" y2="248" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+<text x="525" y="233" font-size="15">누가 손해인지 묻는다</text>
+<rect x="400" y="250" width="230" height="55" rx="4" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="515" y="283" font-size="15" text-anchor="middle">고쳐 쓸 수 있다</text>
+</svg>
+<figcaption>두 수업은 같은 앱을 쓴다. 차이는 앱이 아니라 중간에 끼워 넣은 두 번의 질문에서 생긴다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 700 300" role="img" aria-label="이 표본에서 함께 인용된 편수를 가로 막대로 비교한다. 2020년 역량 정리 논문이 24편으로 가장 많고, 2021년 개념 리뷰와 2022년 디지털 스토리 쓰기가 각각 17편이다">
+<text x="260" y="26" font-size="14" opacity="0.75">함께 인용된 편수</text>
+<line x1="258" y1="36" x2="258" y2="272" stroke="currentColor" stroke-width="1.5"/>
+<text x="248" y="66" font-size="14" text-anchor="end">AI 리터러시란 (2020)</text>
+<rect x="260" y="46" width="360" height="30" fill="#2da44e"/>
+<text x="630" y="66" font-size="14">24</text>
+<text x="248" y="112" font-size="14" text-anchor="end">개념 정리 리뷰 (2021)</text>
+<rect x="260" y="92" width="255" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="525" y="112" font-size="14">17</text>
+<text x="248" y="158" font-size="14" text-anchor="end">디지털 스토리 쓰기 (2022)</text>
+<rect x="260" y="138" width="255" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="525" y="158" font-size="14">17</text>
+<text x="248" y="204" font-size="14" text-anchor="end">중학생 수업 설계 (2021)</text>
+<rect x="260" y="184" width="165" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="435" y="204" font-size="14">11</text>
+<text x="248" y="250" font-size="14" text-anchor="end">윤리·진로 통합 (2022)</text>
+<rect x="260" y="230" width="150" height="30" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="420" y="250" font-size="14">10</text>
+</svg>
+<figcaption>이 분야 논문들이 AI 리터러시를 말할 때 어느 문헌을 함께 끌어오는지 보여 준다. <span class="num">2020</span>년 논문이 공통의 출발점 노릇을 한다.</figcaption>
+</figure>
+
+<h2>한 문장으로</h2>
+<div class="callout">AI 리터러시는 AI를 잘 쓰는 능력이 아니라, AI가 왜 그런 답을 내놓았는지 묻고 따질 수 있는 능력이다.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+<p>이 이론이 답하려는 질문은 하나다. <strong>컴퓨터를 잘 다루는 것과 AI를 아는 것은 같은 일인가?</strong></p>
+<p>자동차를 생각해 보자. 운전은 할 줄 알지만 엔진은 모르는 사람이 많다. 그래도 별 탈이 없다.</p>
+<p>그런데 AI는 다르다. AI는 사람 대신 <strong>판단</strong>을 내린다. 누구를 추천하고, 무엇을 걸러 내고, 어느 답이 맞다고 말한다. 안을 모르면 그 판단이 틀렸는지도 알 수 없다.</p>
+<p>이전 틀로는 이 부분이 설명되지 않았다. 옛 컴퓨터 교육은 <span class="key">기계는 시킨 대로 한다</span>를 전제로 했다. 하지만 AI는 사람이 준 데이터에서 스스로 규칙을 만들어 낸다. 그래서 새 목록이 필요했다.</p>
+
+<h2>어디서 나왔나</h2>
+<p><span class="num">2020</span>년, 흩어져 쓰이던 이 말을 <span class="key">역량 목록</span>으로 처음 정리한 논문이 나왔다(<a href="https://doi.org/10.1145/3313831.3376727">What is AI Literacy?</a>). 그 전까지는 사람마다 다른 뜻으로 이 말을 썼다.</p>
+<p>이 논문은 일반 학습자가 갖출 능력을 열일곱 가지로 나누고, 그것을 가르칠 때 지킬 설계 원칙을 따로 붙였다.</p>
+<p><span class="num">2021</span>년에는 그때까지 나온 정의들을 훑어 네 갈래로 묶은 <a href="https://doi.org/10.1016/j.caeai.2021.100041">리뷰 논문</a>이 나왔다. 알기, 쓰기, 따져보고 만들기, 윤리로 판단하기다.</p>
+<p>이어서 <span class="num">2021</span>~<span class="num">2022</span>년에는 교실에서 실제로 해 본 연구들이 나왔다. 저자 정보는 이 자료에 없어 제목으로만 적는다.</p>
+
+<h2>초등 교실에서는</h2>
+<p>이 이론이 수업에 대고 말하는 것은 네 가지다.</p>
+<ul>
+<li><strong>추천 영상을 다룰 때</strong> — 영상을 보여 주기 전에 "왜 이게 떴을까"를 먼저 묻게 하라. 아이가 최근 본 것 다섯 개를 종이에 적게 하고, 그 종이로 다음에 뜰 영상을 맞혀 보게 하라.</li>
+<li><strong>AI로 글이나 그림을 만들 때</strong> — 결과 하나만 내고 끝내지 마라. 똑같은 요청을 두 번 넣어 서로 다른 결과를 나란히 붙이게 하라. "AI는 틀릴 수 있다"고 말해 주는 것보다 이게 빠르다.</li>
+<li><strong>분류 학습을 시킬 때</strong> — 모둠마다 사진을 모아 기계에 가르치게 하되, 한 모둠에만 한쪽으로 치우친 사진을 모으게 하라. 결과가 왜 망가졌는지 아이들이 직접 찾게 하라.</li>
+<li><strong>윤리를 따로 떼지 마라</strong> — 만드는 시간 안에서 "이걸 누가 쓰면 곤란할까"를 한 번 묻게 하라. <span class="num">2022</span>년 <a href="https://doi.org/10.1007/s40593-022-00293-3">윤리·진로 통합 연구</a>가 이 방식을 택했다.</li>
+</ul>
+<div class="warn">이 이론을 기른 연구는 대부분 중학생 대상이다. 초등 저학년에서 그대로 통한다는 근거는 아직 얇다.</div>
+
+<h2>이 이론으로 연구한다면</h2>
+<ul>
+<li><strong>초등학생이 쓴 글로 이해 정도를 볼 수 있을까?</strong> 아이가 AI를 설명하는 이야기를 직접 쓰게 하고 그 글을 자료로 삼는 방식이다. <a href="https://doi.org/10.1016/j.caeai.2022.100054">디지털 스토리 쓰기 연구</a>를 딛고 서면 된다.</li>
+<li><strong>윤리를 따로 가르칠 때와 만드는 중에 섞을 때, 무엇이 달라지나?</strong> <a href="https://doi.org/10.1007/s40593-022-00293-3">윤리·진로 통합 연구</a>와 <a href="https://doi.org/10.1145/3408877.3432513">중학생 수업 설계 연구</a>를 나란히 놓고 비교할 수 있다.</li>
+<li><strong>네 갈래를 초등용으로 다시 나눌 수 있을까?</strong> <a href="https://doi.org/10.1016/j.caeai.2021.100041">네 갈래를 묶은 리뷰</a>가 출발점이고, 학년별로 쪼개는 작업은 아직 비어 있다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+<ul>
+<li><strong>체크리스트로 쓰면 망가진다.</strong> 열일곱 가지 역량은 다 가르쳤는지 표시하는 표가 아니다. 무엇을 빠뜨렸는지 살피는 지도에 가깝다.</li>
+<li><strong>'쓸 줄 안다'를 능력으로 착각한다.</strong> AI 도구를 쓴 시간이 늘어도 이해가 늘지는 않는다. 이 이론이 가장 자주 오용되는 지점이다.</li>
+<li><strong>재는 방법이 아직 약하다.</strong> 무엇을 길러야 하는지는 정리됐지만, 길러졌는지 어떻게 확인할지는 논문마다 다르다.</li>
+</ul>
+<div class="warn">이 분야에서 "AI 리터러시 수업"이라는 이름이 붙은 것 중 상당수는 실제로는 도구 사용법 수업이다. 이름만 보고 인용하지 마라.</div>
+
+<h2>근거 문헌</h2>
+<ul>
+<li><a href="https://doi.org/10.1145/3313831.3376727">What is AI Literacy? Competencies and Design Considerations</a> — 2020년, 이 표본에서 공동인용 <span class="num">24</span>편. 역량 목록의 출발점. 본문은 유료.</li>
+<li><a href="https://doi.org/10.1016/j.caeai.2021.100041">Conceptualizing AI literacy: An exploratory review</a> — 2021년, 공동인용 <span class="num">17</span>편. 흩어진 정의를 네 갈래로 묶은 리뷰. <a href="https://www.sciencedirect.com/science/article/pii/S2666920X21000357/pdf">전문 공개</a>.</li>
+<li><a href="https://doi.org/10.1016/j.caeai.2022.100054">Using digital story writing as a pedagogy to develop AI literacy among primary students</a> — 2022년, 공동인용 <span class="num">17</span>편. 초등 대상으로 한 드문 연구. <a href="https://www.sciencedirect.com/science/article/pii/S2666920X22000091/pdf">전문 공개</a>.</li>
+<li><a href="https://doi.org/10.1145/3408877.3432513">Developing Middle School Students' AI Literacy</a> — 2021년, 공동인용 <span class="num">11</span>편. 중학생 수업을 설계하고 돌려 본 기록. <a href="https://dl.acm.org/doi/pdf/10.1145/3408877.3432513">전문 공개</a>.</li>
+<li><a href="https://doi.org/10.1007/s40593-022-00293-3">Integrating Ethics and Career Futures with Technical Learning to Promote AI Literacy for Middle School Students</a> — 2022년, 공동인용 <span class="num">10</span>편. 기술·윤리·진로를 한 수업에 섞은 사례. <a href="https://link.springer.com/content/pdf/10.1007/s40593-022-00293-3.pdf">전문 공개</a>.</li>
+</ul></body></html>

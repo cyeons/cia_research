@@ -1,0 +1,344 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>K-12 AI 수업 설계의 다섯 칸</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>K-12 AI 수업 설계의 다섯 칸</h1><p style="color:#666">2026-09-20</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f2f5f1;
+  --panel:#e6ebe4;
+  --ink:#1d2621;
+  --ink-2:#55635a;
+  --line:#c3cec4;
+  --accent:#2c6a58;
+  --mark:#ead79b;
+  --warn-bg:#f4e6db;
+  --warn-line:#b06a42;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131715;
+    --panel:#1c2220;
+    --ink:#e3e9e3;
+    --ink-2:#98a69c;
+    --line:#35423c;
+    --accent:#7cc6aa;
+    --mark:#5b4d21;
+    --warn-bg:#2c2019;
+    --warn-line:#cf8a5e;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131715;
+  --panel:#1c2220;
+  --ink:#e3e9e3;
+  --ink-2:#98a69c;
+  --line:#35423c;
+  --accent:#7cc6aa;
+  --mark:#5b4d21;
+  --warn-bg:#2c2019;
+  --warn-line:#cf8a5e;
+}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.8;
+  padding-inline:16px;
+  padding-block:8px;
+}
+h2{
+  font-family:'Hahmlet','Nanum Myeongjo',serif;
+  font-weight:600;
+  font-size:1.45rem;
+  line-height:1.4;
+  text-wrap:balance;
+  max-width:33rem;
+  margin:3.2rem 0 1.1rem;
+  padding-top:.7rem;
+  border-top:1px solid var(--line);
+}
+h2:first-of-type{margin-top:1.2rem;}
+h3{
+  font-family:'Hahmlet','Nanum Myeongjo',serif;
+  font-weight:500;
+  font-size:1.1rem;
+  text-wrap:balance;
+  max-width:33rem;
+  margin:2rem 0 .5rem;
+  color:var(--accent);
+}
+p{max-width:33rem;margin:0 0 1rem;}
+ul{max-width:33rem;margin:0 0 1.2rem;padding-left:1.1rem;}
+li{margin-bottom:.55rem;}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;}
+strong{font-weight:600;}
+.key{
+  background:var(--mark);
+  color:var(--ink);
+  padding:0 .18em;
+  box-decoration-break:clone;
+}
+.num{
+  font-family:'IBM Plex Mono','IBM Plex Sans KR',monospace;
+  font-weight:500;
+  font-variant-numeric:tabular-nums;
+}
+.callout{
+  max-width:33rem;
+  margin:1.4rem 0 1.6rem;
+  padding:1rem 0;
+  border-top:2px solid var(--accent);
+  border-bottom:1px solid var(--line);
+  font-family:'Hahmlet','Nanum Myeongjo',serif;
+  font-size:1.15rem;
+  line-height:1.65;
+  text-wrap:balance;
+}
+.warn{
+  max-width:33rem;
+  margin:1.4rem 0;
+  padding:.85rem 1rem;
+  background:var(--warn-bg);
+  border:1px solid var(--warn-line);
+  border-radius:2px;
+  font-size:.95rem;
+  line-height:1.7;
+}
+figure{
+  max-width:46rem;
+  margin:1.8rem 0 2rem;
+  padding:1.1rem 1rem .9rem;
+  background:var(--panel);
+  border-radius:2px;
+  color:var(--ink);
+  overflow-x:auto;
+}
+figure svg{display:block;width:100%;height:auto;max-width:100%;}
+figure svg text{font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',sans-serif;}
+figcaption{
+  max-width:33rem;
+  margin-top:.8rem;
+  padding-top:.6rem;
+  border-top:1px solid var(--line);
+  color:var(--ink-2);
+  font-size:.85rem;
+  line-height:1.6;
+}
+table{border-collapse:collapse;font-size:.95rem;}
+th,td{border-bottom:1px solid var(--line);padding:.5rem .7rem;text-align:left;}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 680 320" role="img" aria-label="흩어진 수업 사례들이 깔때기를 지나 학년·내용·교수법·도구·평가 다섯 칸으로 정리되는 그림">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<text x="26" y="24" font-size="15" fill="currentColor" opacity="0.75">따로따로 해 본 수업들</text>
+<rect x="58" y="44" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="150" y="64" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="242" y="40" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="332" y="68" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="420" y="44" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="510" y="64" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<rect x="600" y="42" width="22" height="16" rx="1" fill="none" stroke="currentColor" opacity="0.6"/>
+<path d="M170,112 L510,112 L360,186 L320,186 Z" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="340" y="146" font-size="15" text-anchor="middle" fill="currentColor">되풀이되는 것만</text>
+<line x1="340" y1="186" x2="340" y2="228" stroke="currentColor" stroke-width="1.5" marker-end="url(#a1)"/>
+<text x="352" y="212" font-size="13" fill="currentColor">같은 것끼리</text>
+<line x1="84" y1="240" x2="596" y2="240" stroke="currentColor" stroke-width="1.5"/>
+<line x1="84" y1="240" x2="84" y2="252" stroke="currentColor" stroke-width="1.5"/>
+<line x1="212" y1="240" x2="212" y2="252" stroke="currentColor" stroke-width="1.5"/>
+<line x1="340" y1="240" x2="340" y2="252" stroke="currentColor" stroke-width="1.5"/>
+<line x1="468" y1="240" x2="468" y2="252" stroke="currentColor" stroke-width="1.5"/>
+<line x1="596" y1="240" x2="596" y2="252" stroke="currentColor" stroke-width="1.5"/>
+<rect x="26" y="252" width="116" height="46" rx="2" fill="none" stroke="currentColor"/>
+<rect x="154" y="252" width="116" height="46" rx="2" fill="none" stroke="currentColor"/>
+<rect x="282" y="252" width="116" height="46" rx="2" fill="none" stroke="currentColor"/>
+<rect x="410" y="252" width="116" height="46" rx="2" fill="none" stroke="currentColor"/>
+<rect x="538" y="252" width="116" height="46" rx="2" fill="none" stroke="currentColor"/>
+<text x="84" y="273" font-size="15" text-anchor="middle" fill="currentColor">학년</text>
+<text x="84" y="290" font-size="12" text-anchor="middle" fill="currentColor" opacity="0.7">누구에게</text>
+<text x="212" y="273" font-size="15" text-anchor="middle" fill="currentColor">내용</text>
+<text x="212" y="290" font-size="12" text-anchor="middle" fill="currentColor" opacity="0.7">무엇을</text>
+<text x="340" y="273" font-size="15" text-anchor="middle" fill="currentColor">교수법</text>
+<text x="340" y="290" font-size="12" text-anchor="middle" fill="currentColor" opacity="0.7">어떻게</text>
+<text x="468" y="273" font-size="15" text-anchor="middle" fill="currentColor">도구</text>
+<text x="468" y="290" font-size="12" text-anchor="middle" fill="currentColor" opacity="0.7">무엇으로</text>
+<text x="596" y="273" font-size="15" text-anchor="middle" fill="currentColor">평가</text>
+<text x="596" y="290" font-size="12" text-anchor="middle" fill="currentColor" opacity="0.7">어떻게 확인</text>
+</svg>
+<figcaption>세계 곳곳에서 따로 해 본 AI 수업을 모아, 모든 수업이 어차피 정해야 하는 다섯 가지로 나눈 것이 이 이론이다.</figcaption>
+</figure>
+
+<p>새로 무언가를 만든 이론이 아니다. <strong>이미 있던 수업들을 정리해서 만든 설계표</strong>다.</p>
+
+<figure>
+<svg viewBox="0 0 680 340" role="img" aria-label="같은 주제를 초등 3~4학년과 중학교 2학년에게 가르칠 때 활동이 갈라지지만 도착점은 같음을 보여주는 그림">
+<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<rect x="140" y="14" width="400" height="44" rx="2" fill="none" stroke="currentColor"/>
+<text x="340" y="42" font-size="16" text-anchor="middle" fill="currentColor">같은 주제: 사진을 알아보는 AI</text>
+<line x1="300" y1="58" x2="182" y2="96" stroke="currentColor" stroke-width="1.5" marker-end="url(#a2)"/>
+<line x1="380" y1="58" x2="498" y2="96" stroke="currentColor" stroke-width="1.5" marker-end="url(#a2)"/>
+<text x="56" y="90" font-size="14" fill="currentColor">만져 보게</text>
+<text x="556" y="90" font-size="14" fill="currentColor">만들게</text>
+<rect x="26" y="104" width="290" height="136" rx="2" fill="none" stroke="currentColor"/>
+<rect x="364" y="104" width="290" height="136" rx="2" fill="none" stroke="currentColor"/>
+<text x="42" y="132" font-size="16" fill="currentColor">초등 3~4학년</text>
+<text x="42" y="162" font-size="14" fill="currentColor">· 손으로 사진 나눠 보기</text>
+<text x="42" y="188" font-size="14" fill="currentColor">· 만들어진 AI에 넣어 보기</text>
+<text x="42" y="214" font-size="14" fill="currentColor">· 헷갈린 사진 찾아내기</text>
+<text x="380" y="132" font-size="16" fill="currentColor">중학교 2학년</text>
+<text x="380" y="162" font-size="14" fill="currentColor">· 사진 모아 직접 학습시키기</text>
+<text x="380" y="188" font-size="14" fill="currentColor">· 일부러 틀리게 해 보기</text>
+<text x="380" y="214" font-size="14" fill="currentColor">· 왜 틀렸는지 따져 보기</text>
+<line x1="171" y1="240" x2="288" y2="274" stroke="currentColor" stroke-width="1.5" marker-end="url(#a2)"/>
+<line x1="509" y1="240" x2="392" y2="274" stroke="currentColor" stroke-width="1.5" marker-end="url(#a2)"/>
+<text x="40" y="266" font-size="14" fill="currentColor">본 것을 말로</text>
+<text x="654" y="266" font-size="14" text-anchor="end" fill="currentColor">만든 것을 근거로</text>
+<rect x="140" y="276" width="400" height="44" rx="2" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="340" y="304" font-size="15" text-anchor="middle" fill="currentColor">AI가 왜 그렇게 판단했는지 말한다</text>
+</svg>
+<figcaption>학년이 다르면 활동과 도구가 갈라진다. 그런데 도착해야 할 곳은 같다. 쉬운 학년이라고 목표를 낮추는 게 아니라 가는 길을 바꾸는 것이다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 680 290" role="img" aria-label="컴퓨터 없이 몸으로, 이미 있는 도구로, 내 데이터로 직접 만들기 순으로 학습 방식의 무게가 옮겨 가는 그림">
+<defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<rect x="26" y="18" width="440" height="58" rx="2" fill="none" stroke="currentColor"/>
+<text x="46" y="44" font-size="16" fill="currentColor">컴퓨터 없이 몸으로</text>
+<text x="46" y="65" font-size="13" fill="currentColor" opacity="0.75">카드와 몸짓으로 나눠 보기</text>
+<line x1="246" y1="76" x2="246" y2="112" stroke="currentColor" stroke-width="1.5" marker-end="url(#a3)"/>
+<text x="266" y="98" font-size="14" fill="currentColor">나누기가 뭔지 알면</text>
+<rect x="26" y="114" width="440" height="58" rx="2" fill="none" stroke="currentColor"/>
+<text x="46" y="140" font-size="16" fill="currentColor">이미 있는 AI 도구로</text>
+<text x="46" y="161" font-size="13" fill="currentColor" opacity="0.75">넣어 보고 결과를 살펴보기</text>
+<line x1="246" y1="172" x2="246" y2="208" stroke="currentColor" stroke-width="1.5" marker-end="url(#a3)"/>
+<text x="266" y="194" font-size="14" fill="currentColor">도구가 틀리는 걸 보면</text>
+<rect x="26" y="210" width="440" height="58" rx="2" fill="none" stroke="#2da44e" stroke-width="2"/>
+<text x="46" y="236" font-size="16" fill="currentColor">내 데이터로 직접</text>
+<text x="46" y="257" font-size="13" fill="currentColor" opacity="0.75">모으고 학습시키고 고치기</text>
+</svg>
+<figcaption>배우는 방식은 몸 → 도구 → 만들기 순으로 무게가 옮겨 간다. 아래 단계를 건너뛰면 도구는 그냥 신기한 장난감으로 끝난다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 680 280" role="img" aria-label="근거가 되는 네 편의 인용 횟수 막대그래프. 20년 정리 408회, 아시아태평양 종합 230회, 머신러닝 사례 204회, 교수설계 종합 161회">
+<line x1="250" y1="34" x2="250" y2="256" stroke="currentColor" stroke-width="1.5"/>
+<text x="238" y="68" font-size="14" text-anchor="end" fill="currentColor">AI 20년 정리</text>
+<rect x="250" y="46" width="340" height="34" fill="currentColor" fill-opacity="0.16" stroke="currentColor"/>
+<text x="600" y="68" font-size="14" fill="currentColor">408회</text>
+<text x="238" y="124" font-size="14" text-anchor="end" fill="currentColor">아태 지역 종합</text>
+<rect x="250" y="102" width="192" height="34" fill="currentColor" fill-opacity="0.16" stroke="currentColor"/>
+<text x="452" y="124" font-size="14" fill="currentColor">230회</text>
+<text x="238" y="180" font-size="14" text-anchor="end" fill="currentColor">머신러닝 사례</text>
+<rect x="250" y="158" width="170" height="34" fill="currentColor" fill-opacity="0.16" stroke="currentColor"/>
+<text x="430" y="180" font-size="14" fill="currentColor">204회</text>
+<text x="238" y="236" font-size="14" text-anchor="end" fill="currentColor">교수설계 종합</text>
+<rect x="250" y="214" width="134" height="34" fill="#2da44e"/>
+<text x="394" y="236" font-size="14" fill="currentColor">161회</text>
+</svg>
+<figcaption>근거가 되는 네 편이 다른 연구에 인용된 횟수. 넷 다 2022년에 나왔는데, 이 이론의 본체인 교수설계 종합(초록색)은 아직 가장 덜 읽혔다.</figcaption>
+</figure>
+
+<h2>한 문장으로</h2>
+
+<div class="callout">AI 수업은 새로 발명할 게 아니라, 이미 수백 번 해 본 수업들에서 학년·내용·교수법·도구·평가 다섯 칸을 골라 채우는 일이다.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+
+<p>책상 위에 수업 사례가 잔뜩 흩어져 있다고 하자. 어떤 건 미국 고등학교, 어떤 건 싱가포르 초등학교, 어떤 건 여름방학 캠프다. 하나하나는 재미있는데, "그래서 우리 <span class="key">4학년</span>한테는 뭘 해야 하나"는 답이 안 나온다.</p>
+
+<p>이 이론은 그 흩어진 것들을 <strong>서랍에 나눠 넣은 것</strong>이다. 서랍은 다섯 개다. 어느 학년에게, 무엇을, 어떻게, 무엇으로, 어떻게 확인하는가.</p>
+
+<p>그 전에는 사례 목록만 있었다. 목록은 "이런 것도 있다"만 말해 준다. 이 이론은 <span class="key">되풀이되는 짝</span>을 말해 준다. 이 학년에는 보통 이 도구가 붙었고, 이 내용에는 보통 이 방식이 붙었다는 것이다.</p>
+
+<h2>어디서 나왔나</h2>
+
+<p>여기 딛고 있는 네 편은 모두 <span class="num">2022년</span>에 나왔다. 한 해에 정리 논문이 네 편씩 몰렸다는 것 자체가 신호다. 사례는 넘치는데 정리가 없었다는 뜻이다.</p>
+
+<p>이름을 그대로 물려받은 논문은 <a href="https://doi.org/10.3390/su142315620">Pedagogical Design of K-12 Artificial Intelligence Education</a>(2022)이다. 같은 문제를 아시아·태평양 지역만 따로 훑은 <a href="https://doi.org/10.1016/j.caeai.2022.100065">메타 리뷰</a>, 머신러닝 수업만 따로 모은 <a href="https://doi.org/10.1007/s10639-022-11416-7">체계적 문헌 고찰</a>이 같이 나왔다.</p>
+
+<p>누가 썼는지, 어떤 사업이나 정책이 계기였는지는 <strong>이 자료에 없다</strong>. 저자와 소속은 확인하지 않고 적지 않는다.</p>
+
+<h2>초등 교실에서는</h2>
+
+<h3>도구는 마지막에 고른다</h3>
+<p>수업을 짤 때 "무슨 앱 쓸까"부터 시작하지 마라. 학년과 목표를 먼저 한 줄로 쓰고, <strong>그 줄에 맞는 도구를 나중에</strong> 고른다. 도구부터 정하면 수업이 도구 사용법 설명으로 변한다.</p>
+
+<div class="warn">가장 흔한 실수다. 새로 나온 AI 도구를 먼저 받아 두고 "이걸로 뭘 하지"를 거꾸로 생각하는 것. 이 이론이 다섯 칸을 정해 준 이유가 바로 이 순서를 막기 위해서다.</div>
+
+<h3>3~4학년은 만들지 말고 부수게 한다</h3>
+<p>저학년에게 AI를 처음 학습시키게 하면 데이터 모으다 시간이 다 간다. 대신 <strong>이미 만들어진 AI에 사진을 넣어 틀리게 만들어 보라</strong>고 시켜라. 틀린 사례를 한 명당 하나씩 찾아 오게 하면 그게 그날의 결과물이다.</p>
+
+<h3>평가는 퀴즈가 아니라 말이다</h3>
+<p>"AI란 무엇인가"를 객관식으로 묻지 마라. 활동 끝에 <strong>"컴퓨터가 왜 이걸 고양이라고 했을 것 같아?"</strong>를 묻고, 그 대답을 한 문장이나 그림으로 남기게 하라. 다섯 칸 중 평가 칸에서 가장 자주 빠지는 게 이 부분이다.</p>
+
+<h3>윤리는 따로 한 차시로 빼지 않는다</h3>
+<p>AI가 누군가를 잘못 알아본 그 순간에 <strong>"이렇게 틀리면 누가 제일 곤란해질까"</strong>를 물어라. 마지막 차시에 몰아서 하면 붙임 딱지처럼 떨어져 나간다.</p>
+
+<h2>이 이론으로 연구한다면</h2>
+
+<ul>
+<li><strong>저학년에게 '직접 학습시키기'는 정말 이른가?</strong> 같은 활동을 3학년과 6학년에 나눠 넣고 무엇이 달라지는지 본다. 머신러닝 수업 사례만 모은 <a href="https://doi.org/10.1007/s10639-022-11416-7">이 고찰</a>이 출발점이다.</li>
+<li><strong>우리 교육과정은 다섯 칸 중 어디가 비었나?</strong> 국내 초등 AI 교육 자료를 이 틀에 넣어 보고 빈 칸을 찾는다. 비교 기준으로 <a href="https://doi.org/10.1016/j.caeai.2022.100065">아시아·태평양 메타 리뷰</a>를 쓴다.</li>
+<li><strong>도구를 바꾸면 배움이 바뀌나, 교수법을 바꿔야 바뀌나?</strong> 같은 내용을 도구만 바꿔서, 그리고 방식만 바꿔서 해 본다. 다섯 칸 사이의 관계를 정리한 <a href="https://doi.org/10.3390/su142315620">교수설계 종합</a>을 배경으로 삼는다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+
+<div class="warn">이 이론이 말하는 건 <strong>"많이 쓰인 방식"이지 "효과 있는 방식"이 아니다</strong>. 정리 논문은 사례를 세는 일이다. 블록 코딩이 제일 많이 나왔다는 사실은 블록 코딩이 제일 잘 가르친다는 뜻이 아니다.</div>
+
+<p><strong>모아 놓은 사례 대부분이 짧다.</strong> 캠프나 방과후처럼 몇 차시로 끝난 수업이 많다. 이 정리 논문들이 스스로 꼽는 약점이기도 하다. 한 학기 정규 수업에 그대로 옮기면 빈 구간이 생긴다.</p>
+
+<p><strong>초등 저학년 자료가 얇다.</strong> 사례가 중·고등학교에 몰려 있다. 그래서 1~2학년 수업을 이 틀로 설계하면, 서랍은 있는데 넣을 게 없는 칸이 나온다. 그 칸은 직접 채워야 한다.</p>
+
+<h2>근거 문헌</h2>
+
+<ul>
+<li><a href="https://doi.org/10.3390/su142315620">Pedagogical Design of K-12 Artificial Intelligence Education: A Systematic Review</a> — 2022, 이 표본에서 공동인용 <span class="num">12편</span>. 다섯 칸 틀의 본체. 학년·내용·교수법·도구·평가를 묶어 놓은 논문이다.</li>
+<li><a href="https://doi.org/10.1007/s10639-022-11416-7">A systematic review of teaching and learning machine learning in K-12 education</a> — 2022, 공동인용 <span class="num">14편</span>. 이 표본에서 가장 많이 같이 인용된다. 기계학습 한 주제만 깊게 파서 활동 설계를 볼 때 쓴다.</li>
+<li><a href="https://doi.org/10.1016/j.caeai.2022.100065">A meta-review of literature on educational approaches for teaching AI at the K-12 levels in the Asia-Pacific region</a> — 2022, 공동인용 <span class="num">13편</span>. 아시아권 교실 조건에 맞춘 비교 기준.</li>
+<li><a href="https://doi.org/10.1007/s10639-022-11491-w">A review of AI teaching and learning from 2000 to 2020</a> — 2022, 공동인용 <span class="num">12편</span>, 유료. 20년 흐름을 보는 배경용. 인용 <span class="num">408회</span>로 넷 중 가장 널리 쓰인다.</li>
+</ul></body></html>

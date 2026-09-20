@@ -1,30 +1,36 @@
-"""AI·디지털 교육의 이론 지도를 만든다.
+"""AI·디지털 교육의 이론들을 하나씩 ELI5로 정리한다.
 
-    python theories.py
+    python theories.py            # 이론 목록을 뽑고, 아직 없는 것만 만든다
+    python theories.py TPACK      # 이름에 이게 들어간 이론만 (다시) 만든다
+    python theories.py --force    # 전부 다시 만든다
 
-주간 브리핑은 매주 이론 문헌을 한두 편씩 흘려보낸다. 그걸로는 지도가 안 그려진다.
-이 도구는 반대로 간다 — 한 번에 수백 편의 참고문헌을 집계해서, 이 분야가 실제로
-'공통으로 딛고 선' 문헌을 찾아내고 그것들이 어떤 이론으로 묶이는지 정리한다.
+한 장에 여러 이론을 몰아넣으면 ELI5가 잘하는 걸 못 한다 — 개념 하나를 그림으로
+풀어내는 게 이 형식의 값어치다. 그래서 이론마다 페이지를 따로 만들고, 목차만 한 장 둔다.
 
-근거는 두 가지다:
-  1) 공동인용 — 논문 180편의 참고문헌을 세면 backbone이 드러난다
-     (실측: Long & Magerko 2020이 26편, Touretzky 2019가 21편에서 인용됨)
-  2) 이론틀 논문 — 제목·초록에서 이론을 명시적으로 다루는 논문
+어떤 이론을 다룰지는 데이터가 정한다. 표본 논문 수백 편의 참고문헌을 집계해
+공통으로 딛고 선 문헌을 찾고(backbone), 그것들이 어떤 이론으로 묶이는지 판별한다.
+내가 아는 이론을 늘어놓는 게 아니다.
 
-수시로 돌릴 것이 아니다. 분기에 한 번쯤, 또는 이론 정리가 필요할 때 돌린다.
 eli5.py와 같은 로컬 Claude Code(구독)를 쓰므로 API 키가 필요 없다.
 """
-import os, sys, webbrowser
+import json, os, re, sys, webbrowser
 from collections import Counter
 from pathlib import Path
 
 import weekly
-from eli5 import DESIGN, DIAGRAMS, run_claude, split_title
+from eli5 import DESIGN, DIAGRAMS, RULES, run_claude, split_title
 
-OUT = Path("docs/theories.html")
+OUT_DIR = Path("docs/theories")
+INDEX = Path("docs/theories.html")
 SAMPLE_PER_THEME = 60          # 갈래당 표본. 180편이면 backbone이 안정적으로 잡힌다.
 MIN_CO_CITED = 4               # 4편 미만이 인용한 문헌은 backbone이 아니라 그냥 참고문헌
-SINCE = "2023-01-01"           # 이론 지도라 최신성보다 축적이 중요하다
+SINCE = "2023-01-01"
+
+
+def name_slug(name):
+    """이론 이름 -> 파일명. eli5.slug()는 URL·경로용이라 '/'를 경로 구분자로 보고
+    뒷부분만 취한다 — 'Constructionist / learning-by-design'이 통째로 잘렸다."""
+    return re.sub(r"[^\w.-]+", "_", name, flags=re.UNICODE).strip("_")[:70]
 
 
 def backbone(top_n=25):
@@ -57,85 +63,115 @@ def backbone(top_n=25):
             for r, c in top if r in meta], len(sample)
 
 
-def theory_papers(n=12):
-    """이론틀을 명시적으로 다루는 논문 — 이름 붙은 이론을 확인하는 용도."""
-    q = ('("theoretical framework" OR "conceptual framework" OR "theoretical foundation" '
-         'OR TPACK OR "technology acceptance" OR UTAUT OR SAMR OR constructionism '
-         'OR "self-determination theory" OR "cognitive load" OR "situated learning")')
-    full = f'{q} AND {weekly.THEMES["수업"]} AND {weekly.LEVEL} {weekly.EXCLUDE}'
+IDENTIFY = """아래는 초등 AI·디지털 교육 논문 표본이 공통으로 인용한 문헌 목록이다.
+co_cited_here가 클수록 이 분야의 공통 전제다.
+
+이 문헌들이 어떤 <b>이름 붙은 이론·프레임워크</b>로 묶이는지 판별해라.
+
+규칙:
+- 목록에 근거가 없는 이론은 만들지 마라. 네가 아는 유명한 이론이라도 여기 문헌이
+  뒷받침하지 않으면 넣지 마라.
+- 한 이론에 문헌이 2편 미만이면 넣지 마라 — 지도가 아니라 추측이 된다.
+- 3~6개. 많이 쪼개지 말고, 초등 교사·대학원생이 구분해서 쓸 만한 단위로 묶어라.
+
+출력은 JSON 배열 하나만. 설명이나 코드펜스를 붙이지 마라.
+[{"name": "한국어 이론 이름(영문 병기 가능)",
+  "one_line": "무엇을 설명하는 이론인지 한 문장",
+  "source_titles": ["뒷받침하는 문헌 제목 그대로", "..."]}]"""
+
+SECTIONS = """이 이론 하나만 다룬다. 다른 이론은 비교할 때만 언급해라.
+
+<h2>그림으로 보는 핵심</h2>
+이 문서의 主다. 그림 3~5개. 그림마다 아래 1~2문장만.
+이 섹션만 보고도 이 이론이 무슨 말인지 알아야 한다.
+
+<h2>한 문장으로</h2>
+<div class="callout">이 이론이 말하는 것 한 줄.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+이 이론이 답하려는 질문이 무엇인지. 전문용어 없이. 일상 비유를 하나 써라.
+이 이론이 나오기 전에는 무엇을 설명하지 못했는지 짚으면 좋다.
+
+<h2>어디서 나왔나</h2>
+누가 언제, 어떤 문제 때문에 내놓았는지 3~5문장. 근거 문헌을 링크로 짚어라.
+데이터에 없는 연도·인물을 지어내지 마라. 모르면 '자료에 없음'이라고 써라.
+
+<h2>초등 교실에서는</h2>
+<b>이 문서에서 가장 중요한 섹션이다.</b> 이 이론이 수업 설계·생활지도에 실제로
+무엇을 말해주는지 2~4개. 각 항목은 "~할 때 ~하게 하라" 수준으로 구체적으로.
+"중요하다", "고려해야 한다" 같은 말로 끝내지 마라.
+
+<h2>이 이론으로 연구한다면</h2>
+이 이론을 이론적 배경으로 삼는다면 어떤 연구 질문이 자연스러운지 2~3개.
+각 질문마다 어느 문헌을 딛고 서야 하는지 링크로.
+
+<h2>조심할 점</h2>
+이 이론의 한계, 또는 이 분야에서 이 이론이 오용되는 방식. 2~3개.
+
+<h2>근거 문헌</h2>
+<ul>로. 제목(링크) — 연도, 이 표본에서 공동인용 N편. 각 한 줄로 어떤 역할인지."""
+
+
+def identify(bb):
+    raw = run_claude(f"{IDENTIFY}\n\n<data>\n{json.dumps(bb, ensure_ascii=False)}\n</data>")
+    raw = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", raw).strip()
     try:
-        r = weekly.oa(filter=f"from_publication_date:{SINCE},title_and_abstract.search:{full}",
-                      select="title,publication_year,cited_by_count,abstract_inverted_index,doi,"
-                             "open_access,best_oa_location",
-                      per_page=n, sort="relevance_score:desc")["results"]
-    except Exception as e:
-        print(f"[warn] 이론틀 논문 수집 실패: {e}", file=sys.stderr)
-        return []
-    return [{"title": w["title"], "year": w["publication_year"],
-             "cited_total": w["cited_by_count"],
-             "abstract": weekly.unabstract(w.pop("abstract_inverted_index", None))[:900],
-             "links": weekly.links_for(w)} for w in r]
+        return json.loads(raw[raw.index("["):raw.rindex("]") + 1])
+    except (ValueError, json.JSONDecodeError) as e:
+        sys.exit(f"이론 목록을 파싱하지 못했습니다: {e}\n받은 것: {raw[:400]}")
 
 
-TASK = """초등 컴퓨터교육·AI교육을 공부하는 대학원생을 위한 <b>이론 지도</b>를 만든다.
-개별 논문 요약이 아니다. 이 분야가 어떤 이론 위에 서 있는지 <b>한 장으로 보이게</b> 하는 게 목적이다.
+def explain(theory, bb):
+    """이론 하나를 ELI5 한 장으로."""
+    titles = set(theory.get("source_titles") or [])
+    sources = [b for b in bb if b["title"] in titles] or bb[:6]
+    prompt = "\n\n".join([
+        DESIGN, RULES, DIAGRAMS,
+        f'다룰 이론: <b>{theory["name"]}</b> — {theory.get("one_line", "")}',
+        SECTIONS,
+        f"<data>\n{json.dumps(sources, ensure_ascii=False)}\n</data>"])
+    title, fragment = split_title(run_claude(prompt), theory["name"])
+    return title, weekly.render(fragment, title=title)
 
-아래 데이터는 통계로 확정된 것이다:
-- <b>backbone</b>: 표본 논문들이 공통으로 인용한 문헌. co_cited_here가 클수록 이 분야의 공통 전제다.
-- <b>theory_papers</b>: 이론틀을 명시적으로 다루는 논문.
 
-데이터에 없는 문헌을 지어내지 마라. 네가 아는 이론이라도 이 목록에 근거가 없으면 쓰지 마라.
-다만 목록의 문헌이 어떤 <i>이름 붙은 이론</i>에 해당하는지(예: 구성주의, 자기결정성이론,
-기술수용모형)는 제목·초록에서 읽히는 범위에서 밝혀도 된다. 확실하지 않으면 그렇게 표시해라.
-
-<h2>한눈에 보는 지도</h2>
-이 문서의 主다. 그림으로 이론 지형을 보여줘라. 최소 3개:
-- <b>계보</b>: 오래된 토대에서 최근 틀로 이어지는 흐름. 연도를 축으로.
-- <b>갈래</b>: 이론들이 무엇을 설명하려 하는지로 묶기(무엇을 가르칠까 / 어떻게 배우나 /
-  왜 받아들이나 / 무엇을 조심하나 등, 데이터에서 실제로 읽히는 묶음으로).
-- <b>어디가 비어 있나</b>: 인용이 몰린 곳과 얇은 곳의 대비.
-그림마다 아래 1~2문장.
-
-<h2>이 분야가 딛고 선 문헌</h2>
-<table>로: 문헌(링크) / 연도 / 여기서 공동인용 / 전체 인용 / 어떤 역할인지 한 줄.
-co_cited_here 순으로. 최대 12행.
-
-<h2>이름 붙은 이론들</h2>
-데이터에서 확인되는 이론을 3~6개. 각각 <h3>로:
-- 무엇을 설명하는 이론인가 (전문용어 없이 3문장 이내)
-- 이 분야에서 어떤 자리를 차지하나 — 근거가 되는 문헌을 링크로 짚어라
-- <b>초등 교실에서는</b>: 이 이론이 수업 설계에 실제로 무엇을 말해주는가. 구체적으로.
-
-<h2>연구 계획에 쓸 때</h2>
-이론적 배경 절을 쓴다면 어느 문헌을 어떤 순서로 딛는 게 자연스러운지 2~3개 경로로 제안해라.
-각 경로마다 "이 조합은 어떤 연구 질문에 맞는지" 한 줄.
-
-<h2>한계</h2>
-이 지도가 무엇을 못 보는지. 표본 편향(영어권·OpenAlex 색인·최근 연도 가중)을 밝혀라."""
+def write_index(entries):
+    items = "".join(
+        f'<li><a href="theories/{f}">{t}</a> — {o}</li>' for t, o, f in entries)
+    INDEX.write_text(weekly.render(
+        f'<p style="font-size:.9em">표본 논문의 공동인용에서 추려낸 이론들. '
+        f'각 항목이 한 장짜리 설명으로 이어집니다. · {weekly.date.today()}</p>'
+        f"<h2>이론 목록</h2><ul>{items}</ul>",
+        title="AI·디지털 교육 이론 모음"), encoding="utf-8")
 
 
 def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    force = "--force" in sys.argv
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
     bb, n_sample = backbone()
-    tp = theory_papers()
-    print(f"backbone {len(bb)}건 / 이론틀 논문 {len(tp)}건", file=sys.stderr)
+    print(f"backbone {len(bb)}건 — 이론 판별 중...", file=sys.stderr)
+    theories = identify(bb)
+    print(f"이론 {len(theories)}개: {', '.join(t['name'] for t in theories)}", file=sys.stderr)
 
-    import json
-    data = json.dumps({"backbone": bb, "theory_papers": tp,
-                       "표본_논문_수": n_sample}, ensure_ascii=False)
-    prompt = "\n\n".join([
-        DESIGN, DIAGRAMS, TASK,
-        "첫 줄은 <!--TITLE: 짧은 한국어 제목--> 주석이다. HTML 조각만 출력해라.",
-        f"<data>\n{data}\n</data>"])
+    entries = []
+    for t in theories:
+        fname = f"{name_slug(t['name'])}.html"
+        path = OUT_DIR / fname
+        wanted = not args or any(a.lower() in t["name"].lower() for a in args)
+        if wanted and (force or not path.exists()):
+            print(f"  만드는 중: {t['name']}", file=sys.stderr)
+            title, doc = explain(t, bb)
+            path.write_text(doc, encoding="utf-8")
+        elif path.exists():
+            print(f"  건너뜀(이미 있음): {t['name']}", file=sys.stderr)
+        if path.exists():
+            entries.append((t["name"], t.get("one_line", ""), fname))
 
-    title, fragment = split_title(run_claude(prompt), "AI·디지털 교육 이론 지도")
-    doc = weekly.render(
-        f'<p style="font-size:.9em">표본 {n_sample}편의 참고문헌 집계 · {weekly.date.today()}</p>{fragment}',
-        title=title)
-    os.makedirs("docs", exist_ok=True)
-    OUT.write_text(doc, encoding="utf-8")
-    print(f"저장: {OUT}", file=sys.stderr)
+    write_index(entries)
+    print(f"저장: {INDEX} (+ {len(entries)}장)", file=sys.stderr)
     if "--no-open" not in sys.argv:
-        webbrowser.open(OUT.resolve().as_uri())
+        webbrowser.open(INDEX.resolve().as_uri())
 
 
 if __name__ == "__main__":

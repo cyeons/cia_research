@@ -1,0 +1,263 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>교사와 함께 만드는 AI 교육과정</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>교사와 함께 만드는 AI 교육과정</h1><p style="color:#666">2026-09-20</p>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Dodum&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#EFF2EF; --surface:#FAFBF9; --ink:#16211F; --muted:#5C6B67;
+  --line:#C9D4CE; --accent:#2A6B52; --mark:#E4DC97;
+  --warn-ink:#7E5207; --warn-bg:#F5EAD4; --warn-line:#D6B46A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A18; --surface:#1A2422; --ink:#E2E9E4; --muted:#9AAAA4;
+    --line:#2E3C38; --accent:#6CC29B; --mark:#4C4A1C;
+    --warn-ink:#E3B25E; --warn-bg:#2B2313; --warn-line:#6B5527;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A18; --surface:#1A2422; --ink:#E2E9E4; --muted:#9AAAA4;
+  --line:#2E3C38; --accent:#6CC29B; --mark:#4C4A1C;
+  --warn-ink:#E3B25E; --warn-bg:#2B2313; --warn-line:#6B5527;
+}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Gowun Dodum","IBM Plex Sans KR",system-ui,sans-serif;
+  font-size:17px; line-height:1.85;
+  max-width:40rem; margin:0 auto; padding-inline:16px; padding-block:2.5rem 4rem;
+}
+h2,h3{font-family:"IBM Plex Sans KR",system-ui,sans-serif; text-wrap:balance; line-height:1.4;}
+h2{font-size:1.45rem; font-weight:600; letter-spacing:-.01em; margin:3.2rem 0 1rem;}
+h2::before{content:""; display:block; width:2.4rem; height:3px; background:var(--accent); margin-bottom:.7rem;}
+h2:first-of-type{margin-top:1rem;}
+h3{font-size:1.08rem; font-weight:600; color:var(--accent); margin:1.8rem 0 .3rem;}
+p{margin:0 0 1rem;}
+ul{padding-left:1.1rem; margin:0 0 1rem;}
+li{margin-bottom:.6rem;}
+a{color:var(--accent); text-underline-offset:3px;}
+strong{font-family:"IBM Plex Sans KR",sans-serif; font-weight:600;}
+.key{background:linear-gradient(transparent 58%, var(--mark) 58%); padding:0 .1em; font-weight:600;}
+.num{font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.94em;
+     color:var(--accent); font-variant-numeric:tabular-nums;}
+.callout{
+  background:var(--surface); border-left:3px solid var(--accent);
+  padding:1rem 1.2rem; margin:1.4rem 0; font-size:1.1rem; line-height:1.7;
+  font-family:"IBM Plex Sans KR",sans-serif; font-weight:500; text-wrap:balance;
+}
+.warn{
+  background:var(--warn-bg); color:var(--warn-ink); border-left:3px solid var(--warn-line);
+  padding:.8rem 1.1rem; margin:1.4rem 0; font-size:.95rem; line-height:1.7;
+}
+figure{
+  margin:2.2rem 0; padding:1.2rem 0 .9rem;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  color:var(--ink);
+}
+figure svg{display:block; width:100%; max-width:100%; height:auto;}
+figcaption{
+  margin-top:.8rem; font-size:.9rem; line-height:1.65; color:var(--muted);
+  font-family:"IBM Plex Sans KR",sans-serif;
+}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure>
+<svg viewBox="0 0 680 296" role="img" aria-label="다리 셋이 다 있는 의자는 서 있고, 자율성 다리가 빠진 의자는 주저앉는다">
+  <text x="190" y="46" text-anchor="middle" font-size="16" fill="currentColor">셋이 다 있으면</text>
+  <text x="490" y="46" text-anchor="middle" font-size="16" fill="currentColor">하나가 빠지면</text>
+  <rect x="95" y="104" width="190" height="14" fill="#2da44e"/>
+  <line x1="115" y1="118" x2="100" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <line x1="190" y1="118" x2="190" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <line x1="265" y1="118" x2="280" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <text x="100" y="268" text-anchor="middle" font-size="14" fill="currentColor">자율성</text>
+  <text x="190" y="268" text-anchor="middle" font-size="14" fill="currentColor">유능감</text>
+  <text x="280" y="268" text-anchor="middle" font-size="14" fill="currentColor">관계성</text>
+  <polygon points="395,118 585,102 585,116 395,132" fill="currentColor"/>
+  <line x1="415" y1="130" x2="400" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 9" opacity="0.4"/>
+  <line x1="490" y1="126" x2="490" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <line x1="565" y1="114" x2="580" y2="240" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <text x="400" y="268" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.45">자율성</text>
+  <text x="490" y="268" text-anchor="middle" font-size="14" fill="currentColor">유능감</text>
+  <text x="578" y="268" text-anchor="middle" font-size="14" fill="currentColor">관계성</text>
+  <line x1="60" y1="248" x2="620" y2="248" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+</svg>
+<figcaption>이 이론은 사람이 일을 계속하게 만드는 받침을 세 개로 본다. 하나만 빠져도 의자는 기울어진다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 680 270" role="img" aria-label="교사가 힘들다고 말하는 세 가지가 각각 유능감, 자율성, 관계성에 대응한다">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <polygon points="0,0 10,5 0,10" fill="currentColor"/></marker></defs>
+  <text x="174" y="22" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.7" letter-spacing="1">교사가 하는 말</text>
+  <text x="521" y="22" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.7" letter-spacing="1">모자란 것의 이름</text>
+
+  <rect x="24" y="36" width="300" height="52" rx="2" fill="none" stroke="currentColor" opacity="0.5"/>
+  <text x="44" y="68" font-size="15" fill="currentColor">“AI, 나도 잘 모르는데”</text>
+  <line x1="336" y1="62" x2="424" y2="62" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <text x="380" y="50" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">가르칠 힘</text>
+  <rect x="436" y="36" width="170" height="52" rx="2" fill="currentColor" fill-opacity="0.07" stroke="currentColor"/>
+  <text x="521" y="69" text-anchor="middle" font-size="17" fill="currentColor">유능감</text>
+
+  <rect x="24" y="114" width="300" height="52" rx="2" fill="none" stroke="currentColor" opacity="0.5"/>
+  <text x="44" y="146" font-size="15" fill="currentColor">“내 교실인데 내가 못 고른다”</text>
+  <line x1="336" y1="140" x2="424" y2="140" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <text x="380" y="128" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">고를 권한</text>
+  <rect x="436" y="114" width="170" height="52" rx="2" fill="currentColor" fill-opacity="0.07" stroke="currentColor"/>
+  <text x="521" y="147" text-anchor="middle" font-size="17" fill="currentColor">자율성</text>
+
+  <rect x="24" y="192" width="300" height="52" rx="2" fill="none" stroke="currentColor" opacity="0.5"/>
+  <text x="44" y="224" font-size="15" fill="currentColor">“물어볼 사람이 없다”</text>
+  <line x1="336" y1="218" x2="424" y2="218" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <text x="380" y="206" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">기댈 사람</text>
+  <rect x="436" y="192" width="170" height="52" rx="2" fill="currentColor" fill-opacity="0.07" stroke="currentColor"/>
+  <text x="521" y="225" text-anchor="middle" font-size="17" fill="currentColor">관계성</text>
+</svg>
+<figcaption>교사가 어려움을 말할 때 그 말은 대개 셋 중 하나가 비었다는 신호다. 어느 다리가 빠졌는지에 따라 도와줄 방법이 다르다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 680 324" role="img" aria-label="밖에서 만든 자료는 한 해 뒤 멈추고, 함께 만든 수업은 교실에서 고쳐지며 다음 해에도 쓰인다">
+  <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+    <polygon points="0,0 10,5 0,10" fill="currentColor"/></marker></defs>
+
+  <text x="24" y="34" font-size="15" fill="currentColor" opacity="0.7">위에서 내려오면</text>
+  <rect x="24" y="52" width="150" height="48" rx="2" fill="none" stroke="currentColor" opacity="0.6"/>
+  <text x="99" y="82" text-anchor="middle" font-size="14" fill="currentColor">밖에서 만든 자료</text>
+  <line x1="180" y1="76" x2="248" y2="76" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="214" y="64" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">그대로 전달</text>
+  <rect x="254" y="52" width="150" height="48" rx="2" fill="none" stroke="currentColor" opacity="0.6"/>
+  <text x="329" y="82" text-anchor="middle" font-size="14" fill="currentColor">교사는 받아 쓴다</text>
+  <line x1="410" y1="76" x2="478" y2="76" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="444" y="64" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">고칠 틈 없음</text>
+  <rect x="484" y="52" width="150" height="48" rx="2" fill="none" stroke="currentColor" stroke-dasharray="6 6" opacity="0.6"/>
+  <text x="559" y="82" text-anchor="middle" font-size="14" fill="currentColor" opacity="0.7">한 해 뒤 멈춘다</text>
+
+  <text x="24" y="192" font-size="15" fill="currentColor" opacity="0.7">함께 만들면</text>
+  <rect x="24" y="210" width="150" height="48" rx="2" fill="none" stroke="currentColor" opacity="0.6"/>
+  <text x="99" y="240" text-anchor="middle" font-size="14" fill="currentColor">교사와 같이 짠다</text>
+  <line x1="180" y1="234" x2="248" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="214" y="222" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">내 수업이 됨</text>
+  <rect x="254" y="210" width="150" height="48" rx="2" fill="none" stroke="currentColor" opacity="0.6"/>
+  <text x="329" y="240" text-anchor="middle" font-size="14" fill="currentColor">교실에 맞게 고친다</text>
+  <line x1="410" y1="234" x2="478" y2="234" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar3)"/>
+  <text x="444" y="222" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">쓸 만해짐</text>
+  <rect x="484" y="210" width="150" height="48" rx="2" fill="none" stroke="#2da44e" stroke-width="2"/>
+  <text x="559" y="240" text-anchor="middle" font-size="14" fill="currentColor">다음 해에도 쓴다</text>
+  <path d="M 559 262 V 292 H 99 V 266" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.75" marker-end="url(#ar3)"/>
+  <text x="329" y="310" text-anchor="middle" font-size="13" fill="currentColor" opacity="0.8">고친 것을 다시 설계에 넣는다</text>
+</svg>
+<figcaption>같은 자료라도 교사가 고칠 자리가 있느냐가 갈림길이다. 고친 것이 다시 설계로 돌아올 때만 수업이 다음 해까지 간다.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 680 250" role="img" aria-label="네 논문의 전체 인용 수 막대 그래프. 442, 186, 259, 432회">
+  <text x="200" y="46" text-anchor="end" font-size="13" fill="currentColor">SDT 교육과정 계획</text>
+  <rect x="212" y="26" width="389" height="30" fill="currentColor" fill-opacity="0.3"/>
+  <text x="609" y="47" font-size="13" fill="currentColor">442회</text>
+
+  <text x="200" y="100" text-anchor="end" font-size="13" fill="currentColor">교사와 함께 설계</text>
+  <rect x="212" y="80" width="164" height="30" fill="#2da44e"/>
+  <text x="384" y="101" font-size="13" fill="currentColor">186회</text>
+
+  <text x="200" y="154" text-anchor="end" font-size="13" fill="currentColor">전체 설계 틀</text>
+  <rect x="212" y="134" width="228" height="30" fill="currentColor" fill-opacity="0.3"/>
+  <text x="448" y="155" font-size="13" fill="currentColor">259회</text>
+
+  <text x="200" y="208" text-anchor="end" font-size="13" fill="currentColor">교사 인식 조사</text>
+  <rect x="212" y="188" width="380" height="30" fill="currentColor" fill-opacity="0.3"/>
+  <text x="600" y="209" font-size="13" fill="currentColor">432회</text>
+
+  <line x1="212" y1="18" x2="212" y2="226" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+</svg>
+<figcaption>전체 인용 수는 네 편이 많이 다르다. 그런데 이 주제 안에서 같이 읽힌 횟수는 <span class="num">12·12·11·10</span>편으로 거의 같다. 초록색 논문은 많이 알려지진 않았지만 이 묶음의 중심에 있다.</figcaption>
+</figure>
+
+<h2>한 문장으로</h2>
+<div class="callout">AI 수업이 학교에 남으려면, 교사가 <strong>스스로 고를 수 있고, 할 줄 알고, 혼자가 아니어야</strong> 한다.</div>
+
+<h2>무엇을 설명하려는 이론인가</h2>
+<p>좋은 AI 교육 자료를 만들어 학교에 보냈다. 첫해엔 쓴다. 이듬해엔 아무도 안 쓴다. 왜일까.</p>
+<p>예전 설명은 주로 <strong>자료가 부족해서</strong>, <strong>연수가 부족해서</strong>였다. 그런데 자료를 더 주고 연수를 더 해도 같은 일이 반복됐다.</p>
+<p>이 이론은 답을 자료가 아니라 사람에서 찾는다. 새 운동기구를 체육관에 들여놔도 쓰는 법을 모르고, 내 마음대로 못 쓰고, 같이 쓸 사람이 없으면 먼지만 쌓인다. 그래서 <span class="key">교사의 세 가지 필요</span>를 교육과정 설계의 출발점으로 놓는다.</p>
+<ul>
+  <li><strong>자율성</strong> — 내 수업에서 무엇을 어떻게 할지 내가 정한다.</li>
+  <li><strong>유능감</strong> — 이 정도는 내가 할 수 있다는 느낌이 있다.</li>
+  <li><strong>관계성</strong> — 막혔을 때 같이 이야기할 사람이 있다.</li>
+</ul>
+<p>그리고 한 걸음 더 간다. 자료를 다 만들어 놓고 교사를 부르는 게 아니라, <span class="key">만드는 자리에 교사를 처음부터 넣는다</span>.</p>
+
+<h2>어디서 나왔나</h2>
+<p><a href="https://doi.org/10.3390/su12145568">SDT 관점의 AI 교육과정 계획</a>이 <span class="num">2020년</span>에 나오면서 틀이 잡혔다. AI 교육이 학교에 막 들어오던 때, "한 번 하고 끝나지 않으려면 무엇이 필요한가"를 물은 글이다.</p>
+<p>이듬해 <a href="https://doi.org/10.1145/3411764.3445377">교사와 함께 AI 교육과정을 설계한 연구</a>가 이를 실제 워크숍으로 옮겼다. 같은 해 <a href="https://doi.org/10.1007/s11528-021-00637-1">학교 전체를 보는 설계 틀</a>이 학생·교사·학교를 한 판에 놓고 정리했다.</p>
+<p>여기에 <a href="https://doi.org/10.1007/s40593-021-00243-5">교사들이 AI를 어떻게 보는지 물은 조사</a>가 붙는다. 교사의 생각을 먼저 듣는다는 이 흐름의 태도를 보여준다.</p>
+<p>저자와 소속 기관은 이 자료에 없다.</p>
+
+<h2>초등 교실에서는</h2>
+<p><strong>받은 자료에서 한 군데는 반드시 바꿔라.</strong> AI 교육 자료집을 받으면 예시 사진이나 소재 하나를 우리 반 이야기로 갈아 끼우고 수업하라. 통째로 따라 하면 다음 해에 다시 안 꺼내게 된다.</p>
+<p><strong>다 배우고 시작하지 마라. 한 차시 분량만 익혀라.</strong> 새 AI 도구를 쓸 땐 아이들에게 보여줄 그 한 가지 기능만 30분 먼저 만져 보고 들어가라. 완벽해질 때까지 기다리면 영원히 안 한다.</p>
+<p><strong>같은 차시를 같은 주에 하는 짝을 한 명 만들어라.</strong> 옆 반 교사와 날짜를 맞추고, 끝나면 10분만 "어디서 막혔나"를 이야기하라. 연수 열 시간보다 이게 오래간다.</p>
+<p><strong>아이들에게도 셋을 똑같이 줘라.</strong> 주제는 세 개 중에 고르게 하고(자율성), 처음엔 빈 화면 대신 이미 만들어진 것을 고치게 하고(유능감), 둘씩 짝지어 앉혀라(관계성).</p>
+<div class="callout">"중요하게 고려한다"가 아니라 "이번 주 수업에서 한 군데 바꾼다"가 이 이론의 실천이다.</div>
+
+<h2>이 이론으로 연구한다면</h2>
+<ul>
+  <li><strong>교사가 자료를 고칠 수 있게 열어 둔 AI 수업과, 그대로 쓰게 한 수업은 한 학기 뒤 얼마나 남아 있을까?</strong> — <a href="https://doi.org/10.3390/su12145568">SDT 교육과정 계획</a>의 지속 가능성 주장을 딛고 선다.</li>
+  <li><strong>초등 교사와 함께 AI 수업을 설계하는 워크숍에서, 교사들은 무엇을 가장 먼저 바꾸자고 할까?</strong> — <a href="https://doi.org/10.1145/3411764.3445377">교사 공동설계 연구</a>의 방식을 초등으로 옮기는 연구다.</li>
+  <li><strong>AI를 아직 안 써 본 교사가 말하는 걸림돌은 셋 중 어디에 몰려 있을까?</strong> — <a href="https://doi.org/10.1007/s40593-021-00243-5">교사 인식 조사</a>가 출발점이 된다.</li>
+</ul>
+
+<h2>조심할 점</h2>
+<p><strong>참여했다는 사실이 성과는 아니다.</strong> 교사를 불러 워크숍을 열었다는 것만으로 좋은 교육과정이 됐다고 말하는 연구가 많다. 만든 수업이 실제로 교실에서 굴러갔는지를 따로 봐야 한다.</p>
+<p><strong>설문 세 개로 끝나기 쉽다.</strong> 자율성·유능감·관계성은 설문으로 재기 편해서, 수업이 어떻게 달라졌는지 대신 만족도만 재고 끝나는 경우가 생긴다.</p>
+<div class="warn">이 세 가지는 원래 서구 학교 맥락에서 다듬어진 개념이다. 교육과정이 국가 수준으로 정해진 한국 초등에서 '자율성'이 무엇을 뜻하는지는 그대로 옮겨 쓸 수 없다. 우리 맥락에서 다시 정의해야 한다.</div>
+<p><strong>참여할 여유가 있는 교사만 모인다.</strong> 공동설계에 오는 교사는 이미 관심과 시간이 있는 사람들이다. 정작 도움이 필요한 교사는 그 자리에 없다.</p>
+
+<h2>근거 문헌</h2>
+<ul>
+  <li><a href="https://doi.org/10.3390/su12145568">Sustainable Curriculum Planning for Artificial Intelligence Education: A Self-Determination Theory Perspective</a> — <span class="num">2020</span>, 이 표본에서 공동인용 <span class="num">12편</span>. 이 틀의 뼈대. 세 가지 필요로 AI 교육과정을 설계한다는 주장의 출처다. (<a href="https://www.mdpi.com/2071-1050/12/14/5568/pdf?version=1594393361">PDF</a>)</li>
+  <li><a href="https://doi.org/10.1145/3411764.3445377">Engaging Teachers to Co-Design Integrated AI Curriculum for K-12 Classrooms</a> — <span class="num">2021</span>, 공동인용 <span class="num">12편</span>. 교사와 함께 만드는 일을 실제로 해 본 연구. 방법을 따라 할 때 딛는 자리다. (<a href="https://dspace.mit.edu/bitstreams/1c59804a-48f3-49b0-8bba-a7044ca2d713/download">PDF</a>)</li>
+  <li><a href="https://doi.org/10.1007/s11528-021-00637-1">A Holistic Approach to the Design of Artificial Intelligence (AI) Education for K-12 Schools</a> — <span class="num">2021</span>, 공동인용 <span class="num">11편</span>. 학생·교사·학교를 한 판에 놓는 넓은 설계 틀. 유료 논문이다.</li>
+  <li><a href="https://doi.org/10.1007/s40593-021-00243-5">Exploring Teachers' Perceptions of Artificial Intelligence as a Tool to Support their Practice in Estonian K-12 Education</a> — <span class="num">2021</span>, 공동인용 <span class="num">10편</span>. 교사의 생각을 먼저 묻는 쪽의 대표 사례.</li>
+</ul></body></html>
