@@ -191,6 +191,46 @@ def test_reviews_failure_does_not_kill_the_brief():
     assert weekly.reviews() == []                # 예외가 아니라 빈 목록
 
 
+def test_search_covers_the_teacher_relevance_criteria():
+    """정확성 기준: 초등 교사가 자기 교실과 연결지을 수 있는 것.
+    주제가 세 갈래(AI/디지털 수업, AI 윤리, 디지털 과몰입)로 넓어졌고,
+    교실 맥락(CONTEXT)이 필수다 - 이게 빠지면 같은 '과몰입' 검색이
+    비만·충치·자세 같은 보건 연구를 상위로 올린다(실측)."""
+    for kw in ("AI ethics", "digital citizenship", "screen time", "smartphone addiction"):
+        assert kw in weekly.TOPIC, f"{kw}가 주제에서 빠졌다"
+    assert "classroom" in weekly.CONTEXT and "teacher" in weekly.CONTEXT
+    for kw in ("obesity", "dental", "higher education", "undergraduate"):
+        assert kw in weekly.EXCLUDE, f"{kw}를 배제하지 않는다"
+    assert all(part in weekly.SEARCH for part in (weekly.TOPIC, weekly.LEVEL,
+                                                  weekly.CONTEXT, weekly.EXCLUDE))
+
+
+def test_papers_sorted_by_relevance_and_skips_already_sent(tmp="_p"):
+    """최신성이 아니라 정확성 우선. 그러면 매주 같은 상위 논문이 반복되므로
+    한 번 보낸 것은 건너뛴다."""
+    import os, shutil, json as _json
+    os.makedirs(tmp, exist_ok=True); cwd = os.getcwd(); os.chdir(tmp)
+    try:
+        os.makedirs("docs", exist_ok=True)
+        with open(weekly.SEEN_PAPERS_PATH, "w", encoding="utf-8") as f:
+            _json.dump({"ids": ["W_old"]}, f)
+        seen_params = {}
+        def fake_oa(**params):
+            seen_params.update(params)
+            return {"results": [
+                {"id": "W_old", "title": "이미 보낸 것", "referenced_works": []},
+                {"id": "W_new", "title": "새로 고른 것", "referenced_works": []}]}
+        weekly.oa = fake_oa
+
+        out = weekly.papers(n=5)
+        assert "relevance_score:desc" in seen_params["sort"]     # 최신순이 아니라 정확도순
+        assert [w["id"] for w in out] == ["W_new"]               # 이미 보낸 것은 제외
+        after = _json.load(open(weekly.SEEN_PAPERS_PATH, encoding="utf-8"))["ids"]
+        assert "W_new" in after and "W_old" in after             # 이번 것도 기억에 추가
+    finally:
+        os.chdir(cwd); shutil.rmtree(tmp)
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):

@@ -13,18 +13,32 @@ MAIL_TO = os.environ.get("MAIL_TO", "")
 WEEK_AGO = (date.today() - timedelta(days=7)).isoformat()
 YEAR_AGO = (date.today() - timedelta(days=365)).isoformat()
 
+# 검색 기준: 최신성이 아니라 정확성. 정확하다 = 초등학교 교사가 읽고 수업·생활지도에
+# 옮길 거리가 있다. 세 조건을 모두 만족해야 한다(AND):
+#   TOPIC   무엇을 다루나 — AI/디지털 수업, AI 윤리, 디지털 과몰입
+#   LEVEL   누구를 다루나 — 초등·K-12 (대학·성인 제외)
+#   CONTEXT 어떤 관점인가 — 교실·수업·교사 (이게 없으면 같은 주제라도 보건 연구가 온다:
+#           과몰입 검색 상위가 비만·충치·자세였다. 교사에게 시사점이 없다.)
 TOPIC = ('("computational thinking" OR "programming education" OR "coding education" '
          'OR "AI literacy" OR "AI education" OR "artificial intelligence education" '
-         'OR "block-based programming" OR "computer science education" OR "educational robotics")')
-LEVEL = '(elementary OR primary OR "K-12" OR children OR "young learners")'
-SEARCH = f"{TOPIC} AND {LEVEL}"
+         'OR "generative AI" OR "computer science education" OR "educational robotics" '
+         'OR "AI ethics" OR "algorithmic bias" OR "digital citizenship" '
+         'OR "screen time" OR "digital addiction" OR "smartphone addiction" '
+         'OR "problematic internet use" OR "digital wellbeing")')
+LEVEL = ('(elementary OR "primary school" OR "primary education" OR "K-12" '
+         'OR schoolchildren OR pupils)')
+CONTEXT = ('(classroom OR teaching OR curriculum OR instruction OR teacher '
+           'OR "learning outcomes" OR pedagogy OR school)')
+EXCLUDE = ('NOT (undergraduate OR university OR "higher education" OR medical OR nursing '
+           'OR obesity OR dental OR myopia OR posture OR sleep OR psychiatric)')
+SEARCH = f"{TOPIC} AND {LEVEL} AND {CONTEXT} {EXCLUDE}"
 
 
 def oa(**params):
     """OpenAlex GET. mailto는 polite pool 진입용(무료, 키 불필요).
 
     429 재시도가 필요하다: 한 번 돌 때 OpenAlex를 7번 부르는데(trending 4 +
-    new_papers + foundations + reviews), GitHub Actions 러너는 IP를 다른 사용자와
+    papers + foundations + reviews), GitHub Actions 러너는 IP를 다른 사용자와
     공유해서 polite pool에 있어도 429가 난다. 실제로 리뷰 호출 하나 때문에
     브리핑 전체가 죽은 적이 있다.
     """
@@ -86,17 +100,57 @@ def links_for(w):
             "paywalled": not is_oa}
 
 
-def new_papers(n=50):
+# 정확도 우선이므로 1주가 아니라 1년치에서 고른다. 대신 매주 같은 상위 논문이
+# 반복되므로, 한 번 보낸 것은 기억해 두고 다음부터 건너뛴다.
+PAPER_WINDOW_DAYS = 365
+SEEN_PAPERS_PATH = "docs/seen_papers.json"
+SEEN_KEEP = 300                  # 이 이상은 버린다. 1년 창에 후보가 2천 건대라 충분하다.
+
+
+def _load_seen():
+    try:
+        with open(SEEN_PAPERS_PATH, encoding="utf-8") as f:
+            return json.load(f).get("ids", [])
+    except (OSError, ValueError):
+        return []
+
+
+def papers(n=25):
+    """정확도 순으로 n편. 이미 보낸 것은 뺀다."""
     fields = ("id,doi,title,publication_year,cited_by_count,referenced_works,"
               "abstract_inverted_index,primary_location,open_access,best_oa_location")
-    r = oa(filter=f"from_publication_date:{WEEK_AGO},title_and_abstract.search:{SEARCH}",
-           select=fields, per_page=n, sort="cited_by_count:desc")
+    since = (date.today() - timedelta(days=PAPER_WINDOW_DAYS)).isoformat()
+    # 중복 제거로 빠지는 만큼 넉넉히 받는다.
+    r = oa(filter=f"from_publication_date:{since},title_and_abstract.search:{SEARCH}",
+           select=fields, per_page=n * 3, sort="relevance_score:desc")
+
+    seen = set(_load_seen())
+    out = []
     for w in r["results"]:
+        if w["id"] in seen:
+            continue
         loc = w.get("primary_location") or {}
         w["venue"] = ((loc.get("source") or {}).get("display_name")) or ""
         w["abstract"] = unabstract(w.pop("abstract_inverted_index", None))
         w["links"] = links_for(w)
-    return r["results"]
+        out.append(w)
+        if len(out) >= n:
+            break
+
+    if not out:      # 1년치를 다 돌았다. 기억을 비우고 처음부터.
+        print("[warn] 후보가 모두 소진됐다 — seen 목록을 비운다", file=sys.stderr)
+        os.makedirs("docs", exist_ok=True)
+        with open(SEEN_PAPERS_PATH, "w", encoding="utf-8") as f:
+            json.dump({"ids": []}, f)
+        return papers(n)
+
+    # 병합을 먼저 끝낸다. open(...,"w")는 여는 순간 파일을 비우므로,
+    # 그 안에서 _load_seen()을 부르면 빈 파일을 읽어 기억이 매주 리셋된다.
+    merged = (list(seen) + [w["id"] for w in out])[-SEEN_KEEP:]
+    os.makedirs("docs", exist_ok=True)
+    with open(SEEN_PAPERS_PATH, "w", encoding="utf-8") as f:
+        json.dump({"ids": merged}, f)
+    return out
 
 
 def foundations(papers, n=10):
@@ -265,7 +319,7 @@ def keris_report():
 def summarize(trends, papers, founds, domestic, revs, keris):
     data = {
         "이번주_급상승_토픽(lift=평소대비배수)": trends,
-        "신규논문_해외": [{k: p[k] for k in ("title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
+        "논문_해외(정확도순_최근1년)": [{k: p[k] for k in ("title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
                      for p in papers[:25]],
         "신규논문_국내(최근30일_초록없음)": domestic,
         "공통인용_문헌(이론적배경_후보)": founds,
@@ -289,10 +343,17 @@ def summarize(trends, papers, founds, domestic, revs, keris):
 
 1. <h2>이번 주 흐름</h2> — 급상승 토픽 중 실제로 의미 있는 3~4개만. lift가 높아도 우연일 수 있으면 그렇게 써라. 각 토픽이 왜 지금 뜨는지 신규논문 초록에서 근거를 찾아 연결. 주의: EFA·Likert·구조방정식 같은 <i>통계 기법 이름</i>은 설문 논문이면 어느 분야든 나오는 공통 어휘라, 급상승해도 이 분야의 연구 흐름이 아니라 "이번 주에 척도 개발 논문이 몰렸다"는 뜻일 뿐이다. 그렇게 보이면 그렇게 써라.
 2. <h2>큰 그림 — 리뷰·메타분석</h2> — 체계적 문헌고찰 한 편은 논문 수십~수백 편을 정리한 것이라, 개별 실험보다 분야 전체가 어디로 가는지 잘 보인다. 최대 3편. <b>고를 때</b>: 목록에 약탈적/저품질 학술지가 섞여 있다. 저널 평판과 초록의 구체성(몇 편을 어떤 DB에서 어떤 기준으로 골랐는지 밝히는가)을 보고 골라라. 초등·K-12와 무관한 것은 버려라. 쓸 만한 게 1편뿐이면 1편만 써라 — 숫자를 채우지 마라. 편당 <b>제목</b>(링크) — 저널, 연도, 인용수. 그리고 <b>무엇을 정리했나</b> 2문장: 몇 편을 어떤 기준으로 훑었고, 그래서 이 분야에 대해 무슨 결론을 내렸는지. 개별 실험 결과가 아니라 <i>종합된 판단</i>을 전해라. 비었으면 "최근 30일 신규 리뷰 없음"만 써라.
-3. <h2>읽을 만한 신규 논문 5편</h2> — 초등/K-12 현장 적합성과 방법론 견고함 기준. 편당 아래 3줄 구조를 지켜라:
+3. <h2>읽을 만한 논문 5편</h2> — 이 목록은 최신순이 아니라 <b>정확도순</b>(최근 1년)이다. 새로 나왔다는 이유로 고르지 마라.
+   <b>고르는 기준 — 아래를 모두 만족하는 것만</b>:
+   (가) <b>초등학교 교사</b>가 읽을 때 자기 교실과 연결점이 있는가. 대학생·성인 대상 연구는 버려라.
+   (나) 주제가 AI/디지털 활용 수업, AI 윤리, 디지털 과몰입 중 하나에 실제로 닿아 있는가.
+   (다) <b>시사점이 있는가</b> — 수업 설계·생활지도·학교 규칙 중 무엇이든 "그래서 나는 무엇을 다르게 할 수 있나"에 답이 되는가.
+        현상만 기술하고 끝나는 연구, 시사점이 "더 많은 연구가 필요하다"뿐인 연구는 버려라.
+   다섯 편을 억지로 채우지 마라. 기준을 통과하는 게 3편뿐이면 3편만 써라.
+   편당 아래 3줄 구조를 지켜라:
    - <b>제목</b>(링크) — 저널, 연도. 열람 링크를 PDF/본문/DOI 순으로 붙여라.
    - <b>쉽게 말하면</b>: 전문용어 없이 2문장. "~를 알아보려고 ~명에게 ~를 시켜봤더니 ~였다" 형태. 통계 용어는 "차이가 꽤 컸다" 식으로 풀어라. 이건 정독용이 아니라 <i>어느 걸 읽을지 고르기 위한</i> 요약이다.
-   - <b>연구적 의미</b>: 학술 용어를 써도 된다. 표본·설계의 한계나 선행연구와의 관계를 1~2문장.
+   - <b>교실에 주는 시사점</b>: 이 논문을 읽고 초등 교사가 무엇을 다르게 할 수 있는지 1~2문장. 구체적으로. 표본·설계의 한계가 그 시사점을 제한한다면 그것도 한 줄.
 4. <h2>이론적 배경 후보</h2> — 공통인용 문헌 표(문헌[doi로 링크] / 연도 / 이번 주 공동인용 수 / 어떤 이론적 역할). 여러 신규 논문이 동시에 인용했다는 건 그게 이 분야의 공통 전제라는 뜻임을 짚어줘라.
 5. <h2>국내 동향</h2> — 목록에 제목·학회·DOI만 있고 초록이 없다. 제목마다 url 필드로 링크를 걸어라. 내용을 지어내지 말고 제목과 학회명에서 읽히는 것만(어떤 주제가 몰려 있는지, 해외와 관심사가 겹치는지/다른지) 짚어라. 비었으면 "최근 30일 신규 없음"만 써라.
 6. <h2>KERIS 디지털교육 동향</h2> — 월간 리포트라 대부분의 주는 지난주와 같은 호다. is_new가 true면 "새 호가 나왔습니다"로 시작하고, false면 "최신호는 여전히 N호입니다"로 한 줄만 쓴다. 제목을 url로 링크하고 파일 크기(mb)를 괄호로 덧붙여라. 내용은 받아보지 않았으니 <b>무슨 내용인지 추측하지 마라</b> — 제목에 있는 것만 쓴다. 마지막에 "정독하려면 내려받아 eli5.py에 넣으세요" 한 줄. 데이터가 null이면 "이번 주 확인 실패"만 써라.
@@ -427,11 +488,11 @@ def send(doc):
 
 def main():
     trends = trending()
-    papers = new_papers()
+    picks = papers()
     revs, keris = reviews(), keris_report()
-    print(f"토픽 {len(trends)} / 신규논문 {len(papers)} / 리뷰 {len(revs)} / "
+    print(f"토픽 {len(trends)} / 논문 {len(picks)} / 리뷰 {len(revs)} / "
           f"KERIS {'통권 ' + str(keris.get('issue')) if keris else '실패'}", file=sys.stderr)
-    doc = render(summarize(trends, papers, foundations(papers), domestic(), revs, keris),
+    doc = render(summarize(trends, picks, foundations(picks), domestic(), revs, keris),
                  pages_url())
     archive(doc)
     print(f"docs/{date.today()}.html 저장", file=sys.stderr)
