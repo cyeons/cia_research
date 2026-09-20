@@ -134,18 +134,21 @@ def test_split_title():
     assert eli5.split_title("<h2>x</h2>", "대체") == ("대체", "<h2>x</h2>")
 
 
-def test_sections_branch_by_document_type():
-    """회귀: 섹션 틀이 '단일 연구 논문'만 전제하면, 동향 리포트·매거진을 넣었을 때
-    끝에 실린 논문 한두 편만 정리하고 본문(정책 동향, 국가별 사례)을 통째로 빠뜨린다.
-    실제로 KERIS 40쪽 매거진에서 그렇게 됐다 - 추출은 멀쩡했고(36,940자 전부 전달)
-    프롬프트가 '누구에게 몇 명 얼마 동안' 표를 요구한 게 원인이었다."""
+def test_sections_bail_out_on_compilation_documents():
+    """회귀: 섹션 틀이 '단일 연구 논문'만 전제하면, 동향 리포트를 넣었을 때 끝에 실린
+    논문 한두 편만 정리하고 본문을 통째로 빠뜨린다(KERIS 40쪽 매거진에서 실제로 그랬다).
+
+    그렇다고 여러 주제용 틀을 따로 두는 것도 답이 아니었다 - 설명할 메커니즘이 하나로
+    없는 문서에 그림을 강제하면 설명이 아니라 장식이 된다. 이 도구는 연구 하나만 맡고,
+    나머지는 안 맞는다고 말한 뒤 길잡이만 준다.
+    """
     p = eli5.build_prompt("https://doi.org/10.1/x")
-    assert "단일 연구 논문" in p and "여러 주제를 모은 문서" in p   # 분기 자체가 있어야
-    assert "A의 틀로 쓰면 실패" in p                               # 잘못된 쪽을 명시
-    for section in ("이 문서가 다루는 지형", "반복되는 흐름", "눈에 띄는 것"):
-        assert section in p, f"B 전용 섹션 {section}가 없다"
-    for section in ("어떤 연구인가", "연구적 위치"):
-        assert section in p, f"A 전용 섹션 {section}가 없다"
+    assert "여러 주제를 모은 것이면" in p                 # 감지 지시
+    assert "아래 섹션 틀을 쓰지 마라" in p                 # 강제로 채우지 않게
+    assert "그림을 그리지 말고" in p                       # 장식용 그림 금지
+    assert "어디부터 읽을까" in p                          # 대신 주는 것
+    # 여러 주제용 본문 섹션을 따로 만들지 않는다
+    assert "이 문서가 다루는 지형" not in p and "반복되는 흐름" not in p
 
 
 if __name__ == "__main__":
