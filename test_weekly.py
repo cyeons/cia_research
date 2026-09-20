@@ -89,11 +89,75 @@ def test_summarize_link_rules_cover_every_section():
     지난 브리핑에서 국내 동향이 0건이라 못 드러났을 뿐, 데이터가 들어오면 터진다."""
     calls = []
     weekly.gemini = lambda system, prompt: calls.append((system, prompt)) or "<h2>x</h2>"
-    weekly.summarize([], [], [], [])
+    weekly.summarize([], [], [], [], [], None)
     system, prompt = calls[0]
-    assert "doi 필드" in system and "url 필드" in system      # 세 형태 전부 명시
+    assert "doi 필드" in system and "url 필드" in system      # 링크 형태 전부 명시
     assert "doi로 링크" in prompt                              # 이론적 배경 섹션 지시
     assert "url 필드로 링크" in prompt                         # 국내 동향 섹션 지시
+    assert "KERIS" in system                                   # KERIS도 링크 규칙 안에
+
+
+def test_keris_parses_issue_and_pdf_link():
+    """KERIS는 공개 API가 없어 HTML을 긁는다. 3단계 체인이 다 이어져야 PDF에 닿는다:
+    POST 목록 -> data-id(fileGrpKey) -> fileDownChk.do JSON -> fileDownload.do"""
+    row = ("<tr><td>번호 363</td>"
+           "<td>[통권 224호] 2026 KERIS 디지털교육 글로벌 동향 리포트</td>"
+           "<td>담당자 곽병일</td><td>발행년도 2026</td>"
+           '<td><a class="listFileDown" data-id="19764">첨부</a></td></tr>')
+    html = "<table><tr><th>번호</th></tr>" + row + "</table>"
+
+    def fake_urlopen(req, timeout=None):
+        import io as _io, json as _json
+        url = req.full_url if hasattr(req, "full_url") else str(req)
+        if "fileDownChk" in url:
+            body = _json.dumps({"infoMediaFileList": [
+                {"fileKey": "abc123", "orignlFileNm": "(8월호) 리포트_224호.pdf",
+                 "fileSize": 41672211}]}).encode()
+        else:
+            body = html.encode("utf-8")
+        class R:
+            def __enter__(self): return _io.BytesIO(body)
+            def __exit__(self, *a): return False
+        return R()
+    weekly.urllib.request.urlopen = fake_urlopen
+
+    r = weekly.keris_latest()
+    assert r["issue"] == 224, r
+    assert "fileKey=abc123" in r["url"] and "dwlTy=pblcte" in r["url"]
+    assert r["mb"] == 39.7                       # 41,672,211 바이트
+    assert "통권 224호" in r["title"]
+
+
+def test_keris_broken_html_does_not_kill_the_brief():
+    """HTML 구조가 바뀌어도 브리핑 전체는 나가야 한다 - 이 섹션만 빈다."""
+    def fake_urlopen(req, timeout=None):
+        import io as _io
+        class R:
+            def __enter__(self): return _io.BytesIO("<html>개편했습니다</html>".encode("utf-8"))
+            def __exit__(self, *a): return False
+        return R()
+    weekly.urllib.request.urlopen = fake_urlopen
+    assert weekly.keris_latest() is None          # 예외가 아니라 None
+
+
+def test_reviews_filters_to_review_type():
+    """1차 연구만 모으면 지엽적이 된다. type:review 가 빠지면 이 섹션의 존재 이유가 없다."""
+    seen = {}
+    def fake_oa(**params):
+        seen.update(params)
+        return {"results": [{"title": "A Systematic Literature Review of AI Literacy",
+                             "publication_year": 2026, "cited_by_count": 147,
+                             "abstract_inverted_index": {"We": [0], "reviewed": [1]},
+                             "primary_location": {"source": {"display_name": "Computers & Education"}},
+                             "open_access": {"is_oa": True},
+                             "best_oa_location": {"pdf_url": "https://x.example/r.pdf"},
+                             "doi": "https://doi.org/10.1/r"}]}
+    weekly.oa = fake_oa
+
+    out = weekly.reviews()
+    assert "type:review" in seen["filter"]
+    assert out[0]["links"]["pdf"] == "https://x.example/r.pdf"   # eli5.py에 바로 넣을 수 있게
+    assert out[0]["abstract"] == "We reviewed"
 
 
 if __name__ == "__main__":

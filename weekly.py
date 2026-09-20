@@ -98,6 +98,32 @@ def foundations(papers, n=10):
     return [{**meta[rid], "co_cited_by": c} for rid, c in top if rid in meta]
 
 
+# 1차 연구(단일 실험, 척도 타당화)만 모으면 브리핑이 지엽적이 된다 — EFA/Likert 같은
+# 통계 기법명이 "급상승"으로 잡히는 게 그 증상이다. 체계적 문헌고찰 한 편은 논문
+# 50~200편을 정리한 것이라, 같은 학술 자료인데도 층위가 다르다.
+REVIEW_WINDOW_DAYS = 30   # 리뷰는 속보성이 아니다. 7일 창이면 2건뿐이라 대부분 빈다.
+
+
+def reviews(n=5):
+    since = (date.today() - timedelta(days=REVIEW_WINDOW_DAYS)).isoformat()
+    fields = ("title,publication_year,cited_by_count,abstract_inverted_index,"
+              "primary_location,open_access,best_oa_location,doi")
+    # 30일 창에서는 인용수가 전부 0이라 인용순 정렬이 무의미하다. 최신순으로 받고,
+    # 그중 어느 걸 실을지는 Gemini가 저널 평판까지 보고 고른다(약탈적 학술지가 섞인다).
+    r = oa(filter=f"from_publication_date:{since},title_and_abstract.search:{SEARCH},type:review",
+           select=fields, per_page=n * 2, sort="publication_date:desc")
+    out = []
+    for w in r["results"]:
+        loc = w.get("primary_location") or {}
+        out.append({"title": w["title"],
+                    "venue": ((loc.get("source") or {}).get("display_name")) or "",
+                    "year": w.get("publication_year"),
+                    "cited_by_count": w.get("cited_by_count"),
+                    "abstract": unabstract(w.pop("abstract_inverted_index", None)),
+                    "links": links_for(w)})
+    return out
+
+
 # 국내 논문: KCI는 API 키 발급에 "접속 서버 IP"를 요구한다(고정 IP 필수).
 # GitHub Actions 공유 러너는 실행마다 IP가 바뀌므로 원천적으로 안 맞는다.
 # 대신 Crossref를 쓴다 — 키도 IP 등록도 없다. 목표 학회들이 DOI를 Crossref에
@@ -135,13 +161,94 @@ def domestic(n=20):
     return out[:n]
 
 
-def summarize(trends, papers, founds, domestic):
+# KERIS 「디지털교육 국내외 동향」 — 월간(통권 224호까지). 공개 API도 RSS도 없어서
+# HTML을 긁는다. 검증된 3단계 체인이고 인증·세션이 필요 없다:
+#   1) POST 목록 -> <table> 행마다 data-id(fileGrpKey)
+#   2) GET fileDownChk.do?fileGrpKey -> JSON {fileKey, 파일명, 크기}
+#   3) GET fileDownload.do?fileKey   -> PDF
+# HTML 구조에 의존하므로 언제든 깨질 수 있다. 깨져도 브리핑 전체는 정상 발송되고
+# 이 섹션만 빈다(stderr 경고는 Actions 로그에 남는다).
+KERIS_BASE = "https://www.keris.or.kr"
+KERIS_MI = "1143"                 # 디지털교육 국내외 동향 메뉴 id
+KERIS_UA = {"User-Agent": "Mozilla/5.0"}
+SEEN_PATH = "docs/keris_seen.json"   # 워크플로가 docs/ 를 커밋하므로 주간 상태가 유지된다
+
+
+def keris_latest():
+    """최신호 1건. 실패하면 None — 호출부에서 섹션만 비운다."""
+    try:
+        req = urllib.request.Request(
+            f"{KERIS_BASE}/main/ad/pblcte/selectPblcteOVSEAList.do",
+            data=f"mi={KERIS_MI}&pageIndex=1".encode(), headers=KERIS_UA)
+        with urllib.request.urlopen(req, timeout=30) as r:
+            html = r.read().decode("utf-8", "replace")
+    except Exception as e:
+        print(f"[warn] KERIS 목록 실패: {e}", file=sys.stderr)
+        return None
+
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S):
+        grp = re.search(r'data-id="(\d+)"', row)
+        if not grp:
+            continue
+        text = " ".join(re.sub(r"<[^>]+>", " ", row).split())
+        title = re.search(r"번호\s+\d+\s+(.*?)\s+담당자", text)
+        if not title:
+            continue
+        issue = re.search(r"\[통권\s*(\d+)\s*호\]", text)
+        info = _keris_file(grp.group(1))
+        return {"title": title.group(1), "issue": int(issue.group(1)) if issue else None,
+                **(info or {})}
+
+    print(f"[warn] KERIS 목록 파싱 0건 — HTML 구조가 바뀌었을 수 있다", file=sys.stderr)
+    return None
+
+
+def _keris_file(file_grp_key):
+    """fileGrpKey -> 실제 PDF 링크와 파일 정보."""
+    try:
+        req = urllib.request.Request(
+            f"{KERIS_BASE}/main/ad/pblcte/fileDownChk.do?"
+            + urllib.parse.urlencode({"fileGrpKey": file_grp_key}), headers=KERIS_UA)
+        with urllib.request.urlopen(req, timeout=30) as r:
+            files = json.load(r).get("infoMediaFileList") or []
+    except Exception as e:
+        print(f"[warn] KERIS 파일정보 실패: {e}", file=sys.stderr)
+        return None
+    if not files:
+        return None
+    f = files[0]
+    return {"filename": f.get("orignlFileNm", ""),
+            "mb": round((f.get("fileSize") or 0) / 1024 / 1024, 1),
+            "url": f"{KERIS_BASE}/common/fileDownload.do?"
+                   + urllib.parse.urlencode({"fileKey": f["fileKey"], "dwlTy": "pblcte"})}
+
+
+def keris_report():
+    """최신호 + 지난주 대비 새 호인지. 월간이라 4주 중 3주는 is_new=False."""
+    latest = keris_latest()
+    if not latest:
+        return None
+    try:
+        with open(SEEN_PATH, encoding="utf-8") as f:
+            seen = json.load(f).get("issue")
+    except (OSError, ValueError):
+        seen = None
+    latest["is_new"] = latest.get("issue") != seen
+    os.makedirs("docs", exist_ok=True)
+    with open(SEEN_PATH, "w", encoding="utf-8") as f:
+        json.dump({"issue": latest.get("issue"), "checked": date.today().isoformat()}, f)
+    return latest
+
+
+def summarize(trends, papers, founds, domestic, revs, keris):
     data = {
         "이번주_급상승_토픽(lift=평소대비배수)": trends,
         "신규논문_해외": [{k: p[k] for k in ("title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
                      for p in papers[:25]],
         "신규논문_국내(최근30일_초록없음)": domestic,
         "공통인용_문헌(이론적배경_후보)": founds,
+        "리뷰_메타분석(최근30일)": revs,
+        "KERIS_디지털교육_국내외동향_최신호": keris,
     }
     system = (
         "너는 초등 컴퓨터교육/AI교육을 연구하는 대학원생의 주간 리서치 어시스턴트다. "
@@ -149,22 +256,24 @@ def summarize(trends, papers, founds, domestic):
         "주어진 숫자가 무엇을 뜻하는지 해석하고 맥락을 붙여라. "
         "데이터에 없는 논문을 언급하지 마라. 확실하지 않으면 '자료 부족'이라고 써라. "
         "모든 섹션에서 논문·문헌 제목은 실제 데이터에 있는 URL로 <a href> 링크를 걸어라 "
-        "(해외 신규 논문은 links.pdf > links.full_text > links.doi 순, 이론적 배경과 국내 동향은 "
-        "각각 doi 필드, url 필드). 그래야 클릭해서 바로 읽거나 eli5 도구에 넣을 수 있다. "
+        "(해외 신규 논문과 리뷰는 links.pdf > links.full_text > links.doi 순, 이론적 배경·국내 동향·"
+        "KERIS는 각각 doi 필드, url 필드, url 필드). 그래야 클릭해서 바로 읽거나 eli5 도구에 넣을 수 있다. "
         "URL을 지어내지 말고, 필드가 비어 있으면 링크 없이 텍스트만 써라. "
         "해외 신규 논문에서 paywalled가 true면 제목 뒤에 '(유료·도서관 프록시 필요)'를 붙여라. "
         "출력은 이메일 본문용 HTML 조각(<h2>/<p>/<ul>/<table>, 인라인 style 최소)만. "
         "<html>/<body> 태그와 마크다운 코드펜스는 쓰지 마라."
     )
-    prompt = f"""아래 JSON으로 주간 브리핑을 작성해라. 한국어. 4개 섹션:
+    prompt = f"""아래 JSON으로 주간 브리핑을 작성해라. 한국어. 6개 섹션, 아래 순서 그대로:
 
-1. <h2>이번 주 흐름</h2> — 급상승 토픽 중 실제로 의미 있는 3~4개만. lift가 높아도 우연일 수 있으면 그렇게 써라. 각 토픽이 왜 지금 뜨는지 신규논문 초록에서 근거를 찾아 연결.
-2. <h2>읽을 만한 신규 논문 5편</h2> — 초등/K-12 현장 적합성과 방법론 견고함 기준. 편당 아래 3줄 구조를 지켜라:
+1. <h2>이번 주 흐름</h2> — 급상승 토픽 중 실제로 의미 있는 3~4개만. lift가 높아도 우연일 수 있으면 그렇게 써라. 각 토픽이 왜 지금 뜨는지 신규논문 초록에서 근거를 찾아 연결. 주의: EFA·Likert·구조방정식 같은 <i>통계 기법 이름</i>은 설문 논문이면 어느 분야든 나오는 공통 어휘라, 급상승해도 이 분야의 연구 흐름이 아니라 "이번 주에 척도 개발 논문이 몰렸다"는 뜻일 뿐이다. 그렇게 보이면 그렇게 써라.
+2. <h2>큰 그림 — 리뷰·메타분석</h2> — 체계적 문헌고찰 한 편은 논문 수십~수백 편을 정리한 것이라, 개별 실험보다 분야 전체가 어디로 가는지 잘 보인다. 최대 3편. <b>고를 때</b>: 목록에 약탈적/저품질 학술지가 섞여 있다. 저널 평판과 초록의 구체성(몇 편을 어떤 DB에서 어떤 기준으로 골랐는지 밝히는가)을 보고 골라라. 초등·K-12와 무관한 것은 버려라. 쓸 만한 게 1편뿐이면 1편만 써라 — 숫자를 채우지 마라. 편당 <b>제목</b>(링크) — 저널, 연도, 인용수. 그리고 <b>무엇을 정리했나</b> 2문장: 몇 편을 어떤 기준으로 훑었고, 그래서 이 분야에 대해 무슨 결론을 내렸는지. 개별 실험 결과가 아니라 <i>종합된 판단</i>을 전해라. 비었으면 "최근 30일 신규 리뷰 없음"만 써라.
+3. <h2>읽을 만한 신규 논문 5편</h2> — 초등/K-12 현장 적합성과 방법론 견고함 기준. 편당 아래 3줄 구조를 지켜라:
    - <b>제목</b>(링크) — 저널, 연도. 열람 링크를 PDF/본문/DOI 순으로 붙여라.
    - <b>쉽게 말하면</b>: 전문용어 없이 2문장. "~를 알아보려고 ~명에게 ~를 시켜봤더니 ~였다" 형태. 통계 용어는 "차이가 꽤 컸다" 식으로 풀어라. 이건 정독용이 아니라 <i>어느 걸 읽을지 고르기 위한</i> 요약이다.
    - <b>연구적 의미</b>: 학술 용어를 써도 된다. 표본·설계의 한계나 선행연구와의 관계를 1~2문장.
-3. <h2>이론적 배경 후보</h2> — 공통인용 문헌 표(문헌[doi로 링크] / 연도 / 이번 주 공동인용 수 / 어떤 이론적 역할). 여러 신규 논문이 동시에 인용했다는 건 그게 이 분야의 공통 전제라는 뜻임을 짚어줘라.
-4. <h2>국내 동향</h2> — 목록에 제목·학회·DOI만 있고 초록이 없다. 제목마다 url 필드로 링크를 걸어라. 내용을 지어내지 말고 제목과 학회명에서 읽히는 것만(어떤 주제가 몰려 있는지, 해외와 관심사가 겹치는지/다른지) 짚어라. 비었으면 "최근 30일 신규 없음"만 써라.
+4. <h2>이론적 배경 후보</h2> — 공통인용 문헌 표(문헌[doi로 링크] / 연도 / 이번 주 공동인용 수 / 어떤 이론적 역할). 여러 신규 논문이 동시에 인용했다는 건 그게 이 분야의 공통 전제라는 뜻임을 짚어줘라.
+5. <h2>국내 동향</h2> — 목록에 제목·학회·DOI만 있고 초록이 없다. 제목마다 url 필드로 링크를 걸어라. 내용을 지어내지 말고 제목과 학회명에서 읽히는 것만(어떤 주제가 몰려 있는지, 해외와 관심사가 겹치는지/다른지) 짚어라. 비었으면 "최근 30일 신규 없음"만 써라.
+6. <h2>KERIS 디지털교육 동향</h2> — 월간 리포트라 대부분의 주는 지난주와 같은 호다. is_new가 true면 "새 호가 나왔습니다"로 시작하고, false면 "최신호는 여전히 N호입니다"로 한 줄만 쓴다. 제목을 url로 링크하고 파일 크기(mb)를 괄호로 덧붙여라. 내용은 받아보지 않았으니 <b>무슨 내용인지 추측하지 마라</b> — 제목에 있는 것만 쓴다. 마지막에 "정독하려면 내려받아 eli5.py에 넣으세요" 한 줄. 데이터가 null이면 "이번 주 확인 실패"만 써라.
 
 <data>
 {json.dumps(data, ensure_ascii=False)}
@@ -297,8 +406,11 @@ def send(doc):
 def main():
     trends = trending()
     papers = new_papers()
-    print(f"토픽 {len(trends)} / 신규논문 {len(papers)}", file=sys.stderr)
-    doc = render(summarize(trends, papers, foundations(papers), domestic()), pages_url())
+    revs, keris = reviews(), keris_report()
+    print(f"토픽 {len(trends)} / 신규논문 {len(papers)} / 리뷰 {len(revs)} / "
+          f"KERIS {'통권 ' + str(keris.get('issue')) if keris else '실패'}", file=sys.stderr)
+    doc = render(summarize(trends, papers, foundations(papers), domestic(), revs, keris),
+                 pages_url())
     archive(doc)
     print(f"docs/{date.today()}.html 저장", file=sys.stderr)
     if "--dry-run" not in sys.argv:
