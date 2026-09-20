@@ -4,7 +4,7 @@
   - 최신 트렌드 = 이번 주 토픽 빈도 / 지난 1년 평균 주간 빈도 (lift)
   - 이론적 배경 = 신규 논문들이 공통으로 인용한 문헌 (co-citation 빈도)
 """
-import json, os, re, smtplib, sys, urllib.error, urllib.parse, urllib.request
+import json, os, re, smtplib, sys, time, urllib.error, urllib.parse, urllib.request
 from collections import Counter
 from datetime import date, timedelta
 from email.message import EmailMessage
@@ -21,12 +21,26 @@ SEARCH = f"{TOPIC} AND {LEVEL}"
 
 
 def oa(**params):
-    """OpenAlex GET. mailto는 polite pool 진입용(무료, 키 불필요)."""
+    """OpenAlex GET. mailto는 polite pool 진입용(무료, 키 불필요).
+
+    429 재시도가 필요하다: 한 번 돌 때 OpenAlex를 7번 부르는데(trending 4 +
+    new_papers + foundations + reviews), GitHub Actions 러너는 IP를 다른 사용자와
+    공유해서 polite pool에 있어도 429가 난다. 실제로 리뷰 호출 하나 때문에
+    브리핑 전체가 죽은 적이 있다.
+    """
     if MAIL_TO:
         params["mailto"] = MAIL_TO   # polite pool (선택). 없어도 동작은 한다.
     url = "https://api.openalex.org/works?" + urllib.parse.urlencode(params)
-    with urllib.request.urlopen(url, timeout=60) as r:
-        return json.load(r)
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(url, timeout=60) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == 3:
+                raise
+            wait = 5 * 2 ** attempt          # 5, 10, 20초
+            print(f"[warn] OpenAlex 429 — {wait}초 후 재시도", file=sys.stderr)
+            time.sleep(wait)
 
 
 def unabstract(inv):
@@ -105,6 +119,14 @@ REVIEW_WINDOW_DAYS = 30   # 리뷰는 속보성이 아니다. 7일 창이면 2�
 
 
 def reviews(n=5):
+    try:
+        return _reviews(n)
+    except Exception as e:                # 보조 섹션이다. 죽어도 브리핑은 나가야 한다.
+        print(f"[warn] 리뷰 수집 실패: {e}", file=sys.stderr)
+        return []
+
+
+def _reviews(n):
     since = (date.today() - timedelta(days=REVIEW_WINDOW_DAYS)).isoformat()
     fields = ("title,publication_year,cited_by_count,abstract_inverted_index,"
               "primary_location,open_access,best_oa_location,doi")

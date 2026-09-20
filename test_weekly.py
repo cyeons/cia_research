@@ -1,7 +1,11 @@
 """네트워크 없이 도는 최소 검증. python test_weekly.py"""
 import os
 os.environ.setdefault("MAIL_TO", "test@example.com")
+import types
+
 import weekly
+
+_REAL_OA = weekly.oa          # 다른 테스트가 weekly.oa를 가짜로 덮어쓴다
 
 
 def test_unabstract():
@@ -158,6 +162,33 @@ def test_reviews_filters_to_review_type():
     assert "type:review" in seen["filter"]
     assert out[0]["links"]["pdf"] == "https://x.example/r.pdf"   # eli5.py에 바로 넣을 수 있게
     assert out[0]["abstract"] == "We reviewed"
+
+
+def test_openalex_retries_on_429():
+    """회귀: 한 번 돌 때 OpenAlex를 7번 부른다. Actions 러너는 IP를 공유해서
+    polite pool에 있어도 429가 난다. 리뷰 호출 하나 때문에 브리핑 전체가 죽었다."""
+    import urllib.error, io as _io, json as _json
+    calls = {"n": 0}
+    def flaky(url, timeout=None):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise urllib.error.HTTPError(url, 429, "Too Many Requests", {}, None)
+        class R:
+            def __enter__(self): return _io.BytesIO(_json.dumps({"results": []}).encode())
+            def __exit__(self, *a): return False
+        return R()
+    weekly.urllib.request.urlopen = flaky
+    weekly.time = types.SimpleNamespace(sleep=lambda s: None)   # 테스트에서 35초 기다리지 않는다
+    weekly.oa = _REAL_OA
+
+    assert weekly.oa(filter="x") == {"results": []}
+    assert calls["n"] == 3                       # 두 번 실패하고 세 번째에 성공
+
+
+def test_reviews_failure_does_not_kill_the_brief():
+    def boom(**kw): raise RuntimeError("OpenAlex 다운")
+    weekly.oa = boom
+    assert weekly.reviews() == []                # 예외가 아니라 빈 목록
 
 
 if __name__ == "__main__":
