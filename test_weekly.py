@@ -83,6 +83,19 @@ def test_domestic_uses_crossref_no_key_needed():
     assert out[0]["url"] == "https://doi.org/10.14352/x.1"
 
 
+def test_summarize_link_rules_cover_every_section():
+    """회귀: 링크 규칙이 links 객체(해외 논문)만 언급하면, doi/url 필드뿐인
+    이론적 배경·국내 동향 섹션은 모델이 아예 링크를 안 걸어버린다.
+    지난 브리핑에서 국내 동향이 0건이라 못 드러났을 뿐, 데이터가 들어오면 터진다."""
+    calls = []
+    weekly.gemini = lambda system, prompt: calls.append((system, prompt)) or "<h2>x</h2>"
+    weekly.summarize([], [], [], [])
+    system, prompt = calls[0]
+    assert "doi 필드" in system and "url 필드" in system      # 세 형태 전부 명시
+    assert "doi로 링크" in prompt                              # 이론적 배경 섹션 지시
+    assert "url 필드로 링크" in prompt                         # 국내 동향 섹션 지시
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):
