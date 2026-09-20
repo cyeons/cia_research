@@ -60,6 +60,29 @@ def test_archive_writes_page_and_rebuilds_index(tmp="_t"):
         os.chdir(cwd); shutil.rmtree(tmp)
 
 
+def test_domestic_uses_crossref_no_key_needed():
+    """KCI는 신청 IP(고정 서버 IP)를 요구해 GitHub Actions와 안 맞는다.
+    Crossref는 키도 IP도 없다 — 그게 이 함수가 존재하는 이유다."""
+    seen = {}
+    def fake_urlopen(url, timeout=None):
+        seen["url"] = url
+        import io as _io, json as _json
+        body = _json.dumps({"message": {"items": [
+            {"title": ["Elementary AI Ethics"], "original-title": ["초등 AI 윤리"],
+             "DOI": "10.14352/x.1", "published": {"date-parts": [[2026]]}}]}}).encode()
+        class R:
+            def __enter__(self): return _io.BytesIO(body)
+            def __exit__(self, *a): return False
+        return R()
+    weekly.urllib.request.urlopen = fake_urlopen
+
+    out = weekly.domestic(n=5)
+    assert "api.crossref.org" in seen["url"]
+    assert "key" not in seen["url"].lower()             # 인증키 없음
+    assert out[0]["title"] == "초등 AI 윤리"              # 원제(한글) 우선
+    assert out[0]["url"] == "https://doi.org/10.14352/x.1"
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):

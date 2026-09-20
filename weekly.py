@@ -5,7 +5,6 @@
   - 이론적 배경 = 신규 논문들이 공통으로 인용한 문헌 (co-citation 빈도)
 """
 import json, os, re, smtplib, sys, urllib.error, urllib.parse, urllib.request
-import xml.etree.ElementTree as ET
 from collections import Counter
 from datetime import date, timedelta
 from email.message import EmailMessage
@@ -99,39 +98,41 @@ def foundations(papers, n=10):
     return [{**meta[rid], "co_cited_by": c} for rid, c in top if rid in meta]
 
 
-def kci(n=30):
-    """국내 등재지. KCI OpenAPI는 XML이고 스키마 문서가 얕아서 태그명을 추정하지 않고 훑는다."""
-    key = os.environ.get("KCI_KEY")
-    if not key:
-        return []
-    url = "https://open.kci.go.kr/po/openapi/openApiSearch.kci?" + urllib.parse.urlencode(
-        {"apiCode": "articleSearch", "key": key, "title": "컴퓨팅사고력|인공지능교육|소프트웨어교육|정보교육",
-         "displayCount": n, "page": 1})
-    try:
-        with urllib.request.urlopen(url, timeout=60) as r:
-            root = ET.fromstring(r.read())
-    except Exception as e:
-        print(f"[warn] KCI 실패: {e}", file=sys.stderr)
-        return []
+# 국내 논문: KCI는 API 키 발급에 "접속 서버 IP"를 요구한다(고정 IP 필수).
+# GitHub Actions 공유 러너는 실행마다 IP가 바뀌므로 원천적으로 안 맞는다.
+# 대신 Crossref를 쓴다 — 키도 IP 등록도 없다. 목표 학회들이 DOI를 Crossref에
+# 등록해 두고 있어서(한국인공지능교육학회, 한국정보교육학회, 한국컴퓨터교육학회,
+# 한국실과교육연구학회) 커버리지도 충분하다. 다만 초록은 안 온다(제목·저자·DOI만).
+DOMESTIC_JOURNALS = {
+    "10.52618": "한국인공지능교육학회",
+    "10.14352": "한국정보교육학회",
+    "10.32431": "한국컴퓨터교육학회",
+    "10.29113": "한국실과교육연구학회",
+}
+DOMESTIC_WINDOW_DAYS = 30   # 이 학회들은 계간지라 1주 기준이면 대부분 0건이 된다
 
-    def pick(rec, *names):
-        for el in rec.iter():
-            if el.tag.split("}")[-1] in names and (el.text or "").strip():
-                return el.text.strip()
-        return ""
 
-    recs = [e for e in root.iter() if e.tag.split("}")[-1] in ("record", "article", "item", "output")]
-    if not recs:
-        print(f"[warn] KCI 레코드 없음. 루트 하위 태그: {[c.tag for c in root][:10]}", file=sys.stderr)
+def domestic(n=20):
+    since = (date.today() - timedelta(days=DOMESTIC_WINDOW_DAYS)).isoformat()
     out = []
-    for rec in recs[:n]:
-        t = pick(rec, "title", "articleTitle", "article-title", "titleKor")
-        if t:
-            out.append({"title": t,
-                        "journal": pick(rec, "journalName", "journal-title", "journalTitle"),
-                        "year": pick(rec, "pubYear", "pubYearInfo", "year"),
-                        "url": pick(rec, "url", "articleUrl", "link")})
-    return out
+    for prefix, name in DOMESTIC_JOURNALS.items():
+        url = "https://api.crossref.org/works?" + urllib.parse.urlencode(
+            {"filter": f"prefix:{prefix},from-pub-date:{since}",
+             "rows": n, "sort": "published", "order": "desc",
+             "mailto": MAIL_TO or "research@example.com"})  # polite pool, mailto 없어도 동작은 한다
+        try:
+            with urllib.request.urlopen(url, timeout=30) as r:
+                items = json.load(r)["message"]["items"]
+        except Exception as e:
+            print(f"[warn] Crossref({name}) 실패: {e}", file=sys.stderr)
+            continue
+        for w in items:
+            title_en = (w.get("title") or [""])[0]
+            title_ko = (w.get("original-title") or [""])[0]
+            out.append({"title": title_ko or title_en, "title_en": title_en if title_ko else "",
+                        "journal": name, "year": (w.get("published") or {}).get("date-parts", [[None]])[0][0],
+                        "url": f"https://doi.org/{w['DOI']}"})
+    return out[:n]
 
 
 def summarize(trends, papers, founds, domestic):
@@ -139,7 +140,7 @@ def summarize(trends, papers, founds, domestic):
         "이번주_급상승_토픽(lift=평소대비배수)": trends,
         "신규논문_해외": [{k: p[k] for k in ("title", "venue", "publication_year", "cited_by_count", "abstract", "links")}
                      for p in papers[:25]],
-        "신규논문_국내_KCI": domestic,
+        "신규논문_국내(최근30일_초록없음)": domestic,
         "공통인용_문헌(이론적배경_후보)": founds,
     }
     system = (
@@ -160,7 +161,7 @@ def summarize(trends, papers, founds, domestic):
    - <b>쉽게 말하면</b>: 전문용어 없이 2문장. "~를 알아보려고 ~명에게 ~를 시켜봤더니 ~였다" 형태. 통계 용어는 "차이가 꽤 컸다" 식으로 풀어라. 이건 정독용이 아니라 <i>어느 걸 읽을지 고르기 위한</i> 요약이다.
    - <b>연구적 의미</b>: 학술 용어를 써도 된다. 표본·설계의 한계나 선행연구와의 관계를 1~2문장.
 3. <h2>이론적 배경 후보</h2> — 공통인용 문헌 표(문헌 / 연도 / 이번 주 공동인용 수 / 어떤 이론적 역할). 여러 신규 논문이 동시에 인용했다는 건 그게 이 분야의 공통 전제라는 뜻임을 짚어줘라.
-4. <h2>국내 동향</h2> — KCI 결과가 있으면 해외와의 관심사 차이를, 비었으면 "이번 주 신규 없음"만.
+4. <h2>국내 동향</h2> — 목록에 제목·학회·DOI만 있고 초록이 없다. 내용을 지어내지 말고 제목과 학회명에서 읽히는 것만(어떤 주제가 몰려 있는지, 해외와 관심사가 겹치는지/다른지) 짚어라. 비었으면 "최근 30일 신규 없음"만 써라.
 
 <data>
 {json.dumps(data, ensure_ascii=False)}
@@ -294,7 +295,7 @@ def main():
     trends = trending()
     papers = new_papers()
     print(f"토픽 {len(trends)} / 신규논문 {len(papers)}", file=sys.stderr)
-    doc = render(summarize(trends, papers, foundations(papers), kci()), pages_url())
+    doc = render(summarize(trends, papers, foundations(papers), domestic()), pages_url())
     archive(doc)
     print(f"docs/{date.today()}.html 저장", file=sys.stderr)
     if "--dry-run" not in sys.argv:

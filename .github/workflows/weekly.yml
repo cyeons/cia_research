@@ -18,7 +18,6 @@ jobs:
         env:
           MAIL_TO:           ${{ secrets.MAIL_TO }}
           GMAIL_APP_PW:      ${{ secrets.GMAIL_APP_PW }}
-          KCI_KEY:           ${{ secrets.KCI_KEY }}
           GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY }}
           PAGES_URL:         ${{ secrets.PAGES_URL }}   # 선택. 없으면 웹 링크 생략
       - name: 아카이브 커밋
