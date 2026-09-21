@@ -30,13 +30,18 @@ def meta(path):
 
 
 # 목차는 weekly.render()를 쓰지 않는다. 그건 메일 본문용 CSS라, 정작 링크를 거는
-# 문서들은 제대로 디자인돼 있는데 목차만 맨몸이 된다. Pretendard + Tailwind로 따로 짠다.
+# 문서들은 제대로 디자인돼 있는데 목차만 맨몸이 된다.
+#
+# 방향: 사용자가 표준(문서 사이트 카드 그리드)을 골랐다. 아이러니 없이 정석대로 짓되
+# 마감은 끝까지 간다. 밝은 쪽이 기본인 이유는 취향이 아니라 사용 장면이다 —
+# 낮의 교실 PC 앞에서 차분히 읽는다. 다크는 시스템 설정을 존중하는 수준으로만 둔다.
 HEAD = """<!doctype html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>연구회 논문 읽기</title>
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -46,28 +51,45 @@ tailwind.config = {
   theme: { extend: {
     fontFamily: { sans: ['Pretendard Variable','Pretendard','system-ui','sans-serif'] },
     colors: {
-      paper:  { DEFAULT:'#FBFAF7', dark:'#0E1211' },
-      card:   { DEFAULT:'#FFFFFF', dark:'#171C1A' },
-      ink:    { DEFAULT:'#151A18', dark:'#E8EDE9' },
-      muted:  { DEFAULT:'#6B7671', dark:'#8FA098' },
-      rule:   { DEFAULT:'#E4E5DF', dark:'#262E2A' },
-      accent: { DEFAULT:'#0E6B57', dark:'#54C9AC' },
+      paper:  { DEFAULT:'#FBFBFA', dark:'#0D0F0E' },
+      card:   { DEFAULT:'#FFFFFF', dark:'#151817' },
+      ink:    { DEFAULT:'#18191B', dark:'#E9EBE9' },
+      muted:  { DEFAULT:'#62676B', dark:'#9BA19E' },
+      rule:   { DEFAULT:'#E3E5E3', dark:'#262A28' },
+      accent: { DEFAULT:'#0F6E58', dark:'#4FC9AC' },
     },
-    letterSpacing: { tightest: '-0.035em' },
   }}
 }
 </script>
 <style>
-  body { -webkit-font-smoothing: antialiased; word-break: keep-all; }
+  /* 안 그린 부분도 디자인에 속한다: 선택 영역, 캐럿, 스크롤바, 포커스 링 */
+  ::selection { background:#0F6E5822; color:#18191B }
+  html { caret-color:#0F6E58; scrollbar-color:#C9CDC9 transparent }
+  body { -webkit-font-smoothing:antialiased; word-break:keep-all;
+         font-feature-settings:"tnum" 0 }
+  .tnum { font-variant-numeric:tabular-nums }
+
+  /* 타입 스케일은 유틸리티가 아니라 시스템으로 둔다. 각 단계 1.25배 이상. */
+  h1 { font-size:2.375rem; line-height:1.24; letter-spacing:-.032em; font-weight:700 }
+  h2 { font-size:.875rem; line-height:1.5;  letter-spacing:-.005em; font-weight:600 }
+  h3 { font-size:1.1875rem; line-height:1.5; letter-spacing:-.014em; font-weight:600 }
+  .lede { font-size:1.0625rem; line-height:1.8 }
+  .desc { font-size:.9375rem; line-height:1.7 }
+  @media (max-width:640px){ h1 { font-size:1.875rem } }
+  :focus-visible { outline:2px solid #0F6E58; outline-offset:3px; border-radius:4px }
+  @media (prefers-color-scheme:dark){
+    ::selection { background:#4FC9AC33; color:#E9EBE9 }
+    html { caret-color:#4FC9AC; scrollbar-color:#313733 transparent }
+    :focus-visible { outline-color:#4FC9AC }
+  }
   @media print {
-    body { background:#fff !important; color:#000 !important; }
-    a { break-inside: avoid; }
-    .no-print { display:none }
+    body { background:#fff !important; color:#000 !important }
+    li { break-inside:avoid }
   }
 </style>
 </head>
-<body class="bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark font-sans antialiased">
-<div class="mx-auto w-full max-w-3xl px-5 sm:px-8">
+<body class="bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark font-sans">
+<div class="mx-auto w-full max-w-4xl px-6 sm:px-8">
 """
 
 FOOT = """
@@ -76,66 +98,40 @@ FOOT = """
 </html>"""
 
 
-def hero(total, rounds):
+def head_block(total, rounds):
+    """제목 위 kicker/eyebrow는 쓰지 않는다. 제목이 스스로 버틴다."""
     return f"""
-  <header class="pt-20 pb-14 sm:pt-28 sm:pb-20">
-    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-accent dark:text-accent-dark">
-      초등 컴퓨터교육 · AI교육 연구회
+  <header class="pt-16 pb-12 sm:pt-24 sm:pb-16 border-b border-rule dark:border-rule-dark">
+    <h1>연구회 논문 읽기</h1>
+    <p class="lede mt-4 max-w-[62ch] text-muted dark:text-muted-dark">
+      격주 월요일에 함께 읽는 논문을, 전문용어 없이 그림 위주로 풀어 쓴 글입니다.
     </p>
-    <h1 class="mt-5 text-[2.1rem] sm:text-[3.1rem] font-bold leading-[1.12] tracking-tightest text-balance">
-      함께 읽는 논문,<br class="hidden sm:block"> 그림으로 풀어서.
-    </h1>
-    <p class="mt-6 max-w-xl text-[1.02rem] leading-[1.8] text-muted dark:text-muted-dark">
-      격주 월요일마다 한 편씩. 전문용어 없이, 큰 그림부터.
-      제목을 누르면 그 논문의 한 장짜리 설명이 열립니다.
+    <p class="mt-6 text-sm text-muted dark:text-muted-dark tnum">
+      {rounds}개 회차 · 전체 {total}편
     </p>
-    <div class="mt-9 flex items-center gap-3 text-sm text-muted dark:text-muted-dark">
-      <span class="inline-flex items-center rounded-full border border-rule dark:border-rule-dark
-                   px-3 py-1 font-medium tabular-nums">{rounds}회차</span>
-      <span class="inline-flex items-center rounded-full border border-rule dark:border-rule-dark
-                   px-3 py-1 font-medium tabular-nums">{total}편</span>
-    </div>
   </header>"""
 
 
 def round_block(day, items):
-    cards = "".join(items)
     return f"""
-  <section class="pb-16">
-    <div class="sticky top-0 z-10 -mx-5 sm:-mx-8 px-5 sm:px-8 py-4
-                bg-paper/85 dark:bg-paper-dark/85 backdrop-blur
-                flex items-baseline gap-4">
-      <h2 class="text-[0.95rem] font-semibold tabular-nums tracking-tight">{day}</h2>
-      <span class="h-px flex-1 bg-rule dark:bg-rule-dark"></span>
-      <span class="text-xs text-muted dark:text-muted-dark tabular-nums">{len(items)}편</span>
-    </div>
-    <ul class="mt-5 space-y-4">{cards}</ul>
+  <section class="pt-12 sm:pt-14">
+    <h2 class="text-muted dark:text-muted-dark tnum">{day}</h2>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-2">{"".join(items)}</ul>
   </section>"""
 
 
 def card(href, title, one):
-    tail = (f'<p class="mt-2.5 text-[0.93rem] leading-[1.75] text-muted dark:text-muted-dark">{one}</p>'
+    tail = (f'<p class="desc mt-2 text-muted dark:text-muted-dark">{one}</p>'
             if one else "")
     return f"""
-    <li>
-      <a href="{href}" class="group block rounded-xl border border-rule dark:border-rule-dark
-             bg-card dark:bg-card-dark p-6 sm:p-7 transition
-             hover:-translate-y-0.5 hover:border-accent/60 dark:hover:border-accent-dark/60
-             hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)]
-             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-             focus-visible:outline-accent dark:focus-visible:outline-accent-dark">
-        <h3 class="text-[1.12rem] sm:text-[1.2rem] font-semibold leading-[1.45] tracking-tight text-balance">
-          {title}
-        </h3>
+    <li class="flex">
+      <a href="{href}" class="group flex w-full flex-col rounded-lg border border-rule
+             dark:border-rule-dark bg-card dark:bg-card-dark p-5 sm:p-6
+             transition duration-150 hover:border-accent/50 dark:hover:border-accent-dark/50
+             hover:shadow-[0_2px_16px_-6px_rgba(24,25,27,0.16)]">
+        <h3 class="group-hover:text-accent dark:group-hover:text-accent-dark
+                   transition-colors duration-150">{title}</h3>
         {tail}
-        <span class="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] font-medium
-                     text-accent dark:text-accent-dark">
-          읽기
-          <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
-               fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-            <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
       </a>
     </li>"""
 
@@ -152,12 +148,13 @@ def build_index():
             total += len(items); rounds += 1
             blocks.append(round_block(day.name, items))
 
-    body = "".join(blocks) or (
-        '<p class="pb-20 text-muted dark:text-muted-dark">아직 올린 글이 없습니다.</p>')
-    foot = (f'<footer class="border-t border-rule dark:border-rule-dark py-10 '
-            f'text-xs text-muted dark:text-muted-dark tabular-nums">'
-            f'갱신 {date.today()}</footer>')
-    INDEX.write_text(HEAD + hero(total, rounds) + body + foot + FOOT, encoding="utf-8")
+    body = "".join(blocks) or """
+  <p class="pt-16 pb-24 text-muted dark:text-muted-dark">
+    아직 올린 글이 없습니다. <code>python publish.py &lt;파일&gt;</code> 로 첫 편을 올리세요.
+  </p>"""
+    foot = (f'<footer class="mt-20 border-t border-rule dark:border-rule-dark py-8 '
+            f'text-xs text-muted dark:text-muted-dark tnum">갱신 {date.today()}</footer>')
+    INDEX.write_text(HEAD + head_block(total, rounds) + body + foot + FOOT, encoding="utf-8")
     return total
 
 
