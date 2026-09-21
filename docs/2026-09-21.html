@@ -1,0 +1,134 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터교육·AI교육 주간 브리핑</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-09-21</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-09-21.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
+<p>이번 주 급상승 지표에서는 현장 적용 및 평가와 관련된 키워드가 두드러졌습니다. lift 수치가 높게 나타난 핵심 토픽과 그 맥락은 다음과 같습니다.</p>
+<ul>
+  <li><strong>Digital divide (lift 4.7배) & Equity (lift 3.6배)</strong>: 단순히 기기 보급 차원을 넘어, 초등 교실 내 생성형 AI 도입에 따른 인프라 격차와 성별·취약계층 간 AI 리터러시 불평등을 완화하려는 연구들이 다수 발표되며 동반 급상승했습니다. 신규 논문 초록들에서도 여학생 대상 AI 리터러시 격차 해소나 저소득·취약 환경 학교의 적응 전략이 공통적으로 다뤄지고 있습니다.</li>
+  <li><strong>Formative assessment (lift 4.5배)</strong>: 연간 70건 수준에서 이번 주 6건이 몰리며 크게 상승했습니다. 최근 K-12 AI 교육이 단순 지식 전달에서 프로젝트 기반 실습으로 이동함에 따라, 프로그래밍 및 로보틱스 수행 과정을 점검하기 위한 형성평가와 역량 측정 도구에 대한 관심이 반영된 결과입니다.</li>
+  <li><strong>Scale (ratio) (lift 2.7배)</strong>: 통계 척도 및 설문 척도와 관련된 공통 기술 용어로, 이번 주 신규 논문 중 초등학생의 AI 리터러시 측정 설문지 타당화(Questionnaire validation)나 사전·사후 검사 척도를 다룬 연구가 집중되며 나타난 일시적 현상입니다. 교육 분야의 질적 패러다임 변화라기보다는 "이번 주에 척도 개발 및 검증 논문이 몰렸다"고 해석하는 것이 타당합니다.</li>
+</ul>
+
+<h2>큰 그림 — 리뷰·메타분석</h2>
+<p>K-12 및 초등 컴퓨팅 교육과 직결되며 신뢰할 수 있는 데이터베이스와 명확한 선정 기준을 제시한 체계적 문헌고찰 1편을 소개합니다.</p>
+<ul>
+  <li>
+    <a href="https://doi.org/10.1016/j.heliyon.2026.e45423">Characteristics and psychometric properties of computational thinking assessments in children and adolescents: A systematic review</a> — Heliyon, 2026, 인용 0회.
+    <p><strong>무엇을 정리했나</strong>: PRISMA 지침에 따라 Web of Science, IEEE Xplore, Science Direct 등 7개 주요 데이터베이스를 검색하여 아동·청소년(초등학생 대상이 최다) 대상 컴퓨팅 사고력(CT) 평가도구를 다룬 논문 64편(도구 65개)을 분석했습니다. 분석 결과 대부분의 도구가 설문지와 루브릭 형태에 의존하고 있으며, 전체 연구의 56%만이 신뢰도나 타당도 근거를 제시하고 있어 현장 도입 시 심리측정학적 엄밀성이 검증된 평가도구 선택이 시급하다고 종합 결론을 내렸습니다.</p>
+  </li>
+</ul>
+
+<h2>읽을 만한 논문 5편</h2>
+<p>초등 교실 맥락에 닿아 있으며 구체적인 교육적 시사점을 제공하는 논문 4편을 갈래별(수업, 윤리·정보판별, 웰빙·안전)로 선정했습니다.</p>
+<ul>
+  <li>
+    <strong>수업</strong>: <a href="https://stemeducationjournal.springeropen.com/counter/pdf/10.1186/s40594-025-00574-y">AI literacy and gender equity in elementary education: A quasi-experimental study of a STEAM–PBL–AIoT course with questionnaire validation</a> — International Journal of STEM Education, 2025.
+    <br><strong>쉽게 말하면</strong>: 초등학교 5학년 학생들에게 기술 중심 AIoT 수업과 STEAM·프로젝트(PBL)를 결합한 AI 리터러시 수업을 각각 비교 적용해 보았습니다. 사전 검사에서는 남학생이 여학생보다 높은 점수를 보였으나, 프로젝트 중심 수업 후에는 성별 점수 차이가 사라졌고 특히 여학생들의 성취도 향상이 두드러졌습니다.
+    <br><strong>교실에 주는 시사점</strong>: 초등 AI 수업 설계 시 기술 작동 원리만 가르치기보다 실생활 문제를 해결하는 융합 프로젝트(PBL) 방식을 적용하면 여학생들의 참여 장벽을 낮추고 성별 격차를 좁힐 수 있습니다. 단, 단일 학년 준실험 연구이므로 학교 환경에 따라 윤리적 태도 변화폭에는 편차가 있을 수 있습니다.
+  </li>
+  <li>
+    <strong>수업</strong>: <a href="https://doi.org/10.1145/3757476">Exploring the Usage of Generative AI for Group Project-Based Offline Art Courses in Elementary Schools</a> (유료·도서관 프록시 필요) — Proceedings of the ACM on Human-Computer Interaction, 2025.
+    <br><strong>쉽게 말하면</strong>: 초등학생 132명을 대상으로 오프라인 미술 모둠 수업에 맞춤형 생성형 AI 도구를 도입하여 아이들이 작품을 어떻게 구상하는지 관찰했습니다. 학생들은 AI를 통해 배경 지식과 아이디어를 빠르게 얻었지만, 원하는 이미지를 만들기 위한 질문(프롬프트) 작성에는 상당한 어려움을 겪었습니다.
+    <br><strong>교실에 주는 시사점</strong>: 생성형 AI를 활용한 프로젝트 수업에서는 학생들에게 프롬프트를 자유롭게 맡기기보다 의도를 언어화할 수 있는 사전 발문 틀(비계)을 체계적으로 제공해야 합니다. 질적 사례 중심 관찰이라 학급별 협동 규칙 수준에 따라 수업 효과가 달라질 수 있습니다.
+  </li>
+  <li>
+    <strong>윤리·정보판별</strong>: <a href="https://doi.org/10.1080/2331186x.2026.2616869">News literacy education and civic engagement among primary school children: a mixed-methods evaluation</a> — Cogent Education, 2026.
+    <br><strong>쉽게 말하면</strong>: 9~11세 초등학생을 대상으로 뉴스 리터러시 프로그램(NewsWise)을 운영하고 무작위 대조군 실험(RCT)을 통해 정보 판별력을 측정했습니다. 프로그램에 참여한 학생들은 가짜 뉴스와 허위조작정보를 찾아내는 능력이 뚜렷하게 향상되었으며 학교와 공동체 문제에 대한 참여 의지도 함께 높아졌습니다.
+    <br><strong>교실에 주는 시사점</strong>: 디지털 허위정보 판별 지도는 고학년뿐만 아니라 초등 중·고학년 교과 연계 수업(사회·국어)으로 조기에 도입할 실효성이 충분합니다. 영국 교육과정 맥락의 평가이므로 국내 교과서 체제에 맞춘 콘텐츠 재구성이 전제되어야 합니다.
+  </li>
+  <li>
+    <strong>웰빙·안전</strong>: <a href="https://czasopisma.aps.edu.pl/index.php/pw/article/download/2524/2234">Awareness and Prevalence of Deepfake Cyberbullying: A Study of Polish Students Aged 12‒15</a> — Educational Psychology, 2025.
+    <br><strong>쉽게 말하면</strong>: 초등 고학년 및 중학교 연령대 학생 192명과 교사들을 설문하여 AI 딥페이크를 이용한 사이버 괴롭힘 실태를 조사했습니다. 학생의 38.5%가 사진 합성이나 음성 변조 등 AI를 악용한 괴롭힘을 직접 목격하거나 겪었다고 답했으나, 이러한 조작물을 식별할 수 있다고 자신한 학생은 3분의 1에 불과했습니다.
+    <br><strong>교실에 주는 시사점</strong>: 학교 정보통신윤리 교육에서 단순한 언어폭력 예방을 넘어 딥페이크 합성 기술의 위험성과 실제 피해 사례를 다루는 생활지도 가이드라인을 조속히 마련해야 합니다. 특정 지역 학생들을 대상으로 한 예비연구(pilot study)이므로 수치를 일반화하기보다는 위험 현상의 조기 경보로 참고해야 합니다.
+  </li>
+</ul>
+
+<h2>이론적 배경 후보</h2>
+<p>이번 주 여러 신규 논문에서 동시에 인용한 문헌들입니다. 복수의 연구가 공통으로 인용한다는 것은 해당 문헌이 현재 연구들의 공통된 문제의식이나 이론적 출발점이 되고 있음을 시사합니다.</p>
+<table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th>문헌 (DOI)</th>
+      <th>연도</th>
+      <th>이번 주 공동인용 수</th>
+      <th>어떤 이론적 역할</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://doi.org/10.1080/14703297.2023.2190148">Chatting and cheating: Ensuring academic integrity in the era of ChatGPT</a></td>
+      <td>2023</td>
+      <td>2</td>
+      <td>생성형 AI 도입 시 필연적으로 마주치는 학업 진실성(Academic Integrity), 표절, 윤리적 가이드라인 구축의 필요성을 뒷받침하는 근거로 인용됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1037/11494-000">The origins of intelligence in children.</a></td>
+      <td>1952</td>
+      <td>2</td>
+      <td>피아제의 인지발달이론 원전으로, 초등 및 학령기 아동의 발달 단계에 맞춘 AI 노출 수준과 인터페이스 적합성을 정당화하는 발달심리학적 준거로 인용됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.1007/s41979-024-00121-4">Exploring Factors That Support Pre-service Teachers’ Engagement in Learning Artificial Intelligence</a></td>
+      <td>2024</td>
+      <td>2</td>
+      <td>초등 AI 교육 실행의 핵심 요인인 예비교사의 AI 역량, 수용성 및 교원 연수 프레임워크 설계를 설명하는 배경으로 인용됨.</td>
+    </tr>
+    <tr>
+      <td><a href="https://doi.org/10.30935/cedtech/13417">ChatGPT: Revolutionizing student achievement in the electronic magnetism unit for eleventh-grade students in Emirates schools</a></td>
+      <td>2023</td>
+      <td>2</td>
+      <td>생성형 AI의 수업 보조 도입이 학습자의 학업 성취도 향상 및 개념 이해에 미치는 긍정적 효과를 증명하는 실증 선행연구로 인용됨.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>국내 동향</h2>
+<p>최근 30일간 한국정보교육학회와 한국컴퓨터교육학회를 중심으로 다수의 초등 정보·AI 교육 논문이 발표되었습니다.</p>
+<ul>
+  <li><strong>초등 맞춤형 AI 도구 및 미들웨어 개발</strong>: <a href="https://doi.org/10.14352/jkaie.2026.30.4.877">초등학생의 생성형 AI 리터러시 함양을 위한 교육적 미들웨어 AL-G 개발 및 타당화</a>, <a href="https://doi.org/10.14352/jkaie.2026.30.4.825">sLLM 기반 교사 업무용 AI 서비스(AMOND) 설계 및 개발</a> 등 초등 현장 전용 플랫폼 구축 연구가 집중되었습니다.</li>
+  <li><strong>평가 도구 및 핵심 역량 개념 재정립</strong>: <a href="https://doi.org/10.14352/jkaie.2026.30.4.851">초등학교 정보교육에서 Creative Computational Thinking 기반 평가도구 적용 사례 연구</a>, <a href="https://doi.org/10.32431/kace.2026.29.8.010">AI 시대의 핵심 역량에 대한 탐구: 컴퓨팅사고력에서 AI 맥락 다관점 메타인지로의 이동</a> 등 평가와 역량 이론화에 관심이 높습니다.</li>
+  <li><strong>해외 트렌드와의 비교</strong>: 해외에서는 AI 윤리적 위험(딥페이크, 저작권, 과몰입)과 성별 격차 완화 같은 사회정서적·정책적 규범 연구 비중이 높은 반면, 국내 연구는 2022 개정 교육과정에 맞춘 실제 수업 프로그램 개발, 데이터 전처리, 특수학생·교사 대상의 맞춤형 소프트웨어 및 교보재 제작 등 구체적 현장 처방 중심의 실행 연구에 무게가 실려 있습니다.</li>
+</ul>
+
+<h2>KERIS 디지털교육 동향</h2>
+<p>최신호는 여전히 224호입니다. <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=96765bf0efa87496c7500738e9d7b383&amp;dwlTy=pblcte">[통권 224호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (39.7MB). 정독하려면 내려받아 eli5.py에 넣으세요.</p></body></html>
