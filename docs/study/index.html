@@ -1,44 +1,111 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>연구회 논문 읽기</title><style>
-  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
-  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
-       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
-       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
-  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
-  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
-  li{margin:.45em 0}
-  strong{font-weight:650;color:#0b1117}
-  a{color:#0969da}
-  table{border-collapse:collapse;width:100%;font-size:.94em}
-  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
-  th{background:#f6f8fa}
-
-  /* 본문에서 쓰는 강조 */
-  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
-  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
-  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
-           margin:1.5em 0;border-radius:0 6px 6px 0}
-  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
-        margin:1.5em 0;border-radius:0 6px 6px 0}
-
-  figure{margin:1.9em 0;text-align:center}
-  figure svg{max-width:100%;height:auto}
-  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
-
-  @media (prefers-color-scheme:dark){
-    body{background:#0d1117;color:#e6edf3}
-    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
-    td,th{border-color:#30363d} th{background:#161b22}
-    .key{background:#4a3a00;color:#ffe9a8}
-    .callout{background:#0d1d2e;border-color:#388bfd}
-    .warn{background:#2b2100;border-color:#d29922}
-    .num,figcaption{color:#9198a1}
+<!doctype html>
+<html lang="ko" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>연구회 논문 읽기</title>
+<link rel="stylesheet" as="style" crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'media',
+  theme: { extend: {
+    fontFamily: { sans: ['Pretendard Variable','Pretendard','system-ui','sans-serif'] },
+    colors: {
+      paper:  { DEFAULT:'#FBFAF7', dark:'#0E1211' },
+      card:   { DEFAULT:'#FFFFFF', dark:'#171C1A' },
+      ink:    { DEFAULT:'#151A18', dark:'#E8EDE9' },
+      muted:  { DEFAULT:'#6B7671', dark:'#8FA098' },
+      rule:   { DEFAULT:'#E4E5DF', dark:'#262E2A' },
+      accent: { DEFAULT:'#0E6B57', dark:'#54C9AC' },
+    },
+    letterSpacing: { tightest: '-0.035em' },
+  }}
+}
+</script>
+<style>
+  body { -webkit-font-smoothing: antialiased; word-break: keep-all; }
+  @media print {
+    body { background:#fff !important; color:#000 !important; }
+    a { break-inside: avoid; }
+    .no-print { display:none }
   }
+</style>
+</head>
+<body class="bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark font-sans antialiased">
+<div class="mx-auto w-full max-w-3xl px-5 sm:px-8">
 
-  /* 브라우저 Ctrl+P -> PDF 저장용 */
-  @page{margin:2cm}
-  @media print{
-    body{background:#fff;color:#000;max-width:none;padding:0}
-    a{color:#000;text-decoration:underline}
-    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
-  }
-</style></head><body><h1>연구회 논문 읽기</h1><p style="color:#666">2026-09-21</p><p style="font-size:.9em">연구회에서 함께 읽는 논문 요약입니다. 각 항목은 그림 위주로 풀어 쓴 한 장짜리 설명으로 이어집니다.</p><h2>2026-09-22</h2><ul><li><a href="2026-09-22/교실_속_AI의_윤리_위험_15가지와_대응_전략_논문_75편을_분류한_체계적_문헌고찰.html">교실 속 AI의 윤리 위험 15가지와 대응 전략 — 논문 75편을 분류한 체계적 문헌고찰</a><br><span class='num'>교육용 AI의 윤리 위험은 기술·교육·사회 세 층에 15가지가 있고, 아래층의 문제가 위층으로 번지므로 정부·학교·교사·학생·개발자가 층마다 나눠 막아야 한다.</span></li><li><a href="2026-09-22/기술보다_교사가_먼저다_2026년_8월_세계_디지털교육_흐름_12꼭지.html">기술보다 교사가 먼저다: 2026년 8월 세계 디지털교육 흐름 12꼭지</a><br><span class='num'>세계 교육은 AI를 '많이 들이는' 단계를 지나, 교사가 골라 쓰고 아이들이 휘둘리지 않게 '잘 쓰는' 단계로 옮겨 가고 있다.</span></li></ul></body></html>
+  <header class="pt-20 pb-14 sm:pt-28 sm:pb-20">
+    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-accent dark:text-accent-dark">
+      초등 컴퓨터교육 · AI교육 연구회
+    </p>
+    <h1 class="mt-5 text-[2.1rem] sm:text-[3.1rem] font-bold leading-[1.12] tracking-tightest text-balance">
+      함께 읽는 논문,<br class="hidden sm:block"> 그림으로 풀어서.
+    </h1>
+    <p class="mt-6 max-w-xl text-[1.02rem] leading-[1.8] text-muted dark:text-muted-dark">
+      격주 월요일마다 한 편씩. 전문용어 없이, 큰 그림부터.
+      제목을 누르면 그 논문의 한 장짜리 설명이 열립니다.
+    </p>
+    <div class="mt-9 flex items-center gap-3 text-sm text-muted dark:text-muted-dark">
+      <span class="inline-flex items-center rounded-full border border-rule dark:border-rule-dark
+                   px-3 py-1 font-medium tabular-nums">1회차</span>
+      <span class="inline-flex items-center rounded-full border border-rule dark:border-rule-dark
+                   px-3 py-1 font-medium tabular-nums">2편</span>
+    </div>
+  </header>
+  <section class="pb-16">
+    <div class="sticky top-0 z-10 -mx-5 sm:-mx-8 px-5 sm:px-8 py-4
+                bg-paper/85 dark:bg-paper-dark/85 backdrop-blur
+                flex items-baseline gap-4">
+      <h2 class="text-[0.95rem] font-semibold tabular-nums tracking-tight">2026-09-22</h2>
+      <span class="h-px flex-1 bg-rule dark:bg-rule-dark"></span>
+      <span class="text-xs text-muted dark:text-muted-dark tabular-nums">2편</span>
+    </div>
+    <ul class="mt-5 space-y-4">
+    <li>
+      <a href="2026-09-22/교실_속_AI의_윤리_위험_15가지와_대응_전략_논문_75편을_분류한_체계적_문헌고찰.html" class="group block rounded-xl border border-rule dark:border-rule-dark
+             bg-card dark:bg-card-dark p-6 sm:p-7 transition
+             hover:-translate-y-0.5 hover:border-accent/60 dark:hover:border-accent-dark/60
+             hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)]
+             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+             focus-visible:outline-accent dark:focus-visible:outline-accent-dark">
+        <h3 class="text-[1.12rem] sm:text-[1.2rem] font-semibold leading-[1.45] tracking-tight text-balance">
+          교실 속 AI의 윤리 위험 15가지와 대응 전략 — 논문 75편을 분류한 체계적 문헌고찰
+        </h3>
+        <p class="mt-2.5 text-[0.93rem] leading-[1.75] text-muted dark:text-muted-dark">교육용 AI의 윤리 위험은 기술·교육·사회 세 층에 15가지가 있고, 아래층의 문제가 위층으로 번지므로 정부·학교·교사·학생·개발자가 층마다 나눠 막아야 한다.</p>
+        <span class="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] font-medium
+                     text-accent dark:text-accent-dark">
+          읽기
+          <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+               fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a href="2026-09-22/기술보다_교사가_먼저다_2026년_8월_세계_디지털교육_흐름_12꼭지.html" class="group block rounded-xl border border-rule dark:border-rule-dark
+             bg-card dark:bg-card-dark p-6 sm:p-7 transition
+             hover:-translate-y-0.5 hover:border-accent/60 dark:hover:border-accent-dark/60
+             hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)]
+             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+             focus-visible:outline-accent dark:focus-visible:outline-accent-dark">
+        <h3 class="text-[1.12rem] sm:text-[1.2rem] font-semibold leading-[1.45] tracking-tight text-balance">
+          기술보다 교사가 먼저다: 2026년 8월 세계 디지털교육 흐름 12꼭지
+        </h3>
+        <p class="mt-2.5 text-[0.93rem] leading-[1.75] text-muted dark:text-muted-dark">세계 교육은 AI를 '많이 들이는' 단계를 지나, 교사가 골라 쓰고 아이들이 휘둘리지 않게 '잘 쓰는' 단계로 옮겨 가고 있다.</p>
+        <span class="mt-4 inline-flex items-center gap-1.5 text-[0.82rem] font-medium
+                     text-accent dark:text-accent-dark">
+          읽기
+          <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+               fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </li></ul>
+  </section><footer class="border-t border-rule dark:border-rule-dark py-10 text-xs text-muted dark:text-muted-dark tabular-nums">갱신 2026-09-21</footer>
+</div>
+</body>
+</html>
