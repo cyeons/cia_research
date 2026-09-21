@@ -134,21 +134,30 @@ def test_split_title():
     assert eli5.split_title("<h2>x</h2>", "대체") == ("대체", "<h2>x</h2>")
 
 
-def test_sections_bail_out_on_compilation_documents():
-    """회귀: 섹션 틀이 '단일 연구 논문'만 전제하면, 동향 리포트를 넣었을 때 끝에 실린
-    논문 한두 편만 정리하고 본문을 통째로 빠뜨린다(KERIS 40쪽 매거진에서 실제로 그랬다).
+def test_sections_handle_compilation_documents_without_bailing():
+    """여러 주제 문서(동향 리포트·매거진)도 같은 틀로 다룬다.
 
-    그렇다고 여러 주제용 틀을 따로 두는 것도 답이 아니었다 - 설명할 메커니즘이 하나로
-    없는 문서에 그림을 강제하면 설명이 아니라 장식이 된다. 이 도구는 연구 하나만 맡고,
-    나머지는 안 맞는다고 말한 뒤 길잡이만 준다.
+    이전엔 '안 맞는다'며 길잡이만 주고 끝냈는데, 분량 상한을 걷어내고 나니
+    같은 틀로도 충분히 다룰 수 있다. 다만 두 가지가 필요하다:
+    모든 꼭지를 고르게(끝에 실린 논문 한두 편만 정리하던 실패), 그리고
+    조사 설계 표를 억지로 만들지 않기(그 표 때문에 논문 쪽으로 끌려갔다).
     """
     p = eli5.build_prompt("https://doi.org/10.1/x")
-    assert "여러 주제를 모은 것이면" in p                 # 감지 지시
-    assert "아래 섹션 틀을 쓰지 마라" in p                 # 강제로 채우지 않게
-    assert "그림을 그리지 말고" in p                       # 장식용 그림 금지
-    assert "어디부터 읽을까" in p                          # 대신 주는 것
-    # 여러 주제용 본문 섹션을 따로 만들지 않는다
-    assert "이 문서가 다루는 지형" not in p and "반복되는 흐름" not in p
+    assert "모든 꼭지를 고르게" in p
+    assert "분량이 많은 쪽이 본체다" in p
+    assert "억지로 만들지 말고" in p
+    assert "맞지 않습니다" not in p              # 거부하고 끝내지 않는다
+
+
+def test_sections_do_not_cap_length():
+    """회귀: '3문장 이내', '3개 이내', '각 한 문장' 같은 상한을 모든 섹션에 걸었더니
+    원문 34,821자가 본문 3,180자(9%)로 압축됐다. 쉽게 쓰는 것과 짧게 쓰는 것은 다르다."""
+    both = eli5.RULES + eli5.SECTIONS
+    for cap in ("3문장 이내", "3개 이내", "길게 쓰지 마라", "덜 쓰고"):
+        assert cap not in both, f"분량 상한이 다시 들어왔다: {cap}"
+    assert "쉽게'와 '짧게'는 다른 말" in both
+    assert "8,000자" in both                     # 목표 분량이 있어야 한다
+    assert "결과마다 문단 하나 이상" in both
 
 
 if __name__ == "__main__":

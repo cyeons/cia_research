@@ -1,0 +1,342 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>기술보다 교사가 먼저다: 2026년 8월 세계 디지털교육 흐름 12꼭지</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>기술보다 교사가 먼저다: 2026년 8월 세계 디지털교육 흐름 12꼭지</h1><p style="color:#666">2026-09-21</p><p style="font-size:.9em">원문: <a href="file:///C:/Projects/cia_research/pdf/%288%EC%9B%94%ED%98%B8%29%20KERIS%20%EB%94%94%EC%A7%80%ED%84%B8%20%EA%B5%90%EC%9C%A1%20%EA%B8%80%EB%A1%9C%EB%B2%8C%20%EB%8F%99%ED%96%A5%20%EB%A6%AC%ED%8F%AC%ED%8A%B8_224%ED%98%B8.pdf">C:\Projects\cia_research\pdf\(8월호) KERIS 디지털 교육 글로벌 동향 리포트_224호.pdf</a></p>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&family=IBM+Plex+Sans+KR:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f1; --paper:#f7faf9; --ink:#16222a; --muted:#566670;
+  --rule:#c3cfcc; --accent:#1b6d61; --accent-soft:#d5eae4;
+  --mark:#f2d766; --warn:#8f5400; --warn-soft:#faeed6;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e161a; --paper:#142026; --ink:#dbe5e2; --muted:#94a6ab;
+    --rule:#2a3b41; --accent:#62c7b1; --accent-soft:#15302b;
+    --mark:#5e5114; --warn:#e3ab4a; --warn-soft:#2a2214;
+  }
+}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:17px;line-height:1.85;word-break:keep-all;counter-reset:fig}
+p,ul,ol,h2,h3,table,.callout,.warn{max-width:42em}
+h2,h3{font-family:"Gothic A1","IBM Plex Sans KR",sans-serif;text-wrap:balance;letter-spacing:-0.01em}
+h2{font-weight:800;font-size:1.6rem;margin:3.2em 0 .9em;padding-top:.55em;border-top:3px solid var(--ink)}
+h3{font-weight:700;font-size:1.14rem;color:var(--accent);margin:2.2em 0 .5em}
+p{margin:0 0 1em}
+ul{padding-left:1.2em}
+li{margin-bottom:.45em}
+li::marker{color:var(--accent)}
+strong{font-weight:600}
+.key{background:linear-gradient(transparent 58%,var(--mark) 58%);font-weight:600;padding:0 .1em}
+.num{font-family:"IBM Plex Mono",monospace;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.callout{border-left:6px solid var(--accent);background:var(--accent-soft);padding:.9em 1.2em;margin:1.2em 0 1.4em;font-weight:600;line-height:1.7}
+.warn{background:var(--warn-soft);border-top:2px dashed var(--warn);border-bottom:2px dashed var(--warn);padding:.85em 1.1em;margin:1.4em 0}
+.warn::before{content:"주의 ";font-weight:700;color:var(--warn)}
+figure{color:var(--ink);max-width:46em;margin:2.4em 0 1.2em;padding:1.1em 0 .7em;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);counter-increment:fig}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:.6em;line-height:1.6}
+figcaption::before{content:"그림 " counter(fig) "  ";font-weight:700;color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:.94rem;margin:1em 0 1.6em}
+th{font-family:"Gothic A1",sans-serif;text-align:left;background:var(--paper);border-bottom:2px solid var(--ink);padding:.5em .6em}
+td{border-bottom:1px solid var(--rule);padding:.5em .6em;vertical-align:top}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+<p>이 문서는 논문 한 편이 아니라 한국교육학술정보원(KERIS)이 펴낸 월간 동향 잡지 2026년 8월호입니다. 여덟 나라의 교육 정책, 국제기구 발표 하나, 시장 보고서 하나, 연구 논문 두 편까지 모두 열두 꼭지가 실려 있습니다. 서로 흩어진 이야기처럼 보이지만 잡지가 말하는 방향은 하나입니다. <strong>AI를 들여오는 것보다 교사가 그것을 잘 골라 쓰게 하는 것이 먼저</strong>라는 것입니다.</p>
+
+<figure>
+<svg viewBox="0 0 680 300" role="img" aria-label="쏟아지는 AI 도구를 교사의 판단이 걸러서 학생에게 보낸다">
+<defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<g fill="none" stroke="currentColor" stroke-width="1.5">
+<rect x="20" y="40" width="110" height="34"/><rect x="20" y="86" width="110" height="34"/><rect x="20" y="132" width="110" height="34"/><rect x="20" y="178" width="110" height="34"/><rect x="20" y="224" width="110" height="34"/>
+<path d="M140 57 H152 V241 H140"/>
+</g>
+<g fill="currentColor" font-size="15" text-anchor="middle">
+<text x="75" y="62">챗봇</text><text x="75" y="108">퀴즈 앱</text><text x="75" y="154">가상현실</text><text x="75" y="200">자동 채점</text><text x="75" y="246">번역기</text>
+</g>
+<line x1="152" y1="149" x2="238" y2="149" stroke="currentColor" stroke-width="1.8" marker-end="url(#ar1)"/>
+<text x="196" y="138" font-size="14" text-anchor="middle" fill="currentColor">쏟아지는 도구</text>
+<polygon points="245,50 245,250 385,178 385,120" fill="#2da44e" fill-opacity="0.18" stroke="#2da44e" stroke-width="2"/>
+<text x="312" y="145" font-size="16" font-weight="700" text-anchor="middle" fill="currentColor">교사의 판단</text>
+<text x="312" y="170" font-size="14" text-anchor="middle" fill="currentColor">안전한가?</text>
+<text x="312" y="190" font-size="14" text-anchor="middle" fill="currentColor">도움이 되나?</text>
+<line x1="385" y1="149" x2="514" y2="149" stroke="currentColor" stroke-width="1.8" marker-end="url(#ar1)"/>
+<text x="450" y="138" font-size="14" text-anchor="middle" fill="currentColor">골라 쓴 도구</text>
+<rect x="520" y="112" width="140" height="74" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="590" y="155" font-size="16" text-anchor="middle" fill="currentColor">학생의 배움</text>
+<line x1="312" y1="220" x2="312" y2="284" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ar1)"/>
+<text x="324" y="274" font-size="14" fill="currentColor">걸러 냄</text>
+</svg>
+<figcaption>AI 도구는 계속 쏟아진다. 무엇을 교실에 들일지는 교사의 판단이라는 깔때기를 거쳐야 한다는 것이 이번 호 전체의 뼈대다.</figcaption>
+</figure>
+<p>세계은행 발표에서 가장 힘주어 말한 대목이 이 깔때기입니다. 기술은 매주 바뀌는데 교사 연수는 준비에 몇 달이 걸립니다. 그러니 특정 도구 사용법을 외우게 하기보다 "이 도구가 우리 반 아이들에게 안전하고 쓸모 있나"를 스스로 가려내는 눈을 길러야 한다는 것입니다. 싱가포르가 AI 기능을 교사가 켜야만 작동하게 만든 것, 홍콩이 학교에 활용 계획서를 받는 것도 같은 생각에서 나왔습니다.</p>
+
+<figure>
+<svg viewBox="0 0 680 220" role="img" aria-label="한국 선도교사 연수는 기본 6시간, 집중 24시간, 공유 5시간으로 집중 과정이 가장 길다">
+<defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<g font-size="15" text-anchor="middle" fill="currentColor" font-weight="700">
+<text x="108" y="66">기본</text><text x="348" y="66">집중</text><text x="580" y="66">공유</text>
+</g>
+<rect x="60" y="80" width="96" height="56" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="156" y="80" width="384" height="56" fill="#2da44e" fill-opacity="0.22" stroke="#2da44e" stroke-width="2"/>
+<rect x="540" y="80" width="80" height="56" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<g font-size="15" text-anchor="middle" fill="currentColor">
+<text x="108" y="114">6시간</text><text x="348" y="114">24시간</text><text x="580" y="114">5시간</text>
+</g>
+<g font-size="14" text-anchor="middle" fill="currentColor">
+<text x="108" y="162">진단·윤리</text><text x="348" y="162">도구 실습·수업 설계·데이터 분석</text><text x="580" y="162">사례 나눔</text>
+</g>
+<line x1="60" y1="184" x2="636" y2="184" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar4)"/>
+<text x="348" y="208" font-size="14" text-anchor="middle" fill="currentColor">모두 35시간</text>
+</svg>
+<figcaption>막대 길이는 시간에 비례한다. 연수 시간의 3분의 2 넘게가 직접 수업을 설계하고 데이터를 다뤄 보는 '집중' 과정에 들어간다.</figcaption>
+</figure>
+<p>우리나라는 AI를 수업에 쓸 줄 아는 선도교사 1만 명을 길러 내려 합니다. 눈여겨볼 것은 시간 배분입니다. 강의를 듣는 시간보다 <strong>자기 교과로 수업과 평가를 직접 짜 보는 시간</strong>이 훨씬 깁니다. 올해로 3년째인 이 연수는 '도구 다루는 법'에서 '학생 성장에 집중하는 법'으로 방향을 바꿨다고 밝혔습니다.</p>
+
+<figure>
+<svg viewBox="0 0 700 320" role="img" aria-label="비판적 사고가 높은 학생은 성찰까지 도는 닫힌 고리, 낮은 학생은 피드백과 재시도만 오간다">
+<defs>
+<marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2da44e"/></marker>
+<marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+</defs>
+<text x="170" y="22" font-size="15" font-weight="700" text-anchor="middle" fill="currentColor">비판적 사고 높은 그룹</text>
+<text x="545" y="22" font-size="15" font-weight="700" text-anchor="middle" fill="currentColor">비판적 사고 낮은 그룹</text>
+<line x1="360" y1="40" x2="360" y2="305" stroke="currentColor" stroke-opacity="0.3"/>
+<g transform="translate(0,14)">
+<g stroke="#2da44e" stroke-width="2" marker-end="url(#ar2)">
+<line x1="181" y1="83" x2="231" y2="108"/><line x1="245" y1="125" x2="257" y2="178"/><line x1="252" y1="200" x2="218" y2="244"/><line x1="198" y1="253" x2="142" y2="253"/><line x1="122" y1="244" x2="88" y2="200"/><line x1="83" y1="178" x2="95" y2="125"/><line x1="109" y1="108" x2="159" y2="83"/>
+</g>
+<g fill="currentColor" font-size="15">
+<text x="170" y="62" text-anchor="middle">관찰</text>
+<text x="254" y="100">모방</text>
+<text x="272" y="196">오류</text>
+<text x="222" y="282" text-anchor="middle">피드백</text>
+<text x="118" y="282" text-anchor="middle">교정</text>
+<text x="68" y="196" text-anchor="end">완료</text>
+<text x="86" y="100" text-anchor="end" font-weight="700">성찰</text>
+</g>
+<text x="170" y="175" font-size="15" text-anchor="middle" fill="#2da44e" font-weight="700">닫힌 고리</text>
+<rect x="430" y="150" width="80" height="38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<rect x="580" y="150" width="80" height="38" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="470" y="175" font-size="15" text-anchor="middle" fill="currentColor">피드백</text>
+<text x="620" y="175" font-size="15" text-anchor="middle" fill="currentColor">재시도</text>
+<path d="M505 148 Q545 104 586 148" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar3)"/>
+<path d="M585 190 Q545 234 504 190" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar3)"/>
+<text x="545" y="110" font-size="14" text-anchor="middle" fill="currentColor">바로 다시</text>
+<text x="545" y="244" font-size="14" text-anchor="middle" fill="currentColor">또 틀림</text>
+<text x="545" y="282" font-size="14" text-anchor="middle" fill="currentColor" fill-opacity="0.7">성찰 없이 반복</text>
+</g>
+</svg>
+<figcaption>메타버스로 배운 간호학과 학생들의 행동 순서. 잘하는 학생은 틀린 뒤 고치고 되돌아보는 한 바퀴를 끝까지 돌고, 못하는 학생은 "다시 해 보기"만 되풀이했다.</figcaption>
+</figure>
+<p>두 번째 논문에서 가장 흥미로운 대목입니다. 같은 가상 세계에서 같은 과제를 받아도 학생마다 움직이는 순서가 달랐습니다. 차이를 가른 것은 <strong>틀린 다음에 멈춰서 생각하느냐</strong>였습니다. 도구가 같아도 배움은 다를 수 있고, 그 빈틈을 채우는 것이 교사의 몫이라는 결론으로 이어집니다.</p>
+
+<figure>
+<svg viewBox="0 0 640 220" role="img" aria-label="메타버스로 배운 학생의 사후 점수가 영상으로 배운 학생보다 약 17.6점 높았다">
+<line x1="150" y1="34" x2="150" y2="182" stroke="currentColor" stroke-width="1.5"/>
+<rect x="150" y="50" width="353" height="44" fill="#2da44e"/>
+<rect x="150" y="120" width="276" height="44" fill="currentColor" fill-opacity="0.3"/>
+<g font-size="15" fill="currentColor">
+<text x="138" y="77" text-anchor="end">메타버스</text>
+<text x="138" y="147" text-anchor="end">영상 수업</text>
+<text x="513" y="77" font-weight="700">80.22점</text>
+<text x="436" y="147">62.64점</text>
+</g>
+<g font-size="14" fill="currentColor" fill-opacity="0.75">
+<text x="150" y="204" text-anchor="middle">0</text>
+<text x="590" y="204" text-anchor="middle">100점</text>
+</g>
+<line x1="590" y1="186" x2="590" y2="192" stroke="currentColor"/>
+</svg>
+<figcaption>시험을 치기 전 실력 차이를 계산으로 맞춘 뒤의 평균 점수. 두 무리의 차이는 약 17.6점이다.</figcaption>
+</figure>
+<p>메타버스로 배운 쪽이 시험 점수가 크게 높았습니다. 100점 만점에서 17점 넘게 차이가 났고, 저자들은 우연이라고 보기 어려운 차이라고 보고했습니다. 다만 대학 간호학과 1학년 <span class="num">56명</span>을 4주 동안 본 결과입니다. 초등학생에게도 똑같이 나타날지는 이 연구만으로 알 수 없습니다.</p>
+
+<h2>세 줄 요약</h2>
+<div class="callout">세계 교육은 AI를 '많이 들이는' 단계를 지나, 교사가 골라 쓰고 아이들이 휘둘리지 않게 '잘 쓰는' 단계로 옮겨 가고 있다.</div>
+<ul>
+<li>여러 나라가 AI를 교사의 조수로 두되 교사가 스위치를 쥐게 하고, 화면 시간과 사용 조건에 선을 긋고 있다.</li>
+<li>세계은행은 교사에게 도구 사용법보다 도구를 가려내는 판단력이 필요하다고 했고, 시장도 실제로 효과가 검증된 서비스 쪽으로 정리되고 있다.</li>
+<li>두 논문은 게임 요소나 가상 세계가 배움을 도울 수 있지만, 설계와 교사의 도움이 함께할 때만 그렇다는 점을 보여 준다.</li>
+</ul>
+
+<h2>어떤 연구인가</h2>
+<p>이 문서는 실험을 한 연구 보고서가 아닙니다. 한국교육학술정보원이 매달 해외와 국내 디지털교육 소식을 모아 우리말로 정리해 내는 잡지입니다. 연구진이 각 나라 교육부 발표, 국제기구 자료, 시장 보고서, 학술 논문을 골라 읽고 한 꼭지씩 요약했습니다. 그래서 "몇 명에게 무엇을 시켰나" 같은 하나의 조사 설계는 없습니다.</p>
+<p>꼭지마다 틀이 같습니다. 원문 제목, 출처와 날짜, 누구를 위한 소식인지(초등, 교원, 정책 결정자 등), 주제 분류, 키워드가 먼저 나옵니다. 그다음 본문을 여섯에서 일곱 개의 짧은 단락으로 나눠 설명합니다. 이번 호에 실린 원문은 대부분 2026년 6월에 나온 것입니다.</p>
+<p>맨 앞의 '이달의 브리프'가 전체를 묶는 주장을 합니다. 기술 경쟁력만큼 교육적 가치, 안전, 현장에서 실제로 쓸 수 있는지가 중요해졌다는 것입니다. 그리고 AI는 교사를 대신하는 것이 아니라 교육을 풍부하게 하는 도구라는 말로 끝맺습니다. 아래 표는 열두 꼭지가 각각 무엇을 다루는지 한눈에 보여 줍니다.</p>
+<table>
+<tr><th>나라·기관</th><th>무엇에 관한 소식인가</th><th>주로 누구 이야기인가</th></tr>
+<tr><td>미국</td><td>대통령 AI 경진대회와 과학재단의 지원</td><td>초등 학생·교사</td></tr>
+<tr><td>호주 빅토리아주</td><td>기기 없는 수업 시간, 화면 시간 상한, 무상 기기</td><td>초등 학생, 정책 결정자</td></tr>
+<tr><td>싱가포르</td><td>교사가 켜는 AI 학습 도우미와 안전 원칙</td><td>초·중등 학생과 교사</td></tr>
+<tr><td>홍콩</td><td>AI·가상현실 교육 도구 12종 무상 구독</td><td>초·중등 학교</td></tr>
+<tr><td>한국</td><td>AI 활용 선도교사 1만 명 연수</td><td>초·중등 교사</td></tr>
+<tr><td>아랍에미리트</td><td>교육 행정 전체를 AI로 바꾸는 NOVA 사업</td><td>교육부, 학교 전체</td></tr>
+<tr><td>일본</td><td>2030년 디지털 교과서 정식 도입 법 개정</td><td>초·중·고, 정책 결정자</td></tr>
+<tr><td>독일 NRW주</td><td>교장·교사용 AI 비서 4종과 행정 줄이기</td><td>교장, 교사</td></tr>
+<tr><td>세계은행 등</td><td>교사가 중심이 되는 AI 이해력</td><td>교사</td></tr>
+<tr><td>HolonIQ</td><td>유럽 에듀테크 기업 200곳 분석</td><td>산업계</td></tr>
+<tr><td>논문 1</td><td>게임 요소와 지식 나누기에 관한 72편 문헌 정리</td><td>기업, 대학</td></tr>
+<tr><td>논문 2</td><td>메타버스 간호 실습 수업의 효과</td><td>대학생 56명</td></tr>
+</table>
+<div class="warn">여기 담긴 내용은 모두 KERIS 연구진이 원문을 줄여 옮긴 것입니다. 정부 발표는 대부분 새 정책을 시작하면서 낸 보도자료라서 "효과가 있었다"는 증거가 아니라 "이렇게 하겠다"는 계획입니다. 두 논문도 원문 전체가 아니라 요약본만 있습니다.</div>
+
+<h2>무엇을 알아냈나</h2>
+
+<h3>미국: 초등 저학년이 AI를 직접 가르쳐 본 '곤충 탐정단'</h3>
+<p>미국은 백악관 AI 교육 정책의 하나로 첫 대통령 AI 경진대회를 열었습니다. 목표는 AI 개념을 외우는 것이 아니라 동네의 실제 문제를 AI로 풀어 보는 경험입니다. 국립과학재단은 이미 진행 중이던 연구 사업에 약 <span class="num">100만 달러</span>를 더 얹어 <span class="num">40개</span> 지원금을 참가 팀에 나눠 주었습니다. 대학 연구자들이 직접 팀을 지도했고, 비싼 소프트웨어와 장비, 전시회 참가 비용도 이 돈으로 해결했습니다.</p>
+<p>전국 우승은 노스캐롤라이나의 한 초등학교 교사가 이끈 팀이 차지했습니다. 저학년 아이들이 먼저 동네 곤충을 관찰합니다. 그다음 구글의 무료 도구(Teachable Machine)에 곤충 사진을 넣어 AI에게 "이건 무슨 곤충"이라고 가르칩니다. 핵심은 그 뒤입니다. AI가 곤충을 잘못 알아맞히면 아이들이 왜 틀렸는지 따져 보고, 넣은 사진을 고쳐서 다시 가르쳤습니다.</p>
+<p>이 과정이 중요한 까닭은 AI가 마법이 아니라 <strong>넣어 준 자료에서 규칙을 찾아내는 기계</strong>라는 사실을 아이들이 몸으로 알게 되기 때문입니다. 자료가 한쪽으로 치우치면 AI도 치우친다는 것을 직접 본 셈입니다. 다른 대학들도 주차 안내, 노인 돌봄, 보행자용 스마트 가로등, 도서관 접근성, 진로 상담 도구 같은 생활 문제를 풀었습니다. 펜실베이니아의 한 팀은 AI가 학생의 생각을 대신하지 않고 생각을 자극하는 역할이어야 한다고 분명히 했습니다.</p>
+
+<h3>호주 빅토리아주: 기기를 끄는 시간도 수업이다</h3>
+<p>빅토리아주는 중·고등학교가 기기를 일부러 쓰지 않는 학습 시간을 반드시 수업에 넣도록 했습니다. 화면 속 편리함과 얼굴을 마주 보는 대화 사이에 균형을 잡으려는 것입니다. 초등학교에는 나이별 기준을 내놨습니다. 유치원부터 2학년까지는 디지털 기술 자체를 배우는 때를 빼고는 기기를 거의 쓰지 않게 하고, 3~6학년은 AI를 포함한 기기 사용을 하루 <span class="num">90분</span>까지로 묶었습니다. 이유로는 화면을 오래 볼 때 생기는 몸과 마음의 문제를 줄이고 깊이 생각하는 활동을 늘리려는 것을 들었습니다.</p>
+<p>2027년부터 초등학교는 학부모에게 기기를 사 오라고 하거나 집의 기기를 가져오게 할 수 없습니다. 학교가 필요한 기기를 공짜로 줘야 합니다. 집이 넉넉한 아이와 그렇지 않은 아이가 다른 기기로 배우는 불공평을 없애려는 것입니다. 다만 장애 학생의 보조 기기, 온라인 전일제 학교, 2027년 전부터 쓰던 기기는 예외로 두었습니다.</p>
+<p>모든 학교는 '디지털 기기를 이렇게 쓰자'는 약속문(이용 동의서)을 만들어야 합니다. 학부모·교사·학생이 함께 의논해서 만들고, 학교 누리집에 올려야 합니다. 글을 잘 못 읽는 저학년은 서명 대신 그림을 그리거나 말로 약속할 수 있고, 다문화 가정을 위해 여러 언어로 번역해 줍니다. 이 약속문은 적어도 2년마다 다시 살펴봐야 합니다. 약속을 어기면 인터넷이나 인쇄 권한을 잠시 막는 식으로 단계별로 대응하지만, 교육부는 벌보다 미리 막는 계획을 세우라고 강조합니다.</p>
+
+<h3>싱가포르: 정답 대신 질문을 던지는 AI, 스위치는 교사 손에</h3>
+<p>싱가포르는 'AI를 쓸 때 언제나 학생이 가운데, 가르치는 방법이 먼저'라는 원칙을 세웠습니다. 배우는 순서도 정했습니다. AI를 이해하고, 써 보고, AI와 함께 배우고, 마지막으로 AI를 따져 보며 쓰는 단계로 올라갑니다. 안전 원칙은 네 가지입니다. 스스로 판단하는 힘(주체성), 누구도 빠지지 않게(포용성), 치우치지 않게(공정성), 그리고 안전입니다.</p>
+<p>나라에서 운영하는 온라인 학습 공간에 AI 기능이 들어 있는데, 학생은 쓰기 전에 AI가 어떻게 돌아가고 무엇이 위험한지 배우는 기초 과정을 꼭 마쳐야 합니다. 초등 4학년 이상이 쓰는 <span class="key">AI 학습 도우미</span>는 답을 바로 알려 주지 않고 되묻는 질문으로 아이가 스스로 생각하게 이끕니다. 이 도우미는 <strong>교사가 켜야만 작동</strong>하고, 주고받을 수 있는 횟수에도 한도가 있습니다. 4~6학년은 수업 시간에 교사가 지켜볼 때만 쓸 수 있습니다.</p>
+<p>과제에 의견을 달아 주는 AI도 있지만, 교사가 그 의견을 먼저 읽고 고친 뒤에 학생에게 전합니다. 수학이나 지리에서는 학생이 어디까지 준비됐는지 보고 다음 문제를 골라 주는 시스템도 씁니다. 학교는 부모에게 집에서의 AI 사용 안내서를 나눠 줍니다. 학교와 집의 기준이 달라서 아이가 헷갈리지 않게 하려는 것입니다.</p>
+
+<h3>홍콩: 쓸 만한 도구를 골라 주고, 쓴 결과를 보고받는다</h3>
+<p>홍콩은 학교, 대학, 교육 단체, 기업이 함께 전자학습 도구를 만드는 사업을 벌이고 있습니다. 2025년 6월과 2026년 1월에 1·2차 결과물을 냈고, 2026년 6월에 3차로 <span class="num">12개</span> 도구를 내놓았습니다. 공립학교 등은 정부가 준 이용권(바우처)으로 이 도구들을 공짜로 구독할 수 있고, 한 학기나 한 해 단위로 고를 수 있습니다.</p>
+<p>도구의 종류는 다양합니다. 홍콩대학교가 만든 도구는 가상현실로 초등학생의 읽기·쓰기를 돕고, 기기가 없는 학교에는 기기를 빌려줍니다. 학생마다 배우는 속도를 분석해 맞춰 주는 플랫폼, 예비 교사가 수업 관리 연습을 하는 AI 도구, 야외 조사를 돕는 도구, 위험 없이 과학 실험을 해 볼 수 있는 가상 실험실도 있습니다.</p>
+<p>눈에 띄는 건 조건입니다. 돈을 지원받은 학교는 한 해 동안 어떻게 쓸지 계획서를 내고, 쓴 뒤에는 평가 보고서를 내야 합니다. 세금을 들인 만큼 정말 쓸모가 있었는지 확인하겠다는 뜻입니다. 망설이는 학교를 위해 <span class="num">15개</span> 프로젝트의 맛보기판을 무료로 풀었고, 개발자가 직접 시연하는 박람회와 먼저 써 본 교사들이 경험을 나누는 연수도 열었습니다.</p>
+
+<h3>한국: 선도교사 1만 명, '도구 연수'에서 '수업 연수'로</h3>
+<p>교육부는 AI를 수업에 제대로 쓰면서 학교의 변화를 이끌 선도교사 1만 명을 기르고 있습니다. 전국을 6개 권역으로 나누고, 권역마다 교대·사범대가 있는 대학이 민간 기관과 손잡고 연수를 맡았습니다. 서울대, 춘천교대, 대구교대, 충남대, 한국교원대, 건국대 등이 참여합니다.</p>
+<p>3년째인 올해는 방향을 바꿨습니다. 예전에는 디지털 도구를 능숙하게 다루는 데 초점이 있었다면, 이제는 교사가 학생의 성장이라는 본래 목적에 집중하도록 내용을 다시 짰습니다. 이를 위해 특정 AI 제품에 묶이지 않는 <span class="key">AI 디지털 교육 역량체계</span>를 새로 만들었습니다. '이해, 활용, 성찰'을 뼈대로 3개 영역, 7개 역량, 21개 행동 기준, 63개 세부 내용으로 되어 있습니다. 유네스코의 교사 AI 역량 틀(2024)과 OECD의 교사 나침반(2025)을 참고했습니다.</p>
+<p>연수는 세 단계입니다. 6시간짜리 기본 과정에서 자기 수준을 진단하고 AI 교육과 윤리의 기초를 다집니다. 24시간짜리 집중 과정에서는 교과별로 반을 나눠 AI 도구를 실습하고, 수업과 평가를 설계하고, 학생 학습 자료를 분석해 피드백을 주는 일까지 직접 해 봅니다. 5시간짜리 공유 과정에서는 발표회를 열어 서로의 수업 사례를 나눕니다. 교사를 기술을 '사서 쓰는 사람'이 아니라 수업을 '설계하는 사람'으로 세우겠다는 것입니다.</p>
+
+<h3>아랍에미리트: 교실보다 교육부 사무실부터 바꾸는 NOVA</h3>
+<p>아랍에미리트 교육부는 NOVA라는 사업을 시작했습니다. 정부 전체에 AI를 빨리 들이려는 나라의 방침에 맞춰, 교육 제도 전체를 디지털로 바꾸려는 장기 계획입니다. 여기저기 흩어진 행정·교육 자료를 AI로 빠르게 분석해 정책을 정하는 데 쓰겠다는 것이 핵심입니다.</p>
+<p>장관은 복잡하고 쪼개져 있던 행정 절차를 처음부터 다시 설계하고 단순하게 만들겠다고 했습니다. 차관은 NOVA가 지난 몇 년간의 디지털·AI·자료 분야 투자를 한데 모은 결과이며, 교육부와 교육 산업에서 겹치는 일을 합치는 역할을 할 거라고 설명했습니다. 동시에 기계보다 사람에게 투자한다고 강조합니다. AI를 책임 있게 다룰 줄 아는 교사와 전문가를 기르지 않으면 혁신이 완성되지 않는다는 생각입니다.</p>
+<p>다만 요약본에는 구체적으로 어떤 도구를 언제 어느 학교에 들이는지는 나오지 않습니다. 학생의 문제 해결력과 디지털 역량을 키우는 바탕이 될 것이라는 기대만 적혀 있습니다. 열두 꼭지 가운데 가장 '선언'에 가까운 소식입니다.</p>
+
+<h3>일본: 2030년부터 디지털 교과서도 정식 교과서</h3>
+<p>일본 국회는 학교교육법을 고쳐, 그동안 종이로만 정해져 있던 교과서의 뜻을 넓혔습니다. 2030년부터 교과서는 세 가지가 됩니다. 종이 교과서, 디지털 교과서, 그리고 같은 내용을 종이와 디지털로 둘 다 만든 하이브리드 교과서입니다. 어느 것을 쓸지는 지역 교육위원회나 국립·사립학교 교장이 정합니다. 디지털 교과서도 나라가 무료로 나눠 줍니다.</p>
+<p>중요한 변화는 '검사 범위'입니다. 지금은 종이 교과서에 찍힌 QR 코드로 연결되는 동영상이나 음성은 교과서가 아닌 보조 자료로 취급돼 나라의 검정을 받지 않았습니다. 앞으로는 교과서 안의 모든 디지털 기능과 연결된 내용까지 교과서의 일부로 보고 검정합니다. 영어 원어민 음성, 과학 실험 동영상 같은 것도 나라가 품질을 확인하겠다는 뜻입니다. 외부 저작물을 교과서에 담기 쉽도록 저작권법도 손봤습니다.</p>
+<p>조심스러운 목소리도 반영했습니다. 논의 과정에서 디지털 자료가 깊이 있는 공부를 방해할 수 있다는 걱정이 나왔습니다. 그래서 문부과학 장관은 <strong>초등 4학년 이하, 그리고 국어·사회·도덕처럼 읽고 쓰는 힘이 중요한 과목에는 디지털 교과서를 인정하지 않겠다</strong>는 생각을 밝혔습니다. 자막이나 화면 확대처럼 특수교육 대상 학생을 돕는 기능도 기대 효과로 들었습니다.</p>
+
+<h3>독일 NRW주: AI 비서로 교사의 서류 일을 덜어 준다</h3>
+<p>독일 노르트라인베스트팔렌주는 교장과 교사가 서류 일에서 벗어나 수업과 학생 지도에 시간을 쓰게 하려고 AI 비서 네 가지를 내놓았습니다. 학교 관련 법 질문에 답하고 공문 초안을 써 주는 비서, 여러 언어로 번역하고 가정통신문을 쓰는 비서, 학교의 디지털화 수준을 진단하고 미디어 교육 계획을 돕는 비서, 언어를 배려한 수업 설계와 교재 분석을 돕는 비서입니다. 여러 주가 함께 운영하는 안전한 대화형 플랫폼 위에서 돌아가며 모든 학교가 무료로 씁니다.</p>
+<p>AI만 들인 것이 아닙니다. 주정부는 학교에 요구하던 자료 제출과 보고를 전부 점검해서 겹치거나 잘 안 쓰이는 설문을 합치거나 없앴습니다. 교직원 충원 현황 보고는 1년에 세 번에서 두 번으로 줄였습니다. 2027/28학년도부터는 학교 행정 시스템과 국가 자료망을 이어 통계를 사람이 따로 입력하지 않아도 되게 합니다. 교원 임용 창구를 하나로 모으고 모바일 학생증도 도입합니다.</p>
+<p>이 꼭지가 주는 교훈은 <strong>일을 AI에게 넘기기 전에 필요 없는 일부터 지웠다</strong>는 점입니다. 쓸모없는 보고서를 AI가 빨리 써 주는 것보다 그 보고서를 없애는 편이 교사의 시간을 더 확실히 돌려줍니다.</p>
+
+<h3>세계은행·에듀테크 허브: 교사 절반이 AI를 '검색창'으로 안다</h3>
+<p>세계은행과 에듀테크 허브가 연 모임에서 인도의 큰 조사 결과가 소개됐습니다. 처음으로 교사의 에듀테크 사용률이 학생보다 높아졌지만, AI를 날마다 쓰는 교사 가운데 약 절반이 AI를 그냥 검색 엔진으로 여기고 있었습니다. 이게 왜 문제일까요? 검색 엔진은 있는 자료를 찾아 주지만 AI는 그럴듯한 문장을 새로 만들어 냅니다. 이 차이를 모르면 치우치거나 틀린 답을 그대로 믿게 됩니다. 인도의 한 재단은 그래서 책임 있고 윤리적인 사용을 중심에 둔 교육과정을 만들어 <span class="num">220만 명</span>의 교사에게 보급하고 있습니다.</p>
+<p>르완다에서는 교사와 함께 만든 메신저 기반 도우미가 소개됐습니다. 교사들이 "우리 교실과 안 맞는다"고 의견을 내자, 도우미가 먼저 학급 인원과 도움이 필요한 장애 학생이 있는지 묻도록 바뀌었습니다. 서양식 영어 발음 대신 현지 아이들에게 익숙한 동아프리카 억양도 넣었습니다. 인터넷이 약한 시골에서는 비싼 장비보다 일반 휴대전화 문자로 돌아가는 간단한 퀴즈가 더 쓸모 있었습니다. 우루과이는 유니세프와 함께 디지털 교과서를 만드는 시간과 돈을 AI로 크게 줄였습니다.</p>
+<p>AI 회사인 오픈AI도 속도 차이를 인정했습니다. 기술은 매주 바뀌는데 연수 준비에는 오래 걸리니, 특정 도구 사용법만 가르치는 연수는 금방 낡습니다. 그래서 필요한 것은 어떤 도구가 우리 아이들에게 안전하고 유익한지 스스로 판단하는 <span class="key">비판적인 안목</span>입니다. 걱정도 함께 나왔습니다. AI가 행정 일을 덜어 준다지만, 오히려 수업 구상이나 피드백 같은 교사 고유의 전문성마저 기계에 기대게 될 수 있다는 것입니다. 그래서 교사가 아이들과 보내는 시간의 '양'이 아니라 그 시간 동안 나누는 교감의 '깊이'를 고민하자고 했습니다.</p>
+
+<h3>HolonIQ: 유럽 에듀테크 시장, 반짝 아이디어보다 오래 버틴 회사가 이긴다</h3>
+<p>시장 분석 기관 HolonIQ가 유럽의 주목할 에듀테크 기업 200곳을 골라 분석했습니다. 가장 큰 몫은 전체의 약 절반을 차지한 직장인 직무 교육 분야입니다. 학교 교육 분야는 약 <span class="num">25%</span>로, 주로 가르치는 일을 돕거나 학생별 맞춤 학습 자료를 만드는 회사들입니다. 대학 쪽은 새로운 형태의 학위나 취업 연결 서비스가 자라고 있습니다.</p>
+<p>누구에게 파느냐도 달라졌습니다. 개인 소비자에게 직접 파는 회사가 <span class="num">57%</span>, 기업이나 기관에 파는 회사가 <span class="num">44%</span>였습니다(두 숫자를 더하면 100이 넘는데, 이유는 요약본에 설명이 없습니다). 2020년대 초에는 개인 판매가 60%를 넘었다가 2023~2025년에 줄어 이제 균형을 이뤘다고 합니다. 나라별로는 영국이 <span class="num">39%</span>로 가장 많고 독일 13%, 프랑스 12%가 뒤를 이었습니다.</p>
+<p>세운 지 4~6년 된 회사가 <span class="num">53%</span>로 가장 많고, 3년이 안 된 신생 회사는 <span class="num">4%</span>뿐이었습니다. 분석가들은 이것을 시장이 '새 아이디어 자랑' 단계를 지나 '실제로 쓸모와 지속성을 증명하는' 단계에 들어섰다는 신호로 풀이했습니다. 학교 입장에서 보면, 앞으로 살아남는 도구는 화려한 기술보다 현장에서 효과가 확인된 것일 가능성이 크다는 뜻입니다.</p>
+
+<h3>논문 1: 게임 요소는 지식을 나누게 만드는가 — 72편을 모아 본 결과</h3>
+<p>점수, 배지, 순위표 같은 게임 요소를 게임이 아닌 곳에 넣는 것을 게이미피케이션이라고 합니다. 이 논문은 회사와 대학에서 게임 요소가 사람들이 지식을 얻고 나누고 만드는 데 어떤 영향을 주는지 다룬 연구들을 모아 정리했습니다. 2004년부터 2023년까지 나온 우수 학술지 논문 가운데 정해진 기준으로 거르고 걸러 <span class="num">72편</span>을 남겼습니다. 이 가운데 실제 자료로 효과를 확인한 연구가 45편, 이론을 다룬 연구가 18편 등입니다.</p>
+<p>저자들은 게임 요소가 왜 효과를 내는지 네 가지 이론으로 설명합니다. 첫째, 사람은 스스로 고르고, 잘한다고 느끼고, 남과 이어져 있다고 느낄 때 속에서 우러나는 의욕이 생긴다는 이론입니다. 다만 상을 너무 많이 주면 오히려 그 의욕이 꺼질 수 있습니다. 둘째, 과제가 내 실력보다 너무 쉬우면 지루하고 너무 어려우면 좌절하니, 딱 맞는 난이도일 때 푹 빠진다는 이론입니다. 셋째, 머릿속에만 있는 요령을 말과 글로 꺼내 여럿의 지식으로 만든다는 이론입니다. 넷째, 억지로 시키지 않고 기본 설정이나 알림 같은 작은 장치로 행동을 슬쩍 이끈다는 이론입니다. 이것도 조종당한다고 느끼면 반발을 부릅니다.</p>
+<p>저자들은 이 넷을 이어 붙여 하나의 흐름을 제안했습니다. 설계가 사람에게 잘 맞으면 의욕이 생기고, 의욕이 몰입을 낳고, 몰입이 지식을 나누는 행동으로 이어지고, 그 행동이 협력을 부르고, 협력 속에서 개인의 요령이 모두의 지식으로 바뀌어 결국 조직에 가치를 만든다는 것입니다. 회사에서는 주로 직원 성과와 지식 공유에, 대학에서는 학생의 흥미와 오래 기억하기에 게임 요소를 썼습니다. 대학은 가상현실, 방탈출, 시뮬레이션 게임처럼 다양한 기술을 섞는 경향이 강했습니다.</p>
+<p>연구가 한쪽으로 몰려 있다는 사실도 드러났습니다. 게임 요소 연구는 지식 얻기(<span class="num">26%</span>)와 나누기(<span class="num">28%</span>)에 몰려 있고 새 지식 만들기는 <span class="num">9%</span>였습니다. 지식을 저장하고 찾기, 지키기, 실제로 활용하기에 관한 연구는 거의 없었습니다. 흔한 부작용도 정리했습니다. 시스템이 너무 복잡하면 사람들이 손을 놓고, 점수와 배지만 좇으면 내용 없는 참여만 늘고, 모두에게 공개된 순위표는 경쟁을 부추겨 오히려 나누기를 막습니다. 해결책으로는 내용을 잘게 나누고 단계별 안내를 붙이기, 양보다 질을 평가하기, 팀 단위로 보상하고 점수 공개를 본인이 고르게 하기가 제시됐습니다.</p>
+
+<h3>논문 2: 메타버스 간호 실습 — 점수는 오르고, 머리는 덜 지쳤다</h3>
+<p>대만의 한 대학 간호학과 1학년 <span class="num">56명</span>(평균 21.2세)이 참여했습니다. 모두 가상현실 기기를 써 본 적도, 아이 환자를 실제로 돌본 적도 없는 초보자였습니다. 4주 동안 한쪽은 가상현실 헤드셋을 쓰고 메타버스 안에서 배웠고, 다른 쪽은 기존처럼 동영상과 안내서로 배웠습니다. 두 쪽 모두 경력 6년이 넘는 같은 교수자가 가르쳤습니다.</p>
+<p>메타버스 쪽 학생들은 소아 환자에게 항암 치료를 준비하는 절차(허리에 바늘을 넣는 시술 포함)를 가상 병실 안에서 직접 해 봤습니다. 설계는 반두라의 <span class="key">사회학습이론</span>을 따랐습니다. 사람은 남이 하는 것을 보고, 따라 하고, 그 결과로 배운다는 이론입니다. 그래서 먼저 가상 교수자의 시범을 관찰하고, 안전한 가상 공간에서 따라 하며 반복 연습하고, 잘하면 보물상자 같은 보상과 시스템의 피드백을 받았습니다. 막히면 힌트를 찾아보며 스스로 다음 단계로 나아갔습니다.</p>
+<p>결과는 네 가지입니다. 첫째, 시작 전 실력 차이를 계산으로 맞춘 뒤의 시험 점수가 메타버스 쪽 <span class="num">80.22점</span>, 동영상 쪽 <span class="num">62.64점</span>이었습니다. 우연이라고 보기 어려울 만큼 큰 차이입니다. 둘째, 머리가 느끼는 부담(인지 부하)이 메타버스 쪽이 더 낮았습니다. 셋째, 비판적 사고 점수도 메타버스 쪽이 <span class="num">4.53점</span>으로 동영상 쪽 <span class="num">4.25점</span>보다 높았고 이 역시 우연으로 보기 어려운 차이였습니다(몇 점 만점인지는 요약본에 없음).</p>
+<p>저자들은 이렇게 풀이합니다. 간호 절차는 글과 영상으로만 보면 추상적이고 복잡합니다. 가상 병실에서 손을 뻗어 순서대로 해 보면 절차가 눈앞에 공간으로 펼쳐지므로, 머릿속으로 억지로 그려 보는 수고가 줄어듭니다. 그렇게 아낀 힘을 배우는 데 쓸 수 있으니 점수가 올랐다는 설명입니다.</p>
+<p>넷째 결과가 가장 교육적입니다. 메타버스 쪽 학생들을 비판적 사고 점수로 나눠 행동 순서를 분석했더니, 점수가 높은 학생들은 관찰→따라 하기→실수→피드백→고치기→완료→되돌아보기→다시 관찰로 이어지는 한 바퀴를 온전히 돌았습니다. 점수가 낮은 학생들은 피드백을 받으면 생각하지 않고 곧장 다시 해 보는 것만 되풀이했습니다. 저자들은 그래서 이런 학생을 위해 "잠깐, 왜 틀렸을까?"를 묻는 장치나 교수자의 추가 도움이 메타버스 안에 설계돼야 한다고 말합니다. 메타버스는 교수자를 대신하는 것이 아니라 현실에서 위험하거나 비용이 큰 연습을 대신해 주는 '보조'라는 것이 결론입니다.</p>
+
+<h2>초등 현장에 주는 시사점</h2>
+<div class="callout">도구를 고르는 기준은 "얼마나 똑똑한가"가 아니라 "아이가 생각을 멈추지 않게 하는가"다.</div>
+<p><strong>지금 수업에 옮겨 볼 수 있는 것</strong>부터 적습니다. 각 항목은 이번 호에 실린 사례를 근거로 삼았습니다.</p>
+<ul>
+<li><strong>AI의 원리를 가르칠 때는 일부러 AI가 틀리게 만들고, 아이들이 그 까닭을 찾아 고치게 하라.</strong> 미국 우승 팀이 보여 준 방식입니다. AI가 넣은 자료로 배운다는 사실은 설명보다 '틀린 결과를 고쳐 보는 경험'으로 더 잘 전해집니다.</li>
+<li><strong>AI 대화 도구를 쓸 때는 정답을 주지 않고 되묻도록 설정하고, 교사가 켜고 끄며 주고받는 횟수를 정해 두어라.</strong> 싱가포르의 설계입니다. 아이가 생각할 몫을 AI가 가져가지 않게 하려는 장치입니다.</li>
+<li><strong>하루 수업을 짤 때 기기를 쓰는 시간을 모두 더해 보라.</strong> 빅토리아주는 3~6학년 하루 90분, 저학년은 최소화를 기준으로 삼았습니다. 과목마다 조금씩 쓰다 보면 합계가 생각보다 길어지기 쉽습니다.</li>
+<li><strong>학급의 기기 사용 약속은 아이들과 함께 만들고, 저학년은 그림이나 말로 약속하게 하라.</strong> 스스로 만든 약속이어야 지킬 이유가 생깁니다.</li>
+<li><strong>시뮬레이션이나 게임 활동에는 "왜 틀렸을까"를 묻는 멈춤 단계를 넣어라.</strong> 메타버스 논문에서 생각이 약한 학생은 되돌아보지 않고 다시 누르기만 반복했습니다. 코딩 교육에서 '실행해 보고 안 되면 또 실행'하는 모습과 닮았습니다.</li>
+<li><strong>점수·배지를 쓸 때는 개인 순위표보다 모둠 보상을 쓰고, 점수 공개는 아이가 고르게 하라.</strong> 게이미피케이션 문헌 정리에서 공개 순위표가 나누기를 막는다는 문제가 반복해 나왔습니다.</li>
+<li><strong>교사 연수나 동료 연구 모임에서는 새 도구 사용법보다 도구를 거르는 질문 목록을 함께 만들어라.</strong> "누구의 자료로 배웠나, 틀리면 어떻게 아나, 우리 반 아이에게 안전한가" 같은 질문이 도구가 바뀌어도 오래 쓰입니다.</li>
+</ul>
+<p><strong>이 문서만으로는 아직 말할 수 없는 것</strong>도 분명히 해 둡니다.</p>
+<ul>
+<li>메타버스 수업이 초등학생에게도 점수를 올려 주는지는 알 수 없습니다. 대학생 56명, 간호 실습 한 과목의 결과입니다.</li>
+<li>하루 90분이 알맞은 양이라는 과학적 근거는 요약본에 없습니다. 빅토리아주의 정책 기준일 뿐입니다.</li>
+<li>일본의 '초등 4학년 이하 디지털 교과서 불인정'은 장관의 견해로 소개됐을 뿐 확정된 지침은 아닙니다.</li>
+<li>게임 요소가 배움을 얼마나 높이는지 효과의 크기는 논문 1에 나오지 않습니다. 연구들이 어디에 몰려 있는지를 정리한 것입니다.</li>
+<li>각국 정책이 실제로 교사 부담을 줄이거나 성취를 높였는지는 아직 결과가 나오지 않았습니다.</li>
+</ul>
+
+<h2>한계와 조심할 점</h2>
+<p><strong>저자가 밝힌 한계</strong>는 요약본에 거의 없습니다. 두 논문 요약 모두 결과와 시사점만 옮겼고 저자 스스로 밝힌 한계 단락은 실려 있지 않습니다. 논문 2의 저자들이 "생각이 약한 학생에게는 추가 도움이 필요하다"고 한 것은 한계라기보다 설계 제안입니다.</p>
+<p>아래는 <strong>내가 보기에 걸리는 점</strong>입니다.</p>
+<ul>
+<li><strong>대부분이 정부 보도자료다.</strong> 새 정책을 알리는 글이라 좋은 점 위주로 쓰였습니다. 그래서 이 꼭지들은 "무엇이 효과가 있다"가 아니라 "여러 나라가 이쪽으로 가고 있다"는 증거로만 읽어야 합니다.</li>
+<li><strong>한 번 걸러진 요약본이다.</strong> KERIS 연구진이 원문을 줄여 옮기면서 빠진 조건이나 단서가 있을 수 있습니다. 중요한 숫자를 인용하려면 원문을 확인해야 합니다.</li>
+<li><strong>논문 2는 반을 무작위로 나누지 않은 실험이다.</strong> '유사 실험'이라는 말은 학생을 제비뽑기로 나누지 않았다는 뜻입니다. 시작 점수를 계산으로 맞추긴 했지만, 두 반의 다른 차이(의욕, 분위기)가 결과에 섞였을 수 있습니다. 각 반이 몇 명이었는지도 요약본에 없습니다.</li>
+<li><strong>논문 2는 여러 가지를 한꺼번에 바꿨다.</strong> 메타버스 쪽은 가상현실, 직접 해 보기, 보상, 힌트가 모두 달랐습니다. 그래서 점수 차이가 '가상현실' 때문인지 '직접 해 보기와 즉각 피드백' 때문인지 가려낼 수 없습니다.</li>
+<li><strong>처음 써 보는 신기함이 섞였을 수 있다.</strong> 참가자 모두 가상현실이 처음이었고 기간은 4주였습니다. 이건 내 추측이지만, 신기함이 사라진 뒤에도 효과가 남는지, 배운 것을 오래 기억하는지는 이 연구로 알 수 없습니다.</li>
+<li><strong>'도움 되는 부담'까지 줄었다는 점이 이상하다.</strong> 요약본은 쓸데없는 부담과 배우는 데 쓰이는 부담이 둘 다 낮았다고 적었습니다. 보통 배우는 데 쓰이는 부담은 줄어드는 게 꼭 좋은 신호가 아니므로, 저자들이 이를 어떻게 풀이했는지 원문 확인이 필요합니다. 이 결과를 "머리가 편해서 좋았다"로만 읽으면 안 된다는 뜻입니다.</li>
+<li><strong>논문 1은 회사 연구와 대학 연구를 함께 다룬다.</strong> KERIS 제목은 '고등교육'을 앞세웠지만 원문은 기업 지식 관리까지 포함합니다. 또 2023년까지의 연구라 생성형 AI가 퍼진 뒤의 상황은 거의 담기지 않았습니다. 초등 교실로 옮길 때는 한 단계 더 조심해야 합니다.</li>
+<li><strong>유럽 시장 숫자가 맞지 않는다.</strong> 개인 판매 57%와 기관 판매 44%를 더하면 100%를 넘습니다. 한 회사가 두 방식을 함께 쓰는 경우로 짐작되지만 요약본에 설명이 없어 숫자 해석에 주의가 필요합니다.</li>
+</ul>
+<div class="warn">논문 2의 결과를 "메타버스를 쓰면 초등학생 점수가 17점 오른다"로 옮기면 안 됩니다. 대상(대학 간호학생), 과목(시술 절차), 비교 대상(동영상+안내서)이 모두 초등 교실과 다릅니다.</div>
+
+<h2>연구적 위치</h2>
+<p>이번 호는 디지털교육 정책 담론에서 '기술 결정론'을 경계하고 교수설계와 교사 주체성(teacher agency)을 강조하는 흐름에 서 있습니다. 정책 꼭지들은 공통적으로 human-in-the-loop 원칙, 즉 AI 출력이 교사의 검토를 거쳐 학습자에게 도달하는 구조를 제도화합니다. 세계은행 세션은 도구 중심 역량(tool proficiency)에서 비판적 AI 리터러시와 교사 공동설계(co-design)로의 전환을 명시적으로 주장합니다.</p>
+<p>논문 1은 계량서지분석과 PRISMA 기반 체계적 문헌고찰을 결합한 통합 리뷰로, 게이미피케이션 연구를 지식관리(KM) 하위 프로세스(획득·공유·창출·저장/검색·보호·활용)에 매핑하고 네 이론을 결합한 다층 프레임워크(설계 적합성→동기→몰입→지식행동→협업→SECI 지식전환→조직가치)를 제안합니다. 논문 2는 사회학습이론의 삼원 상호결정(개인–행동–환경)을 몰입형 시나리오 설계 원리로 번역하고, ANCOVA와 행동 전이 분석(lag sequential analysis로 보이나 요약본에 기법명은 없음)을 결합해 효과와 과정을 함께 보았습니다. 인지부하를 외재적·본유적(germane) 부하로 나눠 측정한 점은 인지부하이론의 틀을 따른 것입니다.</p>
+<p>요약본에는 참고문헌 목록이 실려 있지 않습니다. 아래는 본문에서 이름이 직접 거론되거나 구조적으로 기대고 있는 틀이며, 괄호 안의 이론 제안자는 일반적으로 알려진 출처입니다.</p>
+<ul>
+<li><strong>사회학습이론(Bandura)</strong> — 논문 2의 핵심 설계 틀. 관찰학습·모델링·강화를 가상 시범, 모방 연습, 보물상자 보상으로 구현했다.</li>
+<li><strong>자기결정성이론(Deci &amp; Ryan)</strong> — 논문 1의 동기 층위. 자율성·유능감·관계성 충족이 내재 동기를 낳고, 외재 보상 남용이 이를 훼손한다는 과잉정당화 우려의 근거.</li>
+<li><strong>몰입이론(Csikszentmihalyi)</strong> — 논문 1의 몰입 층위. 난이도–역량 균형과 점진적 난이도 조절의 근거.</li>
+<li><strong>조직지식창조이론·SECI 모델(Nonaka &amp; Takeuchi)</strong> — 논문 1에서 암묵지↔형식지 전환(사회화·외재화·종합화·내재화)을 게임 요소(공동 미션, 템플릿, 마일스톤, 시뮬레이션)에 대응시키는 축.</li>
+<li><strong>넛지이론(Thaler &amp; Sunstein)</strong> — 논문 1에서 선택 설계(기본값, 개인화 알림)를 통한 비강제적 행동 유도의 근거이자 자율성 침해 논쟁의 출처.</li>
+<li><strong>인지부하이론</strong> — 논문 2의 결과 해석 틀. 몰입형 환경이 외재적 부하를 줄인다는 주장의 이론적 배경.</li>
+<li><strong>PRISMA 보고 지침</strong> — 논문 1의 문헌 선별 절차 기준.</li>
+<li><strong>UNESCO 교사 AI 역량 프레임워크(2024)·OECD Teaching Compass(2025)</strong> — 한국 'AI 디지털 교육 역량체계(3영역·7역량·21지표·63내용)' 설계의 참조 틀.</li>
+<li><strong>싱가포르 IMDA 모델 AI 거버넌스 프레임워크</strong> — 싱가포르 교육용 AI 프레임워크(주체성·포용성·공정성·안전)의 모체.</li>
+</ul>
+
+<p><em>디자인 스킬(artifact-design)은 "Unknown skill"로 로드되지 않았습니다. 그래서 지시문에 적힌 기준대로 팔레트, 글꼴, 다크 모드를 직접 설계했습니다. 색은 청회색 바탕에 짙은 청록 포인트이고, 글꼴은 Gothic A1, IBM Plex Sans KR, IBM Plex Mono입니다.</em></p></body></html>
