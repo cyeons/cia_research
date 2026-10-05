@@ -1,0 +1,129 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터교육·AI교육 주간 브리핑</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-10-05</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-10-05.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
+<p>이번 주 급상승 토픽 중 초등 및 K-12 컴퓨팅·AI 교육 연구 맥락에서 주목할 만한 흐름은 다음과 같습니다.</p>
+<ul>
+  <li><strong>digital storytelling (lift 8.7배)</strong>: 이번 주 가장 높은 증가율을 기록했습니다. 신규 논문 동향에서 초등학생의 디지털 시민성 함양을 위해 스토리북 기반 교수법을 적용하거나(Research Square 프리프린트 등), 멀티미디어 서사를 통한 표현 교육에 관심이 모인 점과 맞닿아 있습니다. 다만 주간 발생 건수(4건)가 적어 일시적인 표본 급증(우연)일 가능성도 열어두어야 합니다.</li>
+  <li><strong>AI in teaching (lift 7.4배)</strong>: 교사의 생성형 AI 리터러시, 프롬프트 엔지니어링 역량, 수업 설계 보조 도구 활용을 다룬 신규 연구(Education Sciences, Computers in Human Behavior Reports 등)가 집중되면서 뚜렷한 상승세를 보였습니다. 교실 직접 도입보다 수업 준비 단계에서의 위임 현상이 실제 연구로 구체화되는 추세입니다.</li>
+  <li><strong>unplugged coding (lift 6.8배) &amp; formative assessment (lift 6.7배)</strong>: 초등 컴퓨팅 사고력(CT) 및 로봇·프로그래밍 기초 단계에서 언플러그드 활동과 형성평가 프레임워크를 연계하려는 흐름이 반영된 것으로 해석됩니다.</li>
+</ul>
+
+<h2>큰 그림 — 리뷰·메타분석</h2>
+<p>검색된 리뷰 중 초등·K-12 교육과 직결되며 신뢰할 수 있는 학술지에 게재된 3편을 선별했습니다.</p>
+<ul>
+  <li>
+    <p><strong><a href="https://doi.org/10.1016/j.caeo.2026.100424">Artificial Intelligence (AI) in elementary language education: A systematic review</a></strong> — Computers and Education Open, 2026, 피인용 0회</p>
+    <p><strong>무엇을 정리했나</strong>: 6개 주요 학술 DB에서 PRISMA 가이드라인을 준수해 선별한 31편의 논문을 분석하여 초등 언어 교육에 적용된 AI의 양상을 점검했습니다. 연구 결과 AI는 말하기·어휘 중심의 대화형 AI/자연어 처리에 치우쳐 있고 적응형 시스템이나 발달 단계 맞춤형 접근은 여전히 미흡하다는 결론을 내렸습니다.</p>
+  </li>
+  <li>
+    <p><strong><a href="https://doi.org/10.1016/j.chbr.2026.101329">Teachers’ AI-related cognitive offloading: Systematic narrative review and framework for delegation and oversight</a></strong> — Computers in Human Behavior Reports, 2026, 피인용 0회</p>
+    <p><strong>무엇을 정리했나</strong>: 5개 학술 DB에서 K-12 교사의 인지적 외주화(offloading)와 과의존을 다룬 실증·리뷰 논문 40편을 PRISMA 기준에 따라 체계적으로 검토했습니다. 교사들이 수업 계획·자료 제작 업무를 AI에 광범위하게 위임하고 있으나 검증(oversight) 수준은 체계화되지 못했다고 진단하며, 위임 깊이와 검증 품질을 축으로 하는 교사 연수 프레임워크(T-AICO)를 종합 모델로 제안했습니다.</p>
+  </li>
+  <li>
+    <p><strong><a href="https://link.springer.com/content/pdf/10.1007/s44217-026-02150-0.pdf">A bibliometric analysis and systematic literature review of project based learning in K12 education</a></strong> — Discover Education, 2026, 피인용 0회</p>
+    <p><strong>무엇을 정리했나</strong>: ScienceDirect 및 Scopus에서 추출한 1,345편의 서지 분석과 20편의 핵심 논문 질적 합성을 통해 K-12 단계의 프로젝트 기반 학습(PjBL) 효과를 체계적으로 고찰했습니다. PjBL이 STEM 및 컴퓨팅 사고력 증진에 유의미한 잠재력을 가지나, 교사 전문성과 인프라 격차가 실질적 도입을 가로막는 병목이라는 결론을 제시했습니다.</p>
+  </li>
+</ul>
+
+<h2>읽을 만한 논문 5편</h2>
+
+<ul>
+  <li>
+    <p><strong><a href="https://doi.org/10.3390/educsci16050811">An Exploratory Cross-National Study of K–12 Teachers’ Generative AI Literacy and Classroom Enactment</a></strong> — Education Sciences, 2026 (주제: 수업)</p>
+    <p><strong>쉽게 말하면</strong>: 미국, 필리핀, 인도 등 5개국 K-12 교사 26명을 인터뷰하여 생성형 AI를 수업에 어떻게 쓰는지 살펴보았습니다. 그 결과 기관 차원의 지원 유무보다 교사 개인의 프롬프트 역량이 실제 수업 연계 여부를 갈랐고, 다들 학생 지도보다는 수업 준비 보조용으로 AI를 훨씬 많이 쓰고 있었습니다.</p>
+    <p><strong>교실에 주는 시사점</strong>: 초등 교사는 AI 툴의 단순 도입보다 효과적인 발문(프롬프트)을 설계하는 역량에 초점을 맞추어 수업 설계 시간을 줄이고 비판적으로 검토하는 습관을 들여야 합니다. 단, 국가별 소수 인터뷰(26명) 질적 연구이므로 통계적 일반화에는 주의가 필요합니다.</p>
+  </li>
+
+  <li>
+    <p><strong><a href="https://ccsenet.org/journal/index.php/ies/article/download/0/0/53290/58122">Components and Indicators Framework for Computational Thinking Instruction: A Study of Primary School Teachers in Thailand</a></strong> — International Education Studies, 2026 (주제: 수업)</p>
+    <p><strong>쉽게 말하면</strong>: 초등학교 교실에서 컴퓨팅 사고력을 가르칠 때 필요한 5가지 영역(학습자 분석, 교육과정, 목표 수립, 활동 운영, 평가)과 19개 세부 지표를 전문가 검증을 통해 개발했습니다. 현직 전문가들은 이 틀의 타당성과 현장 실행 가능성을 매우 높게 평가했습니다.</p>
+    <p><strong>교실에 주는 시사점</strong>: 초등 교사가 실과나 창의적 체험활동에서 SW·CT 수업을 짤 때 '단순 코딩 실습'에만 머물지 않고 목표 수립부터 형성평가까지 5개 영역 지표를 수업 루브릭 체크리스트로 활용할 수 있습니다. 단, 전문가 델파이 검증 중심이라 실제 학생 학습 성과에 대한 교실 실증 데이터는 아직 부족합니다.</p>
+  </li>
+
+  <li>
+    <p><strong><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1847155/pdf">Children's media engagement and media literacy in platformized environments: primary school teachers' perspectives</a></strong> — Frontiers in Psychology, 2026 (주제: 윤리·정보판별)</p>
+    <p><strong>쉽게 말하면</strong>: 초등학교 교사 71명을 대상으로 알고리즘 기반 미디어 플랫폼(유튜브, 틱톡 등)이 초등학생들의 가치관과 행동에 어떤 영향을 미치는지 물었습니다. 교사들은 아이들이 위험을 무비판적으로 수용하고 학교나 부모보다 플랫폼 알고리즘을 더 신뢰하는 경향이 뚜렷해졌다고 보고했습니다.</p>
+    <p><strong>교실에 주는 시사점</strong>: 미디어 리터러시 교육을 단순 검색 기술이나 저작권 교육에 한정하지 않고, 알고리즘이 추천하는 영상의 의도와 편향성을 함께 토론하는 비판적 필터링 수업으로 재편해야 합니다.</p>
+  </li>
+
+  <li>
+    <p><strong><a href="https://doi.org/10.1186/s40359-026-05311-w">The relationship between digital addiction and peer bullying in primary school children: a cross-sectional study</a></strong> — BMC Psychology, 2026 (주제: 웰빙·안전)</p>
+    <p><strong>쉽게 말하면</strong>: 초등학생 240명을 조사해 디지털 과몰입 수준과 교우 간 학교폭력(가해 및 피해) 간의 관련성을 분석했습니다. 조사 결과 디지털 중독의 내향성 및 대인관계 하위 요인이 높을수록, 특히 남학생일수록 또래 괴롭힘 가해 행동을 보일 확률이 뚜렷하게 높았습니다.</p>
+    <p><strong>교실에 주는 시사점</strong>: 교실 내 디지털 과몰입 지도는 기기 사용 시간 제한에 그치지 않고, 디지털 기기로 숨어드는 내향적 고립 학생의 오프라인 교우 관계 개선 및 공격성 발현 예방 생활지도와 통합 운영되어야 합니다.</p>
+  </li>
+
+  <li>
+    <p><strong><a href="https://sssj.aearedo.es/index.php/sssj/article/download/screen-time-physical-literacy-primary-students/83">Screen time and its relationship with the development of physical literacy in primary school students</a></strong> — Sustainability and Sports Science Journal, 2026 (주제: 웰빙·안전)</p>
+    <p><strong>쉽게 말하면</strong>: 초등 6학년 학생들을 대상으로 스크린 타임과 신체 리터러시를 측정한 뒤, 정규 국어·수학 수업에 신체 활동을 결합한 1주일간의 수업 중재(PAL)를 적용해 보았습니다. 스크린 타임이 길수록 신체 능력이 낮았지만, 교과 수업 중 액티브 브레이크(신체 움직임)를 도입하자 학생 걸음 수와 수업 호응도가 즉각 올라갔습니다.</p>
+    <p><strong>교실에 주는 시사점</strong>: 디지털 기기 기반 스마트 교실 수업을 설계할 때 40분 내내 화면만 보게 하지 말고, 교과 내용과 결합된 짧은 신체 활동형 게임이나 동작 퀴즈를 중간에 배치하여 좌식 시간을 적극적으로 끊어줄 수 있습니다. 단, 1개 학급 24명 대상 단기 연구이므로 지속적인 체력 향상 효과는 추가 확인이 필요합니다.</p>
+  </li>
+</ul>
+
+<h2>이론적 배경 후보</h2>
+<p>이번 주 신규 논문들이 공통으로 인용한 핵심 문헌은 아래와 같습니다. 다수의 신규 연구가 이를 공통으로 인용한다는 것은 해당 연구가 초등·K-12 AI 리터러시 프레임워크 논의의 출발점이자 학계의 기본 전제로 확립되어 있음을 뜻합니다.</p>
+<table border="1" cellpadding="6" style="border-collapse: collapse; width: 100%; text-align: left;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th>문헌 (DOI)</th>
+      <th>연도</th>
+      <th>이번 주 공동인용 수</th>
+      <th>어떤 이론적 역할</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://doi.org/10.1145/3313831.3376727">What is AI Literacy? Competencies and Design Considerations</a></td>
+      <td>2020</td>
+      <td>2</td>
+      <td>비전공자 및 초중등 학습자를 위한 AI 리터러시의 핵심 역량(개념 이해, 사용, 비판적 평가 등)을 체계화한 고전 문헌으로, 초등 AI 교육과정 설계 및 교사 역량 척도의 개념적 기틀을 제공합니다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>국내 동향</h2>
+<p>최근 30일 신규 없음</p>
+
+<h2>KERIS 디지털교육 동향</h2>
+<p>최신호는 여전히 224호입니다. <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=96765bf0efa87496c7500738e9d7b383&amp;dwlTy=pblcte">[통권 224호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (39.7MB).<br>
+정독하려면 내려받아 eli5.py에 넣으세요.</p></body></html>
