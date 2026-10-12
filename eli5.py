@@ -1,6 +1,7 @@
 """논문 하나를 ELI5 HTML로 만들어 브라우저에 띄운다.
 
     python eli5.py paper.pdf
+    python eli5.py paper.md
     python eli5.py https://doi.org/10.1371/journal.pone.0345347
 
 로컬 Claude Code(`claude -p`)를 헤드리스로 부른다. 구독으로 처리되므로 API 키가 필요 없다.
@@ -183,16 +184,20 @@ def extract_pdf_text(path):
 
 
 def source_instruction(src):
-    """원문을 준비한다. URL은 WebFetch에 맡기고, PDF는 텍스트를 직접 뽑아 통째로 준다."""
+    """원문을 준비한다. URL은 WebFetch에 맡기고, PDF·md는 텍스트를 통째로 준다."""
     if src.startswith(("http://", "https://")):
         return f"WebFetch로 다음 주소의 논문을 가져와 전문을 읽어라: {src}"
     path = Path(src)
     if not path.is_file():
         sys.exit(f"파일이 없습니다: {src}")
-    if path.suffix.lower() != ".pdf":
-        sys.exit(f"PDF가 아닙니다: {src} (PDF 파일이나 http(s) 주소를 주세요)")
-    text = extract_pdf_text(path)
-    return f"다음은 논문 원문 전체다(PDF에서 텍스트로 추출함). 이 내용만 근거로 삼아라:\n\n{text}"
+    ext = path.suffix.lower()
+    if ext == ".md":
+        text = path.read_text(encoding="utf-8-sig")   # 메모장이 붙이는 BOM을 걷어낸다
+    elif ext == ".pdf":
+        text = extract_pdf_text(path)
+    else:
+        sys.exit(f"PDF나 md가 아닙니다: {src} (PDF·md 파일이나 http(s) 주소를 주세요)")
+    return f"다음은 논문 원문 전체다({ext[1:]} 파일에서 읽음). 이 내용만 근거로 삼아라:\n\n{text}"
 
 
 def build_prompt(src):
@@ -225,7 +230,8 @@ def run_claude(prompt):
 
 def slug(src):
     # 한글 주소는 퍼센트 인코딩돼 있다. 풀지 않으면 파일명이 _EC_83_81... 이 된다.
-    base = urllib.parse.unquote(src).rstrip("/").rsplit("/", 1)[-1].removesuffix(".pdf") or "paper"
+    base = urllib.parse.unquote(src).rstrip("/").rsplit("/", 1)[-1]
+    base = re.sub(r"\.(pdf|md)$", "", base, flags=re.I) or "paper"
     return re.sub(r"[^\w.-]", "_", base, flags=re.UNICODE)[:60]
 
 

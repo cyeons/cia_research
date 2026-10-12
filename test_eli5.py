@@ -62,7 +62,17 @@ def test_bad_inputs_fail_loudly():
     with tempfile.TemporaryDirectory() as d:
         assert "파일이 없습니다" in _exits(lambda: eli5.source_instruction(str(Path(d, "no.pdf"))))
         txt = Path(d, "a.txt"); txt.write_text("x")
-        assert "PDF가 아닙니다" in _exits(lambda: eli5.source_instruction(str(txt)))
+        assert "PDF나 md가 아닙니다" in _exits(lambda: eli5.source_instruction(str(txt)))
+
+
+def test_md_read_directly():
+    """md는 PyMuPDF 없이 그대로 읽는다. 메모장이 붙인 BOM은 프롬프트에 새지 않는다."""
+    eli5.fitz = None
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d, "a.md"); p.write_text("# 초등 AI교육 동향", encoding="utf-8-sig")
+        ins = eli5.source_instruction(str(p))
+    assert "# 초등 AI교육 동향" in ins and "\ufeff" not in ins
+    assert eli5.slug("C:/p/report.md") == "report"
 
 
 def _stub_run(rc=0, stdout="<h2>요약</h2>", stderr="", seen=None):

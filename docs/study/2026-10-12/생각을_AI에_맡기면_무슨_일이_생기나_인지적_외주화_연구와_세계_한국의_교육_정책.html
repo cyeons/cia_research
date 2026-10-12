@@ -1,0 +1,468 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>생각을 AI에 맡기면 무슨 일이 생기나 — 인지적 외주화 연구와 세계·한국의 교육 정책</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>생각을 AI에 맡기면 무슨 일이 생기나 — 인지적 외주화 연구와 세계·한국의 교육 정책</h1><p style="color:#666">2026-10-12</p><p style="font-size:.9em">원문: <a href="file:///C:/Projects/cia_research/pdf/compass_artifact_wf-50b3fe26-1705-5f96-bfbb-c61cc07b2840_text_markdown.md">C:\Projects\cia_research\pdf\compass_artifact_wf-50b3fe26-1705-5f96-bfbb-c61cc07b2840_text_markdown.md</a></p>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* 팔레트: 모눈 공책(밝은 배경) / 칠판(어두운 배경). 맡기기의 첫 도구가 공책이었다는 데서 가져왔다. */
+:root{
+  --paper:#eef1f0;  /* 모눈 공책 종이 */
+  --grid:#e1e7e6;   /* 모눈 선 */
+  --ink:#17212b;    /* 푸른 기 도는 잉크 */
+  --soft:#566370;   /* 연필 */
+  --rule:#b9c4c6;
+  --wash:#dfe8ee;
+  --mark:#ffe14d;   /* 형광펜 */
+  --tutor:#1d5fd1;  /* 힌트의 파랑 */
+  --count:#0b6e63;  /* 수치 */
+  --alarm:#b3243c;  /* 빨간 펜 */
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#131a18;  /* 칠판 */
+    --grid:#182120;
+    --ink:#e3e8df;    /* 분필 */
+    --soft:#98a59d;
+    --rule:#33413d;
+    --wash:#1b2725;
+    --mark:#75610f;
+    --tutor:#7fb0ff;
+    --count:#63d6c4;
+    --alarm:#ff8f9c;
+  }
+}
+@media screen{
+  body{
+    counter-reset:sec;
+    max-width:42em; margin-inline:auto; padding:2.5rem 1.25rem 5rem;
+    background-color:var(--paper);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:'IBM Plex Sans KR',system-ui,sans-serif;
+    font-size:17px; line-height:1.85; word-break:keep-all;
+  }
+  h1,h2,h3{font-family:'Hahmlet',serif; text-wrap:balance; line-height:1.35; color:var(--ink);}
+  h1{font-weight:700; font-size:1.9rem; margin:0 0 1.5rem;}
+  h2{
+    counter-increment:sec;
+    font-weight:700; font-size:1.45rem;
+    margin:3.5rem 0 1rem; padding-top:.9rem; border-top:2px solid var(--ink);
+  }
+  h2::before{
+    content:counter(sec,decimal-leading-zero);
+    display:block; margin-bottom:.2rem;
+    font:500 .8rem 'IBM Plex Mono',monospace; letter-spacing:.1em; color:var(--tutor);
+  }
+  h3{font-weight:500; font-size:1.14rem; margin:2.2rem 0 .5rem;}
+  p{margin:.75rem 0;}
+  ul{padding-left:1.2em; margin:.75rem 0;}
+  li{margin:.4rem 0;}
+  li::marker{color:var(--tutor);}
+  strong{font-weight:600;}
+  .key{background:linear-gradient(transparent 42%,var(--mark) 42%); padding:0 .12em; font-weight:600;}
+  .num{font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--count); white-space:nowrap;}
+  .callout{
+    margin:1.4rem 0; padding:.9rem 1.1rem;
+    border-left:6px solid var(--tutor); background:var(--wash);
+    font-weight:500; font-size:1.04em; line-height:1.7;
+  }
+  .warn{
+    margin:1.4rem 0; padding:.8rem 1.1rem;
+    border:1.5px dashed var(--alarm); background:var(--paper);
+  }
+  .warn::before{
+    content:"주의"; display:block;
+    font:500 .78rem 'IBM Plex Mono',monospace; letter-spacing:.1em; color:var(--alarm);
+  }
+  table{width:100%; border-collapse:collapse; margin:1.4rem 0; font-size:.9em; line-height:1.6; background:var(--paper);}
+  th{text-align:left; font-weight:600; padding:.5rem .6rem; border-bottom:2px solid var(--ink);}
+  td{padding:.55rem .6rem; border-bottom:1px solid var(--rule); vertical-align:top;}
+  figure{
+    margin:2.2rem 0 .8rem; padding:1rem 0 .9rem;
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    background:var(--paper);
+  }
+  figure svg{display:block; width:100%; height:auto; color:var(--ink); font-family:inherit;}
+  figcaption{
+    margin-top:.7rem; padding-left:.8rem; border-left:3px solid var(--tutor);
+    font-size:.88em; line-height:1.6; color:var(--soft);
+  }
+}
+</style>
+
+<h2>그림으로 보는 핵심</h2>
+
+<figure><svg viewBox="0 0 680 290" role="img" aria-label="머리가 하던 일이 도구로 넘어가는 네 단계. 마지막에는 생각하는 과정이 생성형 AI로 넘어간다.">
+<circle cx="90" cy="145" r="56" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="90" y="150" text-anchor="middle" font-size="16" fill="currentColor">내 머리</text>
+<line x1="146" y1="145" x2="200" y2="145" stroke="currentColor" stroke-width="2"/>
+<line x1="200" y1="43" x2="200" y2="247" stroke="currentColor" stroke-width="2"/>
+<line x1="200" y1="43" x2="450" y2="43" stroke="currentColor" stroke-width="2"/>
+<polygon points="450,37 462,43 450,49" fill="currentColor"/>
+<text x="325" y="33" text-anchor="middle" font-size="15" fill="currentColor">기억·계산</text>
+<rect x="470" y="21" width="190" height="44" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="565" y="48" text-anchor="middle" font-size="15" fill="currentColor">메모·계산기</text>
+<line x1="200" y1="111" x2="450" y2="111" stroke="currentColor" stroke-width="2"/>
+<polygon points="450,105 462,111 450,117" fill="currentColor"/>
+<text x="325" y="101" text-anchor="middle" font-size="15" fill="currentColor">길 찾기</text>
+<rect x="470" y="89" width="190" height="44" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="565" y="116" text-anchor="middle" font-size="15" fill="currentColor">GPS·스마트폰</text>
+<line x1="200" y1="179" x2="450" y2="179" stroke="currentColor" stroke-width="2"/>
+<polygon points="450,173 462,179 450,185" fill="currentColor"/>
+<text x="325" y="169" text-anchor="middle" font-size="15" fill="currentColor">사실</text>
+<rect x="470" y="157" width="190" height="44" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="565" y="184" text-anchor="middle" font-size="15" fill="currentColor">검색</text>
+<line x1="200" y1="247" x2="446" y2="247" stroke="#3b82f6" stroke-width="6"/>
+<polygon points="444,237 464,247 444,257" fill="#3b82f6"/>
+<text x="325" y="233" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">생각하는 과정</text>
+<rect x="470" y="225" width="190" height="44" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="565" y="252" text-anchor="middle" font-size="15" fill="currentColor">생성형 AI</text>
+</svg>
+<figcaption>도구가 바뀔 때마다 머리에서 도구로 넘어가는 일이 달라졌고, 생성형 AI에 와서는 '생각하는 과정' 자체가 넘어간다.</figcaption></figure>
+<p>공책에 적어 두는 것, 계산기를 두드리는 것도 머리의 짐을 바깥에 내려놓는 일이다. 예전에는 내려놓는 짐이 기억이나 계산처럼 가벼웠다. 지금은 따져 보고, 엮고, 글로 쓰는 일까지 내려놓을 수 있다. 문제는 바로 그 일이 배움이 일어나는 자리라는 점이다.</p>
+
+<figure><svg viewBox="0 0 712 310" role="img" aria-label="답을 주는 AI에서는 생각이 AI 안에서 일어나고, 힌트를 주는 AI에서는 생각이 학생 안에 남는다.">
+<line x1="356" y1="14" x2="356" y2="296" stroke="currentColor" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="171" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">답을 주는 AI</text>
+<circle cx="64" cy="160" r="44" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="64" y="165" text-anchor="middle" font-size="14" fill="currentColor">받아 적기</text>
+<text x="64" y="230" text-anchor="middle" font-size="15" fill="currentColor">학생</text>
+<rect x="222" y="116" width="100" height="88" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="272" y="166" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">생각</text>
+<text x="272" y="230" text-anchor="middle" font-size="15" fill="currentColor">AI</text>
+<line x1="114" y1="144" x2="202" y2="144" stroke="currentColor" stroke-width="2"/>
+<polygon points="202,138 214,144 202,150" fill="currentColor"/>
+<text x="164" y="134" text-anchor="middle" font-size="14" fill="currentColor">문제 통째로</text>
+<line x1="214" y1="178" x2="126" y2="178" stroke="currentColor" stroke-width="2"/>
+<polygon points="126,172 114,178 126,184" fill="currentColor"/>
+<text x="164" y="199" text-anchor="middle" font-size="14" fill="currentColor">완성된 답</text>
+<text x="171" y="280" text-anchor="middle" font-size="15" fill="currentColor">연습은 오르고 시험은 내림</text>
+<text x="541" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">힌트를 주는 AI</text>
+<circle cx="434" cy="160" r="44" fill="none" stroke="#2da44e" stroke-width="6"/>
+<text x="434" y="166" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">생각</text>
+<text x="434" y="230" text-anchor="middle" font-size="15" fill="currentColor">학생</text>
+<rect x="592" y="116" width="100" height="88" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="642" y="165" text-anchor="middle" font-size="14" fill="currentColor">힌트만</text>
+<text x="642" y="230" text-anchor="middle" font-size="15" fill="currentColor">AI</text>
+<line x1="484" y1="144" x2="572" y2="144" stroke="currentColor" stroke-width="2"/>
+<polygon points="572,138 584,144 572,150" fill="currentColor"/>
+<text x="534" y="134" text-anchor="middle" font-size="14" fill="currentColor">막힌 곳 질문</text>
+<line x1="584" y1="178" x2="496" y2="178" stroke="currentColor" stroke-width="2"/>
+<polygon points="496,172 484,178 496,184" fill="currentColor"/>
+<text x="534" y="199" text-anchor="middle" font-size="14" fill="currentColor">힌트</text>
+<text x="541" y="280" text-anchor="middle" font-size="15" fill="currentColor">연습도 오르고 시험 손실 거의 없음</text>
+</svg>
+<figcaption>같은 AI라도 답을 통째로 주면 생각이 AI 쪽에서 일어나고, 힌트만 주면 생각이 학생 쪽에 남는다.</figcaption></figure>
+<p>이 보고서가 가장 힘주어 말하는 대목이다. 해로운 것은 AI라는 물건이 아니다. <strong>생각이 누구 머리에서 일어나도록 짜여 있느냐</strong>가 결과를 가른다.</p>
+
+<figure><svg viewBox="0 0 680 264" role="img" aria-label="터키 고등학교 수학 실험. 연습 성적은 답 주는 AI 반이 48퍼센트, 힌트 주는 AI 반이 127퍼센트 높았다. AI 없이 본 시험은 답 주는 AI 반이 17퍼센트 낮았다.">
+<line x1="250" y1="38" x2="250" y2="236" stroke="currentColor" stroke-width="2"/>
+<text x="10" y="30" font-size="15" font-weight="700" fill="currentColor">연습 문제 성적</text>
+<text x="10" y="63" font-size="14" fill="currentColor">답 주는 AI</text>
+<rect x="250" y="44" width="115" height="28" fill="currentColor" opacity="0.55"/>
+<text x="373" y="63" font-size="15" fill="currentColor">+48%</text>
+<text x="10" y="103" font-size="14" fill="currentColor">힌트 주는 AI</text>
+<rect x="250" y="84" width="305" height="28" fill="currentColor" opacity="0.55"/>
+<text x="563" y="103" font-size="15" fill="currentColor">+127%</text>
+<text x="10" y="150" font-size="15" font-weight="700" fill="currentColor">AI 없이 본 시험</text>
+<text x="10" y="183" font-size="14" fill="currentColor">답 주는 AI</text>
+<rect x="209" y="164" width="41" height="28" fill="#d29922"/>
+<text x="201" y="183" text-anchor="end" font-size="15" font-weight="700" fill="currentColor">−17%</text>
+<text x="10" y="223" font-size="14" fill="currentColor">힌트 주는 AI</text>
+<text x="260" y="223" font-size="14" fill="currentColor">손실 대부분 막음 (수치 없음)</text>
+<text x="250" y="256" text-anchor="middle" font-size="14" fill="currentColor">AI 안 쓴 반 = 0</text>
+</svg>
+<figcaption>터키 고등학교 수학 실험: 답을 주는 AI를 쓴 반은 연습 성적이 48% 높았지만, AI를 치우고 본 시험은 17% 낮았다.</figcaption></figure>
+<p>연습 시간의 점수와 진짜 실력은 다른 것이다. 왼쪽으로 뻗은 짧은 막대 하나가 이 보고서 전체의 출발점이다. 힌트형 AI 반의 시험 점수는 정확한 숫자가 문서에 없고, "손실을 대부분 막았다"고만 적혀 있다.</p>
+
+<figure><svg viewBox="0 0 690 260" role="img" aria-label="시드니대의 두 갈래 평가. 감독 아래 실력을 확인하는 길과 AI를 쓰되 밝히며 배우는 길로 나뉜다.">
+<circle cx="56" cy="130" r="40" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="56" y="135" text-anchor="middle" font-size="15" fill="currentColor">학생</text>
+<line x1="96" y1="130" x2="130" y2="130" stroke="currentColor" stroke-width="2"/>
+<line x1="130" y1="75" x2="130" y2="185" stroke="currentColor" stroke-width="2"/>
+<line x1="130" y1="75" x2="180" y2="75" stroke="currentColor" stroke-width="2"/>
+<polygon points="180,69 192,75 180,81" fill="currentColor"/>
+<text x="160" y="62" text-anchor="middle" font-size="14" fill="currentColor">검증용</text>
+<line x1="130" y1="185" x2="180" y2="185" stroke="currentColor" stroke-width="2"/>
+<polygon points="180,179 192,185 180,191" fill="currentColor"/>
+<text x="160" y="172" text-anchor="middle" font-size="14" fill="currentColor">학습용</text>
+<rect x="196" y="40" width="250" height="70" fill="none" stroke="#3b82f6" stroke-width="5"/>
+<text x="321" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">첫째 길 · 감독 아래</text>
+<text x="321" y="94" text-anchor="middle" font-size="14" fill="currentColor">마주 보고 실력 확인</text>
+<rect x="196" y="150" width="250" height="70" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="321" y="180" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">둘째 길 · 열린 과제</text>
+<text x="321" y="204" text-anchor="middle" font-size="14" fill="currentColor">AI 쓰되 밝히기</text>
+<line x1="446" y1="75" x2="506" y2="75" stroke="currentColor" stroke-width="2"/>
+<polygon points="506,69 518,75 506,81" fill="currentColor"/>
+<text x="480" y="62" text-anchor="middle" font-size="14" fill="currentColor">드러남</text>
+<line x1="446" y1="185" x2="506" y2="185" stroke="currentColor" stroke-width="2"/>
+<polygon points="506,179 518,185 506,191" fill="currentColor"/>
+<text x="480" y="172" text-anchor="middle" font-size="14" fill="currentColor">자람</text>
+<rect x="524" y="50" width="152" height="50" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="600" y="81" text-anchor="middle" font-size="16" fill="currentColor">진짜 실력</text>
+<rect x="524" y="160" width="152" height="50" fill="none" stroke="currentColor" stroke-width="2"/>
+<text x="600" y="191" text-anchor="middle" font-size="16" fill="currentColor">배우는 힘</text>
+</svg>
+<figcaption>호주 시드니대의 '두 갈래 평가': 감독 아래 실력을 확인하는 길과, AI를 쓰되 밝히며 배우는 길을 따로 둔다.</figcaption></figure>
+<p>세계의 학교들은 "AI를 막을까, 풀까"를 묻다가 질문을 바꿨다. 이제는 "어디서 진짜 실력을 확인하고, 어디서 AI와 함께 배우게 할까"를 묻는다. 이 그림이 그 답의 대표 사례다.</p>
+
+<figure><svg viewBox="0 0 680 220" role="img" aria-label="한국 AI 디지털교과서의 2025년 실적. 채택한 학교 32.3퍼센트, 평균 활용률 8.1퍼센트, 한 번도 접속하지 않은 학생 60퍼센트.">
+<line x1="200" y1="20" x2="200" y2="192" stroke="currentColor" stroke-width="2"/>
+<line x1="600" y1="20" x2="600" y2="192" stroke="currentColor" stroke-width="1" stroke-dasharray="4 6"/>
+<text x="10" y="51" font-size="14" fill="currentColor">채택한 학교</text>
+<rect x="200" y="30" width="129" height="32" fill="currentColor" opacity="0.55"/>
+<text x="337" y="51" font-size="15" fill="currentColor">32.3%</text>
+<text x="10" y="111" font-size="14" fill="currentColor">평균 활용률</text>
+<rect x="200" y="90" width="32" height="32" fill="currentColor" opacity="0.55"/>
+<text x="240" y="111" font-size="15" fill="currentColor">8.1%</text>
+<text x="10" y="171" font-size="14" fill="currentColor">한 번도 접속 안 한 학생</text>
+<rect x="200" y="150" width="240" height="32" fill="#d29922"/>
+<text x="448" y="171" font-size="15" font-weight="700" fill="currentColor">60%</text>
+<text x="200" y="212" text-anchor="middle" font-size="14" fill="currentColor">0</text>
+<text x="600" y="212" text-anchor="middle" font-size="14" fill="currentColor">100%</text>
+</svg>
+<figcaption>한국 AI 디지털교과서의 2025년 실적: 학교 셋 중 하나가 골랐지만, 학생 열 명 중 여섯은 한 번도 접속하지 않았다(감사원 발표를 옮긴 보도 기준).</figcaption></figure>
+<p>한국에서는 AI 디지털교과서가 큰 돈을 들이고도 교실에서 거의 쓰이지 않았다. 그 뒤 법이 바뀌어 '교과서'에서 '교육자료'로 지위가 내려갔다. 지금은 부정행위를 막는 지침부터 하나씩 만들어 가는 중이다.</p>
+
+<h2>세 줄 요약</h2>
+<div class="callout">머리가 할 일을 도구에 맡기는 것은 막아야 할 나쁜 버릇이 아니라 잘 짜야 하는 선택이고, AI가 답을 주느냐 생각을 끌어내느냐에 따라 배움이 줄기도 하고 늘기도 한다.</div>
+<ul>
+<li>AI가 답을 대신 내 주면 그 자리의 점수는 오르지만, AI를 치우고 재 보면 실력은 오히려 떨어질 수 있다.</li>
+<li>세계의 학교는 '전면 금지'에서 '평가 다시 짜기, 쓴 사실 밝히기, 스스로 판단하는 힘 가르치기'로 옮겨 갔고, 한국도 2025년 말부터 같은 쪽 지침을 내고 있다.</li>
+<li>유네스코와 유럽연합·경제협력개발기구(OECD)가 만든 국제 기준은 'AI를 잘 쓰는 힘'의 한가운데에 '무엇을 맡기고 무엇을 내가 할지 정하는 힘'을 놓는다.</li>
+</ul>
+
+<h2>어떤 연구인가</h2>
+<p>이 글은 실험 하나를 보고하는 논문이 아니다. 여러 학술 논문, 정부 지침, 국제기구 문서, 신문 보도를 모아 한 주제로 엮은 <strong>조사 보고서</strong>다. 누가 썼는지는 문서에 적혀 있지 않다. 글 안에서 "연구자 견해"라고 표시한 대목이 따로 있어서, 모은 사실과 쓴 사람의 판단을 나눠 읽을 수 있다.</p>
+<p>보고서가 붙든 물음은 이렇다. 사람은 옛날부터 머리가 할 일을 바깥에 맡겨 왔다. 장 볼 것을 종이에 적고, 큰 수의 곱셈은 계산기에 넘긴다. 이렇게 머리의 짐을 바깥 도구에 내려놓는 일을 학자들은 <span class="key">인지적 외주화</span>(cognitive offloading)라고 부른다. 이 글에서는 쉽게 '생각 맡기기'라고 부르겠다.</p>
+<p>그동안은 큰 걱정이 없었다. 맡기는 것이 기억이나 계산처럼 단순한 일이었기 때문이다. 그런데 2022년 11월에 챗GPT가 나오면서 사정이 달라졌다. 이제는 자료를 따져 보고, 엮고, 글로 쓰는 일까지 통째로 맡길 수 있다. 학생이 배우는 것은 바로 그 일을 하는 동안이다. 그러니 "맡겨도 되는가"가 교육의 큰 문제가 됐다.</p>
+<p>보고서는 이 문제를 여섯 갈래로 나눠 훑는다. 실험을 직접 한 것이 아니므로 '누구에게 몇 명'으로 정리하는 표는 만들 수 없다. 대신 무엇을 어디까지 다루는지 아래에 적는다.</p>
+<table>
+<tr><th>꼭지</th><th>다루는 내용</th></tr>
+<tr><td>개념의 뿌리</td><td>'생각 맡기기'라는 말이 어디서 왔는지, 어떤 생각들이 바탕에 있는지, 도구가 어떻게 달라져 왔는지</td></tr>
+<tr><td>핵심 연구</td><td>2023~2026년에 나온 생성형 AI 연구 여덟 편과, 학자들 사이의 맞선 의견</td></tr>
+<tr><td>세계의 정책</td><td>호주·영국·미국의 대학, 중국·에스토니아·잉글랜드의 초·중·고 정책</td></tr>
+<tr><td>한국의 현황</td><td>AI 디지털교과서, 수행평가 지침, 2025년 대학 부정행위 사태, 나라 연구기관의 조사</td></tr>
+<tr><td>국제 기준</td><td>유네스코의 학생용·교사용 기준, 유럽연합과 OECD가 함께 만든 AI 이해력 기준</td></tr>
+<tr><td>권고와 주의</td><td>교사와 정책 담당자에게 주는 제안, 그리고 각 정보가 얼마나 확인됐는지의 등급</td></tr>
+</table>
+<p>눈에 띄는 점은 보고서가 스스로 <strong>믿을 만한 정도를 세 등급으로 나눠</strong> 밝힌다는 것이다. 원문을 직접 확인한 것, 신문 보도나 아직 검사받지 않은 원고에 기댄 것, 확인하지 못한 배경지식을 따로 표시했다. 이 글에서도 그 구분을 따라 적는다.</p>
+
+<h2>무엇을 알아냈나</h2>
+
+<h3>1. 생각을 맡기는 것은 원래 똑똑한 전략이다</h3>
+<p>이 분야의 기준이 되는 정의는 2016년에 캐나다와 영국의 두 학자(리스코와 길버트)가 내놓았다. 풀어 쓰면 "머리가 져야 할 짐을 줄이려고 몸을 움직여 바깥 것을 쓰는 일"이다. 손가락으로 세는 것, 달력에 동그라미를 치는 것이 다 여기에 든다.</p>
+<p>두 사람이 찾은 중요한 점이 있다. 사람은 도구가 실제로 더 나을 때가 아니라, <strong>도구가 내 머리보다 낫다고 믿을 때</strong> 맡긴다는 것이다. 그러니 맡길지 말지는 "내 기억을 얼마나 믿는가" 하는 스스로에 대한 판단에 달려 있다. 이들은 맡기기가 "큰 이득과 숨은 비용"을 함께 가져온다고 정리했다.</p>
+<p>다만 '짐을 바깥으로 넘긴다'는 표현 자체는 그보다 먼저 쓰였다. 그래서 보고서는 "두 사람이 처음 만든 말"이라 하지 않고 "흩어져 있던 연구를 하나의 분야로 묶었다"고 적는다. 이 앞선 연구들은 보고서가 원문을 다시 확인하지 못했다고 밝혔다.</p>
+<p>바탕에 깔린 생각은 다섯 갈래다. 쉬운 말로 옮기면 아래와 같다.</p>
+<ul>
+<li><strong>수첩도 마음의 일부다.</strong> 기억을 잃어 가는 환자가 늘 들고 다니는 수첩은, 믿을 수 있고 언제든 볼 수 있다면 그 사람 마음의 한 부분으로 봐도 된다는 철학자들의 주장이다. 맡기기를 '능력을 잃는 것'이 아니라 '마음이 넓어지는 것'으로 보게 해 준다.</li>
+<li><strong>생각은 머릿속에서만 일어나지 않는다.</strong> 사람과 도구와 주변 환경이 한 덩어리로 일을 해낸다는 관점이다. 교실 전체를 AI까지 넣어 하나로 짜 보자는 생각으로 이어진다.</li>
+<li><strong>"누가 아는지"만 기억한다.</strong> 부부나 팀은 모든 내용을 각자 외우지 않고, 누가 무엇을 아는지만 기억해 서로에게 맡긴다. 지금은 그 짝이 사람에서 인터넷과 AI로 바뀌었다.</li>
+<li><strong>구글 효과.</strong> 나중에 찾을 수 있다고 믿으면 내용보다 '어디 있는지'를 더 잘 기억한다는 2011년 실험이다. 다만 뒤에 다시 해 본 연구에서 일부 효과가 약하게 나와 아직 다투는 중이다.</li>
+<li><strong>맡기기는 스스로에 대한 판단이다.</strong> 앞에서 본 2016년 정리다. 뒤이은 연구들은 알림 맞추기 같은 '할 일 맡기기'로 넓혀 갔다.</li>
+</ul>
+<p>이 흐름의 최근 결론이 흥미롭다. 2026년에 나온 연구는 "덜 맡기게 하자"가 아니라 <strong>"딱 알맞게 맡기도록 연습시키자"</strong>고 말한다. 맡기기를 없앨 대상이 아니라 익혀야 할 솜씨로 보는 것이다.</p>
+<p>우리말 번역도 하나로 정해지지 않았다. '인지적 외주화', '인지 오프로딩', '인지 부하 위임'이 섞여 쓰인다. 원래 영어는 '짐을 내려놓는다'는 뜻에 가깝고, '외주'는 '일을 통째로 남에게 맡긴다'는 느낌이 더 세다. 보고서는 생성형 AI 시대에는 뒤쪽 느낌이 커졌으니 '외주화'라는 번역이 오히려 현실에 맞는다고 본다.</p>
+
+<h3>2. 도구가 바뀔 때마다 맡기는 것이 깊어졌다</h3>
+<p>보고서는 도구의 변화를 네 계단으로 나눈다. 첫째는 메모와 계산기다. 이때 넘어간 것은 기억과 단순 계산이었다. 문제를 정하고 결과를 풀이하는 일은 여전히 사람 몫이었다.</p>
+<p>둘째는 내비게이션과 스마트폰이다. 길 찾기와 일정 기억이 넘어갔다. 캐나다의 한 연구는 평생 내비게이션을 많이 쓴 사람일수록 혼자 길을 찾을 때 공간 기억이 나빴다고 보고했다. 처음 검사한 뒤에 사용이 늘어난 사람은 기억이 더 가파르게 떨어졌다. 원래 길눈이 어두워서 많이 쓴 것은 아니었다고 한다. 다만 사람 수가 적고, 실험이 아니라 지켜본 연구여서 원인이라고 못 박기는 어렵다.</p>
+<p>셋째는 검색이다. '사실'이 넘어갔다. 넷째가 생성형 AI다. 여기서 질이 달라진다. 2026년의 한 원고는 "예전 도구는 좁고 낮은 수준의 일을 도왔지만, 생성형 AI는 엮기·이해하기·따져 보기에서 계획·결정·창작까지 대신한다"고 정리했다. 이제 넘어가는 것은 기억이 아니라 <span class="key">생각하는 과정 그 자체</span>다.</p>
+
+<h3>3. 새로 생긴 걱정에는 이름이 붙었다</h3>
+<p>첫째는 <strong>생각의 빚</strong>(인지적 부채)이다. 지금 AI에 맡겨 아낀 노력이 나중에 '혼자 생각하는 힘이 약해짐'이라는 이자로 돌아온다는 비유다. 이 말을 만든 미국 연구진도 아직 '시험 삼아 내놓은' 개념이라고 밝혔다.</p>
+<p>둘째는 <strong>점검 건너뛰기</strong>(메타인지적 게으름)다. 공부할 때는 계획을 세우고, 중간에 잘 가고 있나 살피고, 끝나고 돌아본다. AI에 기대면 이 살피는 단계를 건너뛰게 된다는 뜻이다. OECD는 이것을 생각 맡기기를 설명하는 한 가지 방식으로 받아들였다.</p>
+<p>셋째는 <strong>솜씨 녹슬기</strong>(탈숙련화)다. 자동 도구에 계속 기대다 보면 원래 할 줄 알던 것이 무뎌진다. 넷째는 <strong>기계 말 덮어놓고 믿기</strong>(자동화 편향)다. 원래 비행기 조종과 의료 분야에서 연구된 현상이다. 2026년에는 사람들이 AI의 제안을 거의 살피지 않고 받아들이고, AI가 틀린 뒤에도 오히려 자신감이 올라가는 현상을 '생각의 항복'이라 부른 연구가 나왔다. 이것은 다른 원고가 옮겨 적은 것을 다시 옮긴 정보다.</p>
+
+<h3>4. 터키 고등학교 실험: 연습 점수와 진짜 실력은 따로 논다</h3>
+<p>보고서가 가장 믿을 만하다고 꼽는 증거다. 터키의 고등학교 수학 시간에 학생들을 세 무리로 나눴다. 한 무리는 보통 챗봇을 마음대로 썼다. 한 무리는 정답 대신 힌트만 주도록 고친 챗봇을 썼다. 나머지는 AI 없이 공부했다. 누가 어느 무리에 들지는 제비뽑기처럼 정했다. 정확한 학생 수는 이 보고서에 없고 '대규모'라고만 적혀 있다.</p>
+<p>연습 문제 성적은 보통 챗봇 무리가 <span class="num">48%</span>, 힌트형 무리가 <span class="num">127%</span> 높았다. 여기까지는 AI가 좋아 보인다. 그런데 AI를 치우고 시험을 보자 보통 챗봇 무리는 AI를 안 쓴 무리보다 <span class="num">17%</span> 낮았다. 힌트형 무리는 이 손실을 대부분 피했다.</p>
+<p>왜 이런 일이 생길까. 보고서는 <strong>'바람직한 어려움'</strong>이라는 오래된 학습 이론으로 풀이한다. 배울 때 조금 끙끙대는 것이 나중까지 남는 실력을 만든다는 생각이다. 답을 바로 받으면 그 자리의 점수는 오르지만 끙끙대는 과정이 사라진다. 그 과정이 곧 배움이었으니 실력은 남지 않는다. OECD도 2026년 보고서에서 이것을 "과제를 해낸 정도와 진짜 배움이 서로 어긋난다"고 요약했다.</p>
+<div class="callout">같은 AI인데 답을 주면 실력이 17% 떨어졌고, 힌트를 주면 손실이 거의 사라졌다. 결과를 가른 것은 AI가 아니라 짜임새였다.</div>
+
+<h3>5. 다른 연구들도 같은 쪽을 가리킨다</h3>
+<p>보고서는 연구 여덟 편을 나란히 놓고, 각각이 얼마나 믿을 만한지도 함께 매겼다.</p>
+<table>
+<tr><th>연구</th><th>누구에게 무엇을</th><th>알아낸 것</th><th>믿을 만한 정도</th></tr>
+<tr><td>터키 수학 실험(2025)</td><td>고등학생, 세 무리 비교</td><td>연습 +48%·+127%, AI 뺀 시험 −17%</td><td>높음. 다만 한 나라 한 과목</td></tr>
+<tr><td>뇌파 연구(2025)</td><td>미국 대학생·성인 54명, 넉 달간 글쓰기 4번</td><td>챗봇 무리의 뇌 활동 연결이 가장 약함</td><td>중간~낮음. 검사 전 원고</td></tr>
+<tr><td>영국 설문(2025)</td><td>666명 설문과 면담</td><td>AI를 많이 쓸수록 따져 보는 힘 점수가 낮음</td><td>중간~낮음. 원인은 알 수 없음</td></tr>
+<tr><td>직장인 조사(2025)</td><td>319명, 실제 사용 사례 936건</td><td>AI를 믿을수록 덜 따지고, 자신을 믿을수록 더 따짐</td><td>중간. 스스로 답한 설문</td></tr>
+<tr><td>대학생 글쓰기 실험(2025)</td><td>챗봇, 사람 전문가, 점검표, 도움 없음 비교</td><td>글 점수는 올랐으나 지식은 뚜렷이 늘지 않음</td><td>중간~높음. 짧은 실험</td></tr>
+<tr><td>개발자 실험(2026)</td><td>52명, 새 프로그래밍 도구 배우기</td><td>이해도 시험 50% 대 67%</td><td>중간~높음. 검사 전 원고</td></tr>
+<tr><td>하버드 물리 실험(2025)</td><td>194명, 잘 짠 AI 과외와 활동 수업 비교</td><td>AI 과외 쪽이 배움이 2배 넘게 큼</td><td>높음. 다만 다른 곳에 옮기기 어려움</td></tr>
+<tr><td>국내 종합 분석(2026)</td><td>국내 연구 여러 편을 모아 다시 계산</td><td>자신감·스스로 공부하는 힘·성적에서 큰 효과</td><td>중간. 서로 다른 연구를 합침</td></tr>
+</table>
+<p><strong>뇌파 연구</strong>는 가장 많이 알려졌지만 가장 조심해서 읽어야 한다. 챗봇으로 글을 쓴 무리는 뇌의 여러 부분이 함께 움직이는 정도가 가장 약했다. 자기가 쓴 글을 다시 떠올려 말하는 것도 가장 못했고, "내 글"이라는 느낌도 가장 낮았다. 나중에 챗봇 없이 쓰게 해도 낮은 상태가 이어졌다. 하지만 마지막 회에는 <span class="num">18명</span>만 남았고, 다른 학자들의 검사를 받기 전의 원고이며, 과제도 한 가지였다. 보고서는 이것을 '결론이 아니라 신호'라고 부른다.</p>
+<p><strong>영국 설문</strong>에서는 AI를 많이 쓰는 사람일수록 생각을 맡기는 정도가 높았고, 맡기는 정도가 높을수록 따져 보는 힘 점수가 낮았다. 젊은 사람에게서 더 뚜렷했고, 많이 배운 사람은 덜했다. 그러나 이것은 둘이 함께 움직인다는 것만 보여 준다. 따지기 싫어하는 사람이 AI를 더 찾는 것일 수도 있다. 이 논문은 나중에 표가 겹친 부분을 고쳐 다시 냈다.</p>
+<p><strong>직장인 조사</strong>는 방향이 다른 두 가지를 보여 준다. AI를 믿는 마음이 클수록 따져 보는 일이 줄었다. 반대로 자기 실력을 믿는 마음이 클수록 따져 보는 일이 늘었다. 일의 성격도 '문제를 푸는 일'에서 '확인하고 합치고 감독하는 일'로 옮겨 갔다.</p>
+<p><strong>개발자 실험</strong>에서는 AI와 함께 배운 무리의 이해도 시험이 <span class="num">50%</span>, 손으로 직접 짠 무리가 <span class="num">67%</span>였다. 우연이라고 보기 어려운 차이다. 그런데 AI를 썼다고 일이 뚜렷이 빨라지지도 않았다. 더 중요한 것은 쓰는 방식이었다. 연구진은 사용 방식을 여섯 가지로 나눴는데, '설명해 달라', '이 개념이 뭐냐'고 묻는 세 가지 방식은 배움이 지켜졌다. 통째로 맡긴 사람들의 손실이 가장 컸다.</p>
+<p><strong>하버드 물리 실험</strong>은 반대쪽 증거다. 연구에 바탕을 두고 꼼꼼히 짠 AI 과외 선생은 길잡이 질문을 던지고 학생에 맞춰 반응했다. 이쪽 학생들은 가운데 학생의 점수가 <span class="num">4.5</span>로, 활동 중심 수업의 <span class="num">3.5</span>보다 높았다. 걸린 시간도 <span class="num">49분</span> 대 <span class="num">60분</span>으로 짧았다. 다만 최고 수준 대학에서, 처음 배우는 단원에, 맞춤으로 만든 도구를 쓴 결과다.</p>
+<p><strong>국내 종합 분석</strong>은 학습 의욕에서는 중간 정도 효과, 몰입에서는 뚜렷하지 않은 결과를 보고했다. 그리고 효과가 '주고받는 방식을 얼마나 잘 짰는가, 학생이 준비됐는가, 과제와 도구가 맞는가'에 달려 있다고 결론지었다.</p>
+
+<h3>6. 두 편이 싸우는 것 같지만, 사실은 조건이 다르다</h3>
+<p>걱정하는 쪽은 생각의 빚, 따져 보는 힘의 약화, 솜씨 녹슬기를 말한다. 괜찮다는 쪽은 맡기기가 원래 슬기로운 전략이고, 잘 짠 AI는 배움을 늘린다고 말한다. 보고서를 쓴 사람은 두 편이 실제로는 부딪치지 않는다고 본다. 이것은 쓴 사람의 판단이다.</p>
+<p>갈림길은 <strong>"무엇을, 언제, 누가 맡기는가"</strong>다. 이미 할 줄 아는 사람이 빨리 하려고 맡기면 대체로 이득이다. 아직 할 줄 모르는 사람이 맡기면 그 능력이 아예 자라지 못한다. 그래서 위험은 초·중·고와 대학 저학년에서 가장 크다.</p>
+<p>2026년의 한 논평은 여기에 한 가지를 보탠다. 어른에게는 잠깐일 수 있는 생각의 빚이 자라는 아이에게는 발달 문제가 될 수 있다는 것이다. 그런데 정작 가장 크게 영향받을 아이들이 연구에서 빠져 있다고 꼬집었다.</p>
+<p>연구의 흐름도 바뀌고 있다. 2026년에는 AI 도움이 끈기와 혼자 하는 실력을 떨어뜨린다는 실험이 나왔다. 같은 해에 "네가 지금 어떻게 생각하고 있는지"를 되짚어 주는 장치를 넣으면 맡기기가 줄어든다는 연구도 나왔다. 물음이 '해로운가'에서 '어떻게 짜면 해롭지 않은가'로 옮겨 간 것이다. 다만 이들 대부분은 아직 검사받지 않은 원고다.</p>
+<div class="warn">뇌파 연구는 "챗GPT가 뇌를 망가뜨린다"는 식으로 부풀려져 퍼졌다. 연구진 스스로 사람 수가 적고, 검사 전이며, 과제가 하나뿐이라고 밝혔다. 수업이나 가정통신문에서 이 연구를 근거로 겁을 주는 것은 피해야 한다.</div>
+
+<h3>7. 세계의 학교: '막기'에서 '다시 짜기'로</h3>
+<p>챗GPT가 나온 직후인 2023년 초에는 접속을 막은 학교와 교육청이 있었다. 그 뒤로는 대부분 '받아들이되 안전장치를 두는' 쪽으로 돌아섰다. 공통으로 쓰는 방법은 다섯 가지다.</p>
+<ul>
+<li><strong>평가 다시 짜기.</strong> 마주 보고 치르는 시험, 말로 묻고 답하는 시험, 과정을 기록해 보는 평가를 늘린다.</li>
+<li><strong>허용 단계표.</strong> 과제마다 'AI 없음'부터 'AI 마음껏 탐구'까지 다섯 단계 중 어디인지 적어 준다. 2024년에 제안됐고 2025년에 고친 판이 나왔다.</li>
+<li><strong>쓴 사실 밝히기.</strong> 어떤 도구에 무엇을 물었고 어떻게 썼는지 적게 한다.</li>
+<li><strong>AI 판별기에 기대지 않기.</strong> 사람이 쓴 글을 AI 글로 잘못 짚는 일이 있기 때문이다.</li>
+<li><strong>스마트폰 제한.</strong> 집중력을 지키는 차원에서 함께 이야기된다.</li>
+</ul>
+<p><strong>호주</strong>는 나라의 대학 감독 기관이 앞장선 가장 체계적인 사례다. 2023년 11월에 두 가지 원칙을 냈다. 학생이 AI 세상에 바르게 참여하도록 준비시킬 것, 그리고 학생의 실력을 믿을 수 있게 평가할 것이다. 2025년 5월에는 '권하는 방식'을 끝내고 2026년부터 규제로 다루겠다고 알렸다.</p>
+<p>시드니대는 평가를 두 길로 나눴다. 첫째 길은 감독 아래 마주 보고 실력을 확인하는 평가다. 여기서 AI를 허용할지는 문제를 낸 사람이 정한다. 둘째 길은 배우기 위한 열린 과제다. AI 사용을 막거나 통제할 수 없다고 보고, 쓰되 밝히게 한다. 이 대학은 지금 평가의 최대 <span class="num">85%</span>를 "기술에 익숙한 초보자가 AI로 무난히 해낼 수 있다"고 스스로 진단했다. 그래서 2026년 말까지 모든 학위 과정이 기준을 채웠음을 보이도록 했다.</p>
+<p><strong>영국</strong>에서는 연구 중심 대학 <span class="num">24곳</span>의 모임이 2023년 7월에 다섯 원칙을 냈다. AI 이해력 돕기, 바르게 쓰기, 평가 다시 짜기, 학문의 엄격함 지키기, 좋은 사례 나누기다. <strong>미국</strong>의 주요 대학은 학교 전체가 한 가지로 막기보다, 강의마다 교수가 허용·제한·금지를 고르게 한다. 두 나라 대학의 2026년 최신 규정은 보고서가 직접 확인하지 못했다고 밝혔다.</p>
+<p><strong>중국</strong>은 '가르치되 어린 학생은 보호한다'는 두 가지를 함께 한다. 2025년 9월부터 초·중·고 모든 학년에서 한 해에 적어도 <span class="num">8시간</span> AI를 가르친다. 그러면서 초등학생이 자유롭게 내용을 만들어 내는 AI를 혼자 쓰는 것은 막았다. AI가 만든 것을 자기 작품으로 내는 것도, 교사가 가르치는 핵심 역할을 AI로 바꾸는 것도 금지했다. 보고서는 이것이 생각 맡기기 연구와 가장 곧바로 이어지는 나라 정책이라고 풀이한다.</p>
+<p><strong>에스토니아</strong>는 2025년 2월에 대통령이 앞장서서 기업들과 함께하는 사업을 발표했다. 그해 9월에 고등학생 약 <span class="num">2만 명</span>과 교사를 대상으로 시작했다. 공식 누리집은 "목표는 AI를 더 쓰게 하는 것이 아니라 뜻있게 쓰게 하는 것"이라고 적었다. 사업 전에도 학생의 <span class="num">64~90%</span>가 이미 AI를 쓰고 있었고, 주로 공짜 앱으로 숙제를 빨리 끝내는 데 썼다는 진단이 배경이었다.</p>
+<p><strong>잉글랜드</strong> 교육부는 AI를 교사의 일을 덜어 주는 도구로 적극 쓰되, 학생이 지식을 갖추는 것이 AI를 잘 쓰는 바탕이라고 강조한다. 핀란드, 싱가포르, 미국 여러 주의 초·중·고 정책도 짧게 언급되지만, 보고서는 이 부분을 확인하지 못한 배경지식이라고 표시했다.</p>
+
+<h3>8. 한국: 교과서는 내려앉고, 지침은 부정행위에서 출발했다</h3>
+<p><strong>AI 디지털교과서.</strong> 2025학년도에 초등 3·4학년, 중1, 고1의 영어·수학·정보 과목에 들이고 차츰 넓힐 계획이었다. 2024년 12월에 국회가 이것을 '교육자료'로 낮추는 법을 통과시켰지만, 정부가 다시 논의해 달라고 요구해 교과서 지위가 유지됐다. 정권이 바뀐 뒤인 2025년 8월 4일, 찬성 <span class="num">162</span>·반대 <span class="num">87</span>로 법이 통과되어 '교육자료'가 됐다. 이제는 학교장이 고를 때 정해진 기준을 따르고 학교운영위원회의 심의를 거쳐야 한다.</p>
+<p>현장 성적은 좋지 않았다. 감사원 발표를 옮긴 보도에 따르면 고른 학교는 <span class="num">32.3%</span>였다. 평균 활용률은 <span class="num">8.1%</span>였고, 한 번도 접속하지 않은 학생이 평균 <span class="num">60%</span>였다. 3년 동안 들어간 돈은 약 <span class="num">1조 4,093억 원</span>으로 전해진다. 2026년에 교육부는 'AI 교육자료'라는 말로 바꾸고 학교가 스스로 고르게 했다. 대신 모든 학생에게 AI를 가르치는 것을 내세워 AI 중점학교를 늘리고 있다.</p>
+<p>보고서를 쓴 사람은 여기서 중요한 지적을 한다. 그동안 다툼은 돈, 교사 부담, 읽기 능력 걱정에 쏠렸다. 정작 물어야 할 것은 <strong>"이 도구가 학생 대신 생각하도록 짜였나, 학생이 생각하게 만들도록 짜였나"</strong>인데, 이것을 실제로 재 본 연구가 부족하다는 것이다. 초4와 중1을 3년 동안 따라가며 보는 연구가 진행 중이라고 보도됐다.</p>
+<p><strong>수행평가 지침.</strong> 2025년 12월 23일, 교육부와 17개 시도교육청이 수행평가 때 AI 쓰는 것을 관리하는 방안을 냈다. 2026학년도부터 적용된다. 계기는 부정행위였다. 한 사례에서는 태블릿으로 수행평가를 보는데 1분도 안 되어 답안 분량이 이상하게 불어났다. 원칙은 "한꺼번에 막기보다 안전하고 교육적으로 쓰게 한다"이다.</p>
+<p>다섯 가지를 정했다. 어디까지 써도 되는지 정하기, 쓴 과정(도구와 물어본 말)을 적게 하기, AI가 그럴듯한 거짓을 말할 수 있음을 미리 가르치기, 그 자리에서 하는 활동 중심으로 평가 짜기, 개인정보 지키기다. 눈여겨볼 조항이 있다. AI가 만든 것을 기록 없이 그대로 내거나, <strong>교사가 내용을 물었을 때 제대로 답하지 못하면 그 부분은 점수에서 뺄 수 있다.</strong> 말로 물어 맡긴 것인지 확인하는 장치인 셈이다.</p>
+<p><strong>대학 부정행위 사태.</strong> 2025년 가을에 일이 잇따랐다. 연세대에서는 약 <span class="num">600명</span>이 듣는 비대면 강의의 중간고사에서 AI 부정행위가 드러났다. 교수가 파악한 인원은 약 50명이었고, 학생 게시판 투표에서는 약 190명이 했다고 답했다. 고려대에서는 약 <span class="num">1,400명</span>이 듣는 온라인 교양 시험에서 단체 대화방으로 답을 돌린 것이 드러나 시험이 모두 무효가 됐다. 이후 교수진이 과제의 'AI 표절률 5% 미만'을 요구했다가 학생들의 반발을 샀다. 서울대에서도 마주 보고 치른 시험에서 AI 풀이가 적발되어 다시 시험을 봤다. 고려대는 그 뒤 모든 시험을 마주 보고 치르는 것을 원칙으로 삼았다.</p>
+<p>이 일들을 계기로 2026년 8월 말에 대학용 AI 윤리 지침이 나왔다. 강의 계획서에 과목별 허용 범위를 적고, 학생은 쓴 도구·단계·물어본 말·고친 내용을 밝혀야 한다. 허용된 경우라도 살피지 않고 그대로 내면 부정행위가 될 수 있다. 판별기에만 기대지 말고 면담과 작성 과정으로 확인하라는 내용도 있다. 다만 <strong>지키지 않아도 벌할 수 없는 권고</strong>다. 그해 2월 기준으로 대학 <span class="num">140곳</span> 가운데 자체 지침이 있는 곳은 <span class="num">56곳</span>뿐이었다.</p>
+<p><strong>나라 연구기관.</strong> 한국교육과정평가원은 2026년 10월 7일에 교사용 지침을 냈다. 초·중·고 교사 <span class="num">2,740명</span> 가운데 약 <span class="num">63%</span>가 수업이나 평가에 생성형 AI를 써 본 적이 있었다. 교사들의 걱정은 틀린 정보, 개인정보 새어 나감, 그리고 학생의 생각하는 힘이 떨어지는 것이었다.</p>
+<p>이 지침에는 생각 맡기기를 막는 내용이 또렷이 들어 있다. AI를 쓰기 전에 학생이 스스로 생각하고 찾아볼 시간을 준다. AI와 일대일로만 주고받게 하지 말고 친구와 결과를 견주게 한다. 평가는 AI가 만든 결과물의 질이 아니라 학생이 생각한 과정을 본다. 보고서는 이것을 '먼저 생각하고, 그다음 AI'를 나라 지침에 옮긴 첫 사례로 평가한다.</p>
+<p>학생들의 실제 사용도 조사됐다. 2024년 조사(<span class="num">17,140명</span>)에서 학생의 <span class="num">49.9%</span>가 생성형 AI를 써 본 적이 있었다. 초등은 <span class="num">18.4~36.2%</span>, 중학교는 <span class="num">40.9~54.9%</span>, 고등학교는 <span class="num">71.3~77.5%</span>였다. 교사가 가장 걱정한 것은 '남의 자료를 자기 것처럼 내는 것'으로 <span class="num">83.4%</span>가 꼽았다. 한편 '디지털 치매' 같은 말이 널리 쓰이지만, 보고서는 이것이 병 이름이 아니라 유행어이며 생성형 AI와 엮은 꼼꼼한 국내 연구는 아직 드물다고 짚는다.</p>
+
+<h3>9. 국제 기준: 'AI를 잘 쓴다'의 한가운데에 '맡길지 정하는 힘'이 있다</h3>
+<p><strong>유네스코의 2023년 지침</strong>은 교육에서 생성형 AI를 다룬 첫 세계 지침이다. 정부가 밟을 일곱 단계를 내놓았고, 교실에서 AI 도구를 쓸 수 있는 나이의 아래 금을 <span class="num">13세</span>로 하자고 했다. '사람이 가운데'라는 생각을 처음 틀로 세웠다.</p>
+<p><strong>유네스코 학생용 기준(2024)</strong>은 학생을 그냥 쓰는 사람이 아니라 "책임 있게 쓰고 함께 만드는 사람, 책임 있는 시민"으로 기르자고 한다. 네 갈래를 세 단계(알기 → 써 보기 → 만들기)로 나눠 모두 <span class="num">12가지</span> 힘을 정했다. 단계는 학년이 아니라 얼마나 익혔는가로 나눈다.</p>
+<ul>
+<li><strong>사람이 가운데라는 마음가짐.</strong> 모든 것의 바탕이다. AI를 쓸지 말지는 사람이 정하고 그 결과도 사람이 책임진다는 태도다. 생각 맡기기와 가장 가깝게 닿아 있다.</li>
+<li><strong>AI를 바르게 쓰는 도리.</strong> 개인정보, 치우침, 숨김 없음, 책임을 알고 지키는 것이다.</li>
+<li><strong>AI의 원리와 쓰임.</strong> 자료와 계산 방법, 기계가 배우는 원리를 알고 도구를 다루는 힘이다.</li>
+<li><strong>AI로 해결책 짜기.</strong> 문제를 정하고, AI로 풀 길을 짜고, 살펴보고 고치는 힘이다.</li>
+</ul>
+<p>배경이 된 숫자가 있다. 유네스코가 2022년에 <span class="num">190개국</span>을 조사했더니, AI 학습 목표를 나라 교육과정에 넣은 곳은 <span class="num">15개국</span>뿐이었다. <strong>교사용 기준</strong>은 다섯 갈래 세 단계로 <span class="num">15가지</span>다. 핵심은 "AI는 교사의 핵심 역할을 대신하는 것이 아니라 거드는 것"이다. 교사도 생각을 맡겨 버릴 위험이 있는 사람이라는 뜻이기도 하다.</p>
+<p><strong>유럽연합과 OECD가 함께 만든 기준</strong>은 2025년 5월에 초안이 나왔고, 2,000명 넘는 사람의 의견을 받아 2026년 6월 18일에 최종본이 나왔다. 네 영역, <span class="num">19가지</span> 힘으로 이뤄진다. 초안은 22가지였고 넷째 영역 이름도 달랐는데, 일부 누리집은 아직 초안 내용을 최종본처럼 적고 있어 조심해야 한다.</p>
+<ul>
+<li><strong>AI와 마주하기.</strong> 일상 속 AI를 알아차리고, 내놓은 답을 따져 본다. 챗봇의 말을 교과서와 맞춰 보는 식이다. 나머지의 바탕이다.</li>
+<li><strong>AI와 함께 만들기.</strong> 함께 만들되 생각의 주인은 나로 남고, AI가 한 몫을 밝힌다.</li>
+<li><strong>AI 다스리기.</strong> AI가 언제 어떻게 도울지, <span class="key">어느 부분을 맡기고 어느 부분을 내가 할지</span> 정하고 결과를 지켜본다.</li>
+<li><strong>AI 빚어 가기.</strong> AI가 어떻게 만들어지는지 알고, 사회에 미칠 영향을 따지며, 만들고 쓰는 방식을 정하는 데 참여한다.</li>
+</ul>
+<p>셋째 영역은 사실상 "생각 맡기기를 스스로 다스리는 법을 가르치라"는 요구다. 이 기준은 2029년 국제 학업성취도 평가(PISA)의 새 영역에 이어진다. 결과는 2031년 12월에 나올 예정이다. 한국 학생의 'AI를 다루는 힘'이 다른 나라와 견줘진다는 뜻이다.</p>
+<p><strong>OECD의 2026년 디지털 교육 보고서</strong>는 생각 맡기기를 정면으로 다룬다. 터키 실험을 대표 증거로 들었고, 교사의 <span class="num">37%</span>가 이미 생성형 AI를 쓴다고 밝혔다. 결론은 "생성형 AI는 교육적인 까닭이 있을 때 골라서 목적을 갖고 써야 하며, 머리 쓰는 노력을 대신하거나 사람 사이의 관계를 약하게 해서는 안 된다"이다. 배움이 늘어나는 조건으로는 뚜렷한 교육 목적, AI가 있다는 것을 전제로 수업을 다시 짜기, 아무 챗봇이 아닌 교육용으로 만든 도구를 꼽았다.</p>
+
+<h3>10. 한국 지침과 국제 기준 사이에는 아직 틈이 있다</h3>
+<p>내용은 닿아 있다. 대학 지침의 '사람이 가운데' 원칙, 교사용 지침의 '책임지고 판단하라' 원칙은 유네스코의 마음가짐과 같은 말이다. 하지만 보고서가 찾아본 범위에서는 한국의 정부 지침이 유네스코 기준이나 유럽연합·OECD 기준을 <strong>이름을 들어 따르거나 인용한 문서가 없었다.</strong> 교사용 지침의 근거로는 2022년 교육부의 AI 윤리 원칙이 제시됐다.</p>
+<p>보고서를 쓴 사람은 이것이 한국 지침의 출발점과 관계있다고 본다. 한국은 부정행위를 다스리는 '공정함' 쪽에서 출발했다. 국제 기준은 '스스로 다스리는 힘을 기르는' 쪽에 서 있다. 국제 평가가 뒤쪽을 재게 되는 만큼, 맞추는 일이 늦어지면 불리할 수 있다고 내다본다.</p>
+
+<h2>초등 현장에 주는 시사점</h2>
+<p>이 보고서가 다룬 실험은 거의 다 고등학생, 대학생, 어른을 대상으로 했다. 그래서 초등에 옮길 수 있는 것과 아직 말할 수 없는 것을 나눠 읽어야 한다.</p>
+
+<h3>수업에 옮길 수 있는 것</h3>
+<ul>
+<li><strong>AI를 쓰는 활동 앞에는 혼자 해 보는 시간을 먼저 두어라.</strong> 글의 첫 줄, 문제의 예상 답, 내 짐작을 공책에 적은 뒤에 AI를 열게 한다. 한국교육과정평가원의 교사용 지침이 그대로 권하는 순서이고, 터키 실험이 보여 준 '끙끙대는 과정이 실력을 만든다'는 풀이와도 맞는다.</li>
+<li><strong>도구를 고를 때 "답을 주는가, 힌트를 주는가"를 먼저 살펴라.</strong> 같은 AI라도 답을 준 쪽은 시험이 17% 떨어졌고 힌트를 준 쪽은 손실이 거의 없었다. 교육용 도구를 살필 때 기능 목록보다 이 한 가지를 먼저 묻는 것이 근거 있는 기준이다.</li>
+<li><strong>아이가 AI에 물을 때 "답 알려 줘"가 아니라 "왜 그런지 설명해 줘"라고 묻게 가르쳐라.</strong> 개발자 실험에서 설명과 개념을 물은 사람들은 배움이 지켜졌고, 통째로 맡긴 사람들은 가장 크게 잃었다.</li>
+<li><strong>결과물을 낸 뒤에는 말로 물어보라.</strong> "이 부분은 왜 이렇게 했니?"에 답하지 못하면 그 부분은 아이 것이 아니다. 수행평가 지침에 이미 근거 조항이 있어, 평가에 반영해도 된다.</li>
+<li><strong>활동마다 AI를 어디까지 써도 되는지 미리 알려 주어라.</strong> '쓰지 않기 / 생각 떠올릴 때만 / 고칠 때만 / 마음껏'처럼 단계를 적어 준다. 세계 여러 학교가 쓰는 단계표를 쉬운 말로 줄인 것이다.</li>
+<li><strong>'맡긴 것, 내가 한 것, 생각이 달라진 점'을 세 줄로 적게 하라.</strong> 스스로를 살피는 연습이다. 국제 기준이 말하는 '맡길지 정하는 힘'을 기르는 가장 손쉬운 길이다.</li>
+<li><strong>AI 판별기 점수로 아이를 판단하지 마라.</strong> 대학 지침도 판별기에만 기대지 말라고 했고, 표절률 숫자를 요구한 대학은 학생의 반발을 샀다.</li>
+</ul>
+<div class="callout">초등에서 가장 조심해야 할 까닭은 분명하다. 아직 자라지 않은 힘을 맡기면 그 힘이 자랄 기회가 사라진다.</div>
+
+<h3>이 보고서만으로는 아직 말할 수 없는 것</h3>
+<ul>
+<li><strong>초등학생에게도 같은 결과가 나오는지.</strong> 어린이를 대상으로 한 실험은 보고서에 한 편도 없다. 보고서 스스로 이것을 국제 연구의 가장 큰 빈자리로 꼽는다.</li>
+<li><strong>힌트형 AI가 초등학생에게도 통하는지.</strong> 힌트를 받아 스스로 풀려면 어느 정도 바탕 지식이 있어야 한다. 저학년에게 맞는 힌트의 수준이 어떤지는 문서에 없다.</li>
+<li><strong>몇 살부터 혼자 쓰게 해도 되는지.</strong> 중국은 초등학생의 단독 사용을 막았고 유네스코는 13세를 말했다. 하지만 이것은 정책의 선택이지, 그 나이를 뒷받침하는 실험 결과가 보고서에 제시된 것은 아니다.</li>
+<li><strong>한국의 AI 교육자료가 생각을 대신하게 짜였는지, 생각하게 짜였는지.</strong> 실제로 재 본 결과가 아직 없다. 3년짜리 연구가 진행 중이라고만 전해진다.</li>
+<li><strong>생각의 빚이 자라는 동안 쌓이는지, 스스로를 살피는 연습이 오래 효과가 있는지.</strong> 보고서가 '아직 답이 없는 물음'으로 남겨 둔 것이다.</li>
+</ul>
+
+<h2>한계와 조심할 점</h2>
+
+<h3>보고서가 스스로 밝힌 것</h3>
+<ul>
+<li><strong>정보의 믿을 만한 정도가 고르지 않다.</strong> 원문을 확인한 것, 보도에 기댄 것, 확인 못 한 배경지식이 섞여 있다. 그래서 같은 문서 안의 문장이라도 같은 무게로 인용하면 안 된다.</li>
+<li><strong>가장 센 증거가 한 나라 한 과목이다.</strong> 터키 고등학교 수학 실험이다. 다른 나라, 다른 과목, 다른 나이에서 17%라는 숫자가 그대로 나온다고 말할 수 없다.</li>
+<li><strong>여러 연구가 아직 검사받지 않은 원고다.</strong> 뇌파 연구, 개발자 실험, 2026년의 여러 연구가 그렇다. 나중에 숫자나 결론이 달라질 수 있어, 흐름을 보는 데까지만 써야 한다.</li>
+<li><strong>설문 연구는 원인을 말해 주지 못한다.</strong> 영국 설문과 직장인 조사가 그렇다. "AI를 쓰면 따지는 힘이 떨어진다"가 아니라 "둘이 함께 나타난다"까지만 말할 수 있다.</li>
+<li><strong>한국 수치 일부는 신문 보도를 거친 것이다.</strong> 감사원 수치, AI 중점학교 수(1,000곳과 1,141곳), 대학 부정행위 인원이 보도마다 다르다. 정확한 숫자가 필요하면 원자료를 직접 봐야 한다.</li>
+<li><strong>확인하지 못한 것들이 있다.</strong> 해외 주요 대학의 2026년 규정, 핀란드·싱가포르 정책, 교육부가 2026년 초에 내겠다던 수업·평가 지침이 실제로 나왔는지 등이다. 이 부분은 사실로 옮겨 적으면 안 된다.</li>
+</ul>
+
+<h3>읽으면서 걸린 것</h3>
+<ul>
+<li><strong>출처 번호와 실제 문서가 어긋나는 곳이 있다.</strong> 기준이 되는 2016년 정의에 붙은 번호는 다른 2019년 논문으로 이어지고, 몇몇 연구는 그 연구를 인용한 다른 원고로 이어진다. 원문이 아니라 건너 들은 설명일 수 있으니, 인용하려면 원논문을 직접 찾아봐야 한다.</li>
+<li><strong>"두 편은 부딪치지 않는다"는 정리는 쓴 사람의 판단이다.</strong> 그럴듯하지만 초보자와 숙련자를 직접 견준 실험이 근거로 제시된 것은 아니다. 가설로 받아들이는 것이 안전하다.</li>
+<li><strong>좋은 결과를 낸 사례는 조건이 유난히 좋다.</strong> 하버드 실험은 뛰어난 학생, 맞춤 제작 도구, 한 단원이었다. 보통 교실에서 시중의 도구로 같은 효과를 기대하기는 어렵다.</li>
+<li><strong>'설계가 결과를 정한다'는 말이 너무 깔끔하다.</strong> 힌트형으로 짜도 학생이 다른 창에서 보통 챗봇을 열면 소용이 없다. 실제 교실에서 그 짜임새가 지켜지는지는 이 보고서가 다루지 않았다.</li>
+<li><strong>국내 종합 분석의 '큰 효과'는 무엇을 쟀는지에 달렸다.</strong> 자신감이나 그 자리의 성적을 쟀다면 터키 실험이 경고한 '연습 점수'와 같은 것일 수 있다. AI를 치우고 쟀는지는 문서에 없다.</li>
+<li><strong>시간이 빨리 흐르는 주제다.</strong> 정책과 연구가 달마다 바뀐다. 이 보고서의 '최신'은 2026년 10월 초까지이므로, 읽는 때에 따라 이미 낡은 내용이 있을 수 있다.</li>
+</ul>
+
+<h2>연구적 위치</h2>
+<p>이 문서는 1차 실증 연구가 아니라 서술적 문헌·정책 종합(narrative review)이다. 체계적 문헌고찰의 검색·선정 절차는 제시되어 있지 않고, 대신 증거 수준을 세 층으로 자체 등급화했다. 이론적으로는 인지적 외주화를 메타인지적 판단의 산물로 보는 인지심리학 전통(Risko &amp; Gilbert)에 서 있으며, 확장된 마음과 분산 인지를 낙관 쪽 근거로, 수행–학습 구분과 바람직한 어려움(Bjork)을 위험 쪽의 설명 기제로 쓴다.</p>
+<p>문서의 중심 논지는 '외주화의 효과는 과제 수준, 학습 단계, 학습자의 전문성에 의해 조절된다'는 조절 가설이다. 전문성 역전 효과나 인지부하 이론을 직접 인용하지는 않지만 논리 구조는 그와 닿아 있다. 정책 분석에서는 평가 타당도(보안 평가)와 형성적 활용(개방 평가)을 분리하는 2-레인 모형과 AI 평가 척도를 준거로 삼고, 역량 프레임워크 분석에서는 인간 주체성(human agency)과 AILit의 'Manage AI' 영역을 외주화 조절 역량으로 재해석한다. 한국 정책에 대해서는 학문적 진실성 중심 규제에서 역량 기반 접근으로의 이행 필요성을 주장한다.</p>
+<ul>
+<li><strong>Risko &amp; Gilbert (2016), Trends in Cognitive Sciences</strong> — 개념의 표준 정의와 '외주화는 메타인지적 신념에 좌우된다'는 기본 전제를 제공한다.</li>
+<li><strong>Clark &amp; Chalmers (1998); Hutchins (1995); Wegner (1985/1987)</strong> — 확장된 마음, 분산 인지, 교류 기억. 외주화를 인지의 확장으로 보는 철학·인지과학적 배경이다(문서가 원문 재확인을 하지 못했다고 밝힘).</li>
+<li><strong>Sparrow, Liu &amp; Wegner (2011), Science</strong> — 구글 효과. 검색엔진 단계의 실험적 상징이며, 재현 논쟁이 있음을 함께 적었다.</li>
+<li><strong>Bjork의 바람직한 어려움</strong> — 수행과 학습의 불일치를 설명하는 핵심 기제로 쓰인다.</li>
+<li><strong>Bastani 외 (2025), PNAS</strong> — 문서 전체의 닻이 되는 현장 무작위 대조 실험. '설계가 결과를 결정한다'는 주장의 1차 근거다.</li>
+<li><strong>Kestin 외 (2025), Scientific Reports</strong> — 교육적으로 설계된 AI 튜터의 긍정 효과를 보인 반대 방향 증거다.</li>
+<li><strong>Kosmyna 외 (2025); Gerlich (2025); Lee 외 (2025)</strong> — 인지적 부채, 비판적 사고 약화, 신뢰와 자기 확신의 역할. 우려 측 논거이나 문서가 증거 수준을 낮게 매겼다.</li>
+<li><strong>Fan 외 (2025), BJET</strong> — '메타인지적 게으름' 개념의 출처이며, OECD 보고서가 이를 수용했다.</li>
+<li><strong>Shen &amp; Tamkin (2026)</strong> — 상호작용 유형에 따라 기술 형성이 달라짐을 보여, 사용 방식 변수의 근거가 된다.</li>
+<li><strong>Perkins, Furze, Roe &amp; MacVaugh (2024)</strong> — AI 평가 척도. 과제별 허용 수준 명시라는 정책 도구의 출처다.</li>
+<li><strong>UNESCO (2023, 2024); EC–OECD AILit (2026); OECD Digital Education Outlook 2026</strong> — 인간 주체성과 위임 판단을 핵심 역량으로 두는 규범적 준거틀이며, 한국 지침과의 정렬 여부를 재는 잣대로 쓰인다.</li>
+<li><strong>최승락; 전찬주·김아람·윤미현 (2026)</strong> — 국내 논의의 대표 문헌. 앞은 개념 번역과 교육적 해법, 뒤는 국내 효과 연구의 종합이다.</li>
+</ul></body></html>
