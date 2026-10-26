@@ -174,14 +174,22 @@ def test_rules_keep_domain_terms_instead_of_replacing_them():
     assert "원어를 괄호에 병기" in r
 
 
-def test_sections_force_a_spine_instead_of_a_flat_list():
-    """회귀: 프레임워크 문서를 넣었더니 '무엇을 알아냈나' 안에 h3 14개가 평평하게
-    늘어섰다. 뼈대와 곁가지가 같은 무게라 '핵심이 뭐냐'가 안 보였다."""
+def test_sections_follow_the_source_table_of_contents():
+    """원문 목차를 그대로 따라가고 항목마다 요약한다. 건너뛰면 실패.
+
+    회귀 둘을 동시에 막는다: (1) 프레임워크를 넣었을 때 h3 14개가 평평하게
+    늘어서 '핵심이 뭐냐'가 안 보이던 것 - 축 선언으로 막는다.
+    (2) 모델이 제 판단으로 내용을 재배열하고 일부를 빠뜨리던 것 - 목차 순서
+    고정과 '건너뛴 항목이 있으면 실패'로 막는다.
+    """
     sec = eli5.SECTIONS
-    assert "평평한 나열이 되면 실패다" in sec
-    assert "축이 무엇인지 밝혀라" in sec          # 뼈대를 말로 선언하게
-    assert "축마다 <h3> 하나씩" in sec
-    assert "곁가지에 <h3>를 하나씩 주지 마라" in sec
+    assert "원문의 목차를 그대로 따라간다" in sec
+    assert "순서를 바꾸지 마라" in sec
+    assert "건너뛴 항목이 있으면 실패다" in sec
+    assert "축이 무엇인지 밝혀라" in sec                 # 지도 역할은 유지
+    assert "원문의 비중을 따라간다" in sec               # 균등 분배 금지
+    assert "열 개를 넘으면" in sec                       # h3 20개로 다시 평평해지는 것 방지
+    assert "목차가 따로 없는 글" in sec                  # 기고문·짧은 리포트 대비
 
 
 def test_sections_are_genre_neutral():
