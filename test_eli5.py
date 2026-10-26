@@ -204,6 +204,22 @@ def test_sections_are_genre_neutral():
     assert "연구가 아니면 이 표를 억지로 만들지 말고" in sec
 
 
+def test_rules_target_translationese():
+    """회귀: 내용·구조를 다 고친 뒤에도 문장이 안 읽혔다. 영어 원문의 구조가
+    그대로 묻어난 번역투였다 - 동사 직역(engage -> '관여하다'), 명사화
+    ('~에 대한 이해'), 나열 전체 괄호 병기, '~라는 점이 중요하다' 식 메타 문장."""
+    r = eli5.RULES
+    assert "번역투" in r
+    assert "동사를 직역하지 마라" in r
+    assert "명사로 뭉치지 마라" in r
+    assert "괄호 병기는 아껴라" in r
+    assert "글에 대한 설명 대신 글의 내용을 써라" in r
+    assert "종결을 반복하지 마라" in r
+    # humanize-scan 실측으로 잡힌 둘 (C-11 74회 / E-1 장문 3.1%)
+    assert "연결어미 뒤에 쉼표를 찍지 마라" in r
+    assert "문장 길이를 섞어라" in r
+
+
 if __name__ == "__main__":
     for name, fn in sorted(vars().items()):
         if name.startswith("test_"):
