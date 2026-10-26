@@ -145,29 +145,55 @@ def test_split_title():
 
 
 def test_sections_handle_compilation_documents_without_bailing():
-    """여러 주제 문서(동향 리포트·매거진)도 같은 틀로 다룬다.
-
-    이전엔 '안 맞는다'며 길잡이만 주고 끝냈는데, 분량 상한을 걷어내고 나니
-    같은 틀로도 충분히 다룰 수 있다. 다만 두 가지가 필요하다:
-    모든 꼭지를 고르게(끝에 실린 논문 한두 편만 정리하던 실패), 그리고
-    조사 설계 표를 억지로 만들지 않기(그 표 때문에 논문 쪽으로 끌려갔다).
-    """
+    """여러 주제 문서(동향 리포트·매거진)도 같은 틀로 다룬다. 거부하고 끝내지 않는다."""
     p = eli5.build_prompt("https://doi.org/10.1/x")
     assert "모든 꼭지를 고르게" in p
     assert "분량이 많은 쪽이 본체다" in p
-    assert "억지로 만들지 말고" in p
-    assert "맞지 않습니다" not in p              # 거부하고 끝내지 않는다
+    assert "맞지 않습니다" not in p
 
 
 def test_sections_do_not_cap_length():
-    """회귀: '3문장 이내', '3개 이내', '각 한 문장' 같은 상한을 모든 섹션에 걸었더니
-    원문 34,821자가 본문 3,180자(9%)로 압축됐다. 쉽게 쓰는 것과 짧게 쓰는 것은 다르다."""
+    """회귀: 모든 섹션에 상한('3문장 이내', '3개 이내')을 걸었더니 원문 34,821자가
+    본문 3,180자(9%)로 압축됐다."""
     both = eli5.RULES + eli5.SECTIONS
     for cap in ("3문장 이내", "3개 이내", "길게 쓰지 마라", "덜 쓰고"):
         assert cap not in both, f"분량 상한이 다시 들어왔다: {cap}"
-    assert "쉽게'와 '짧게'는 다른 말" in both
-    assert "8,000자" in both                     # 목표 분량이 있어야 한다
-    assert "결과마다 문단 하나 이상" in both
+    assert "8,000자" in both
+
+
+def test_rules_keep_domain_terms_instead_of_replacing_them():
+    """회귀: '전문용어 금지' + '중학생 수준'을 같이 걸었더니 용어를 통째로 순우리말로
+    바꿔 버렸다(AI literacy -> '읽고 쓸 줄 아는 힘'). 읽는 사람은 그 용어로 원문을
+    인용하고 후속 문헌을 찾아야 하는 대학원생이다 - 용어를 빼앗으면 다리가 끊긴다."""
+    r = eli5.RULES
+    assert "전문용어 금지" not in r              # 금지가 아니라 '풀고 나서 쓰기'
+    assert "중학생" not in r                     # 독자는 대학원생이다
+    assert "대학원생" in r
+    assert "용어를 빼앗지 마라" in r
+    assert "처음 한 번 풀고" in r                # 첫 등장만 풀이, 이후 용어 그대로
+    assert "원어를 괄호에 병기" in r
+
+
+def test_sections_force_a_spine_instead_of_a_flat_list():
+    """회귀: 프레임워크 문서를 넣었더니 '무엇을 알아냈나' 안에 h3 14개가 평평하게
+    늘어섰다. 뼈대와 곁가지가 같은 무게라 '핵심이 뭐냐'가 안 보였다."""
+    sec = eli5.SECTIONS
+    assert "평평한 나열이 되면 실패다" in sec
+    assert "축이 무엇인지 밝혀라" in sec          # 뼈대를 말로 선언하게
+    assert "축마다 <h3> 하나씩" in sec
+    assert "곁가지에 <h3>를 하나씩 주지 마라" in sec
+
+
+def test_sections_are_genre_neutral():
+    """논문 전용 이름('어떤 연구인가', '무엇을 알아냈나', '연구적 위치')은
+    프레임워크·정책 문서·동향 리포트에 안 맞는다."""
+    sec = eli5.SECTIONS
+    for paper_only in ("<h2>어떤 연구인가</h2>", "<h2>무엇을 알아냈나</h2>",
+                       "<h2>연구적 위치</h2>"):
+        assert paper_only not in sec, f"논문 전용 섹션명이 남아 있다: {paper_only}"
+    for genre in ("프레임워크", "정책 문서", "동향 리포트"):
+        assert genre in sec, f"장르 판단에 {genre}가 빠졌다"
+    assert "연구가 아니면 이 표를 억지로 만들지 말고" in sec
 
 
 if __name__ == "__main__":
