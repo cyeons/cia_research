@@ -1,0 +1,121 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터교육·AI교육 주간 브리핑</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-10-26</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-10-26.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
+<p>이번 주 급상승 토픽 중 초등 컴퓨터·AI 교육 및 디지털 환경 관점에서 주목할 흐름은 다음과 같습니다.</p>
+<ul>
+  <li><strong>Hate Speech and Cyberbullying Detection (lift 10.4) 및 학교폭력·사이버불링 관련 토픽군(bullying lift 6.2, bullying prevention lift 4.2 등)</strong>: 사이버불링 및 온라인 위험 관련 키워드가 일제히 급상승했습니다. 이는 디지털 기기 보급 확대로 초등학생의 스크린 타임과 온라인 노출이 늘어남에 따라, 디지털 안전·웰빙 교육 및 온라인 윤리 실천을 다루는 연구가 집중되었기 때문으로 해석됩니다. 신규 논문에서도 이슬람 가치 기반 디지털 안전 교육, 아동의 스크린 타임과 인지 발달 간의 관계를 다룬 연구가 확인됩니다.</li>
+  <li><strong>Library Science and Information Literacy (lift 10.9)</strong>: 높은 lift 수치를 기록했으나 연간 모수(19건) 자체가 작은 편이라 일시적인 출판 타이밍에 따른 급상승일 가능성을 배제하기 어렵습니다. 다만, 신규 논문 중 한국 초등 6학년을 대상으로 AI 디지털교과서 도입 국면에서 비판적 미디어 리터러시를 다룬 질적 연구나, 교사의 AI 활용 교수학습 자료 개발 시 '정보 검증' 역량을 다룬 연구가 확인되는 만큼, 생성형 AI 시대의 비판적 정보 판별 역량에 대한 실질적 관심이 반영된 것으로 보입니다.</li>
+  <li><strong>abstraction (lift 3.2) 및 pattern recognition (lift 2.3)</strong>: 컴퓨팅 사고(Computational Thinking)의 핵심 개념들입니다. 이번 주 언플러그드 활동을 통한 초등 CT 향상 체계적 문헌고찰 등이 발표된 것과 맞물려, 컴퓨터 과학 기초 개념 교육에 대한 연구 관심이 꾸준히 유지되고 있습니다.</li>
+</ul>
+
+<h2>큰 그림 — 리뷰·메타분석</h2>
+<ul>
+  <li>
+    <a href="https://doi.org/10.1016/j.actpsy.2026.108026">Generative AI in K-12 creative writing instruction: A systematic review and narrative synthesis</a> — Acta Psychologica, 2026, 인용수: 0<br>
+    <strong>무엇을 정리했나</strong>: 7개 학술 DB에서 2020~2026년 발표된 K-12 생성형 AI 기반 창의적 글쓰기 실증 연구 17편(총 736명)을 PRISMA 지침에 따라 추출하고 RoB 2, GRADE 등으로 질 평가를 수행했습니다. 생성형 AI가 글의 품질을 높인다는 결과가 주를 이뤘으나 모든 연구가 AI를 켠 상태로만 평가했을 뿐 'AI 지원 제거(fading) 후 학생 스스로의 글쓰기 역량'을 검증한 연구는 전무해, 현재 증거는 학생의 실제 학습 효과라기보다 도구 보조 수행 수준에 불과하다고 지적했습니다.
+  </li>
+  <li>
+    <a href="https://www.sciencedirect.com/science/article/pii/S1871187126002592/pdf">Enhancing computational thinking through unplugged activities in elementary education: A systematic literature review</a> — Thinking Skills and Creativity, 2026, 인용수: 0<br>
+    <strong>무엇을 정리했나</strong>: 다중 학술 DB를 통해 초등학교 언플러그드 활동 및 컴퓨팅 사고력(CT) 관련 실증 연구 34편을 추출하여 활동 유형, 맥락적 요인, 한계점을 체계적으로 분석했습니다. 언플러그드 활동은 디지털 기기 자원이 부족한 환경에서도 초등학생의 CT 발달을 돕는 비용효율적·포용적 도구임이 확인되었으나, 교사 연수 부족, 정규 교육과정 연계의 어려움, 표준화된 CT 평가 도구 부재가 여전한 과제로 남아있다고 정리했습니다.
+  </li>
+  <li>
+    <a href="https://doi.org/10.3390/psychiatryint7050216">Problematic Internet Use Among Primary School Children: A Narrative Review of Mental Health and Socioecological Correlates</a> — Psychiatry International, 2026, 인용수: 0<br>
+    <strong>무엇을 정리했나</strong>: PsycInfo, WoS, PubMed에서 2021~2026년 발표된 초등학생 대상 문제적 인터넷 사용(PIU) 양적 연구 18편을 검토하여 관련 심리·생태체계 요인을 종합했습니다. 연구 대다수(12편)가 횡단 연구로 인과 규명에 한계가 있었으나, 권위 있는 양육 방식, 긍정적 또래 소통 및 긍정적 학교 풍토가 인터넷 과몰입을 완화하는 핵심 보호 요인으로 작용함을 도출했습니다.
+  </li>
+</ul>
+<p><em>(참고: Educational Research Review에 등재된 CT 메타분석 논문은 초록 및 구체 데이터가 제공되지 않아 제외했습니다.)</em></p>
+
+<h2>읽을 만한 논문 5편</h2>
+<ul>
+  <li>
+    <a href="https://doi.org/10.1111/lit.70037">Coconstructing Critical and Digital Media Literacies Through Creative Pedagogies: A Case Study in a South Korean Elementary Classroom</a> (유료·도서관 프록시 필요) — Literacy, 2026<br>
+    <strong>쉽게 말하면</strong>: 초등학교 6학년 28명에게 AI 디지털교과서(AIDT) 정책 논쟁을 소재로 문제 제기, 뉴스 분석, 이해관계자 탐구, 역할극 토론, 시민 글쓰기 등 5차시 수업을 진행해 학생들의 비판적 사고 변화를 관찰했습니다. 학생들은 단순한 기기 사용자를 넘어 정책의 이해관계를 파악하고 정부 포털에 정책 제안 글을 직접 올릴 정도로 주도적인 비판적 리터러시를 나타냈습니다.<br>
+    <strong>교실에 주는 시사점</strong>: AI 도구를 단순히 기능적으로 가르치는 데 그치지 않고, 정책 토론이나 역할극을 통해 초등학생 스스로 에듀테크 도입의 장단점을 비판적으로 따져보고 대안을 작성해보는 실천적 프로젝트 수업 설계에 참고할 수 있습니다. 단, 단일 학급(28명) 질적 사례연구이므로 일반화에는 신중해야 합니다.
+  </li>
+  <li>
+    <a href="https://ojs.youngres.com/index.php/miyr/article/download/54/31">Artificial intelligence-supported development of teaching and learning materials by primary school teachers</a> — International Journal of Social Science and Humanities Research-MIYR, 2026<br>
+    <strong>쉽게 말하면</strong>: 초등 교사가 AI를 활용해 교수학습 자료를 제작하는 연구 14편을 분석해 교사에게 어떤 역량과 조건이 필요한지 조사했습니다. AI가 자료 제작 속도를 대폭 줄여주지만 환각(오정보), 저작권, 교육과정 부합 여부를 걸러내는 교사의 검증 능력이 수업 성패를 좌우한다는 점을 확인했습니다.<br>
+    <strong>교실에 주는 시사점</strong>: 초등 교사는 생성형 AI가 만든 수업 보조자료를 교실에 바로 투입하지 말고, 사실 여부·저작권·학습자 발달 단계를 점검하는 자체 검증 체크리스트(3단계 10과정)를 수업 준비 과정에 필수로 도입해야 합니다.
+  </li>
+  <li>
+    <a href="https://doi.org/10.17583/ijep.19403">The Relationship between Screen Time and Academic Achievement in Primary School Children: The Mediating Role of Working Memory</a> — International Journal of Educational Psychology, 2026<br>
+    <strong>쉽게 말하면</strong>: 초등학교 2~3학년 아동 117명을 대상으로 보호자가 보고한 스크린 타임, 일상 작업기억 능력, 표준화된 읽기·수학 학업성취도를 측정해 비교했습니다. 아동의 스크린 타임이 길어질수록 작업기억에 부정적 영향을 주어 학업성취도 저하로 이어지는 연결고리가 확인되었습니다.<br>
+    <strong>교실에 주는 시사점</strong>: 디지털 학습 기기를 활용할 때 단순 화면 노출 시간뿐만 아니라 학생의 작업기억 부하를 고려해 적정 화면 집중 시간을 배분하고, 가정과 연계한 스크린 타임 규칙 지도가 기초학력 지도와 직결됨을 안내할 수 있습니다. 단, 스크린 사용 유형(학습용 vs 오락용)을 분리하지 못했고 횡단 연구라는 한계가 있습니다.
+  </li>
+  <li>
+    <a href="https://doi.org/10.1007/978-3-032-39205-3_19">Teaching Agile Methods in K-12 Computer Science Education: An Experience Report on Preparing Teachers to Coach in Classrooms</a> — Lecture notes in business information processing, 2026<br>
+    <strong>쉽게 말하면</strong>: K-12 컴퓨터 과학 수업에서 프로젝트를 진행할 때 교사가 '코치' 역할을 잘 수행할 수 있도록 예비교사 대상 세미나를 열고 수업 설계 효능감을 분석했습니다. 예비교사들이 개발자와 교사 입장을 번갈아 경험하는 애자일 기반 프레임워크를 적용했더니 반복적 프로젝트를 학교 현장에 맞게 운영할 수 있다는 효능감이 높아졌습니다.<br>
+    <strong>교실에 주는 시사점</strong>: 초등 SW·프로그래밍 프로젝트 수업 시 교사가 일방적인 지식 전달자가 아닌, 주기적인 피드백과 스프린트 방식을 적용한 '애자일 코치' 방식으로 모둠 활동을 설계하고 진행하는 방안을 적용해볼 수 있습니다.
+  </li>
+  <li>
+    <a href="https://jurnal.istaz.ac.id/index.php/fatawa/article/download/2522/721">Integrating Islamic Values into Digital Literacy and Online Safety Education: A School-Based Intervention for Primary School Students</a> — FATAWA Jurnal Pendidikan Agama Islam, 2026<br>
+    <strong>쉽게 말하면</strong>: 초등학생을 대상으로 가치 중심의 60분 참여형 디지털 안전 교육(정보 검증, 개인정보 보호, 윤리적 소통 등)을 실행하고 학생들의 디지털 위험 인식 변화를 관찰했습니다. 학생들이 퀴즈와 맥락적 토론을 통해 허위정보 분별 및 개인정보 유출 방지 등 온라인 위험을 책임 있게 대처하는 기초 태도를 습득했습니다.<br>
+    <strong>교실에 주는 시사점</strong>: 창의적 체험활동이나 디지털 윤리 단원에서 규칙 암기 위주가 아닌, '진위 판별(정보 검증)'과 '책임 있는 소통'이라는 윤리적 가치를 구체적 사례 퀴즈 및 역할 토론과 연결해 지도할 수 있습니다. 단, 특정 종교적 맥락에 기반한 1회성(60분) 프로그램이므로 공교육 적용 시 종교 중립적 보편 가치로 재구성해야 합니다.
+  </li>
+</ul>
+
+<h2>이론적 배경 후보</h2>
+<p>이번 주 신규 논문 데이터셋 내에 2회 이상 동시 인용된 공통인용 문헌이 집계되지 않았습니다(자료 부족). 이는 이번 주 추가된 논문들이 서로 다른 세부 영역(글쓰기, 언플러그드 CT, 보건·심리, 에듀테크 정책 등)으로 분산되어 공통된 이론적 전제를 공유하기보다 각 분야의 개별 문헌을 인용했기 때문입니다.</p>
+
+<h2>국내 동향</h2>
+<p>이번 주 한국컴퓨터교육학회 학술지에 총 12편의 논문이 게재되었습니다. 주요 흐름은 다음과 같습니다.</p>
+<ul>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.007">AI시대, 무엇을 읽을 것인가? : 비판적 시민성의 관점에서 본 국내 리터러시 교육정책과 정보교육의 방향</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.011">초등학생 대상 프로그래밍 멘토링 교육이 대학생 멘토의 컴퓨팅 프로그래밍 자아효능감과 교수효능감에 미치는 효과</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.009">Computing Curricula 표준 문서에 나타난 AI 교육 내용 구성의 변화 분석</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.001">텍스트 마이닝을 활용한 교직소양과목 '디지털교육' 내용 분석</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.004">고등학생을 위한 생성형 AI 협력 탐구공동체 기반 데이터 교육 프로그램 개발</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.012">유니티 기반 게임 제작 학습이 청소년의 디지털 리터러시에 미치는 영향</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.006">온라인학교 정보 교과 교육과정 편성 현황 분석과 운영 발전 방향</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.005">대학 AI+X 교과목 개발을 위한 핵심 구성요소와 교수학습 활동 절차 탐색</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.008">텍스트 마이닝 기반 토픽 모델링을 활용한 AI리터러시 프로젝트 학습자 행위 분석: 대학교育에서 IT비전공자를 대상으로</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.003">Artificial Intelligence in Higher Education: A Comparative Bibliometric Study of Korean and Chinese Research (2016-2025)</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.010">A Study on the Development of Proficiency Test Contents for Evaluating Digital Forensics Technical Competency</a></li>
+  <li><a href="https://doi.org/10.32431/kace.2026.29.9.002">RAG 기반 항공기 정비교육 AI 챗봇 시스템 개발 및 적용 방안 연구</a></li>
+</ul>
+<p><strong>동향 해석</strong>: 초등 대상 연구로는 멘토링 효능감 연구가 확인되며, AI 시대의 비판적 시민성과 리터러시 교육 방향을 다룬 이론 논문이 등장해 해외의 비판적 미디어 리터러시 흐름과 궤를 같이하고 있습니다. 한편 대학 교원양성 교직과목('디지털교육') 분석, Computing Curricula 분석 등 교육과정 및 교원 연수 체제에 대한 관심이 두드러지며, 고등·대학 단계의 AI+X 및 도메인 특화 챗봇(정비 교육) 등 실무형 교육과정 연구가 함께 몰려 있습니다.</p>
+
+<h2>KERIS 디지털교육 동향</h2>
+<p>새 호가 나왔습니다: <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=fe41e5ba73b40764c4b3a3ee074a6d03&dwlTy=pblcte">[통권 226호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (13.7MB)</p>
+<p>정독하려면 내려받아 eli5.py에 넣으세요.</p></body></html>
