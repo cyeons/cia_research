@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>컴퓨터교육·AI교육 주간 브리핑</title><style>
+  /* Gmail은 CSS 변수(var())를 제거한다. 색은 전부 literal로 쓴다. */
+  body{font:16px/1.75 -apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+       max-width:720px;margin:0 auto;padding:32px 20px;color:#1f2328;background:#fff;
+       word-break:keep-all}   /* 한글이 단어 중간에서 끊기지 않게 */
+  h1{font-size:1.7rem;letter-spacing:-.02em;margin:0 0 .2em}
+  h2{font-size:1.2rem;margin:2.4em 0 .8em;padding-bottom:.35em;border-bottom:2px solid #d8dee4}
+  li{margin:.45em 0}
+  strong{font-weight:650;color:#0b1117}
+  a{color:#0969da}
+  table{border-collapse:collapse;width:100%;font-size:.94em}
+  td,th{border:1px solid #d8dee4;padding:7px 11px;text-align:left}
+  th{background:#f6f8fa}
+
+  /* 본문에서 쓰는 강조 */
+  .key{background:#fff3c4;padding:0 .18em;border-radius:2px}          /* 형광펜 */
+  .num{font-family:ui-monospace,Consolas,monospace;font-size:.92em;color:#57606a}
+  .callout{border-left:4px solid #0969da;background:#f2f7fd;padding:.9em 1.1em;
+           margin:1.5em 0;border-radius:0 6px 6px 0}
+  .warn{border-left:4px solid #bf8700;background:#fff8e6;padding:.9em 1.1em;
+        margin:1.5em 0;border-radius:0 6px 6px 0}
+
+  figure{margin:1.9em 0;text-align:center}
+  figure svg{max-width:100%;height:auto}
+  figcaption{font-size:.88em;color:#57606a;margin-top:.7em;text-align:center}
+
+  @media (prefers-color-scheme:dark){
+    body{background:#0d1117;color:#e6edf3}
+    h2{border-color:#30363d} strong{color:#fff} a{color:#58a6ff}
+    td,th{border-color:#30363d} th{background:#161b22}
+    .key{background:#4a3a00;color:#ffe9a8}
+    .callout{background:#0d1d2e;border-color:#388bfd}
+    .warn{background:#2b2100;border-color:#d29922}
+    .num,figcaption{color:#9198a1}
+  }
+
+  /* 브라우저 Ctrl+P -> PDF 저장용 */
+  @page{margin:2cm}
+  @media print{
+    body{background:#fff;color:#000;max-width:none;padding:0}
+    a{color:#000;text-decoration:underline}
+    figure,li,tr{break-inside:avoid} h2{break-after:avoid}
+  }
+</style></head><body><h1>컴퓨터교육·AI교육 주간 브리핑</h1><p style="color:#666">2026-11-02</p><p style="font-size:.9em"><a href="https://cyeons.github.io/cia_research/2026-11-02.html">웹에서 보기 / PDF로 저장</a></p><h2>이번 주 흐름</h2>
+<ul>
+  <li><strong>개별화 피드백(personalized feedback, lift 7.8배) 및 거대언어모델(large language models, lift 4.0배)</strong>: 평소 대비 출현 빈도가 크게 뛰었습니다. 최근 생성형 AI 챕터 및 초등 연구 초록들에서 생성형 AI의 핵심 교육적 기능으로 '맞춤형 피드백'과 '자기주도 학습 지원'을 일관되게 지목하면서 두 키워드가 동반 급상승한 것으로 분석됩니다.</li>
+  <li><strong>문제해결력(problem solving, lift 5.5배)</strong>: 연간 누적 빈도(38회) 대비 이번 주(4회) 집중도가 높습니다. 초등 피지컬 컴퓨팅 기반 AI 수업(Tangible AI) 등에서 머신러닝 모델 학습 원리를 프로그래밍과 연계해 직접 조작하고 해결하는 컴퓨팅 사고력(CT) 및 문제해결 연구가 반영된 결과입니다.</li>
+  <li><strong>특수교육(special education, lift 4.3배)</strong>: 이번 주 3건이 집계되어 배수가 높게 나타났으나, 이번 주 수집된 핵심 연구들의 초록을 검토했을 때 특수교육 관련 논의가 중심을 이룬다기보다는 표본 수가 작은 상태에서 발생한 우연한 급상승일 가능성이 큽니다.</li>
+  <li><strong>AI 윤리(AI ethics, lift 2.3배)</strong>: lift 배수는 상대적으로 완만해 보이지만 연간 115건 중 이번 주에만 5건이 집계되었습니다. 초등 생성형 AI 리뷰 및 미디어 리터러시 초록들에서 공통적으로 '환각 현상 감지', '비판적 AI 리터러시', '출력물의 신뢰성 검증'을 핵심 과제로 강조하면서 꾸준한 연구 압력을 받고 있습니다.</li>
+</ul>
+
+<h2>큰 그림 — 리뷰·메타분석</h2>
+<p>
+  <a href="https://www.eu-jer.com/articles/EU-JER_16_1_91.pdf">Generative AI and AI literacy in Elementary Education: A Systematic Review of Research published from 2021 to January 2026</a> — European Journal of Educational Research, 2026, 피인용 0회
+  <br>
+  <strong>무엇을 정리했나</strong>: PRISMA 2020 기준에 따라 4개 주요 DB(SCOPUS, EBSCO, WoS, Taylor & Francis)에서 2021년부터 2026년 1월까지 출간된 초등 생성형 AI 및 AI 리터러시 논문 211편을 주제 분석했습니다. 분석 결과 생성형 AI가 자기주도 학습이나 외국어 수업에는 자리 잡고 있으나, 초등 수준의 '비판적 AI 윤리' 정의는 아직 학문적 합의가 부족하며 AI 산출물의 신뢰성 검증 교육이 시급하다고 종합 결론을 내렸습니다.
+</p>
+
+<h2>읽을 만한 논문 5편</h2>
+<p>
+  <b><a href="https://doi.org/10.58421/gehu.v5i5.1993">Tangible AI in the Elementary Classroom: Effects on AI Literacy, Computational Thinking, and Learner Dispositions</a></b> — Journal of General Education and Humanities, 2026. (갈래: 수업)<br>
+  <b>쉽게 말하면</b>: 초등학교 5학년 학생 36명에게 센서와 교구를 직접 만지는 피지컬 AI 수업을 4차시 동안 진행했더니, AI 개념 이해도가 8.4점에서 15.1점으로 크게 올랐고 AI를 도깨비 방망이처럼 마법적·의인화하여 바라보던 학생 비율도 89%에서 25%로 줄었습니다. 머신러닝이 데이터와 센서로 작동한다는 점을 설명할 수 있는 학생은 28%에서 83%로 대폭 늘어났습니다.<br>
+  <b>교실에 주는 시사점</b>: 화면 속 코딩에 머물지 말고 센서와 물리적 교구를 연결해 머신러닝 학습 과정을 시각화·체험화하면 5학년도 AI의 기계적 원리를 직관적으로 이해시킬 수 있습니다. 다만 단일 학급 대상의 사전-사후 검증 연구라 통제집단이 없어 변화가 오직 교구 효과 때문인지는 신중하게 볼 필요가 있습니다.
+</p>
+
+<p>
+  <b><a href="https://www.ijiet.org/vol16/IJIET-V16N4-2569.pdf">Enhancing Media Literacy, Academic Achievement, and Engagement in Primary Education through ICT-Supported Critical Thinking Pedagogy</a></b> — International Journal of Information and Education Technology, 2026. (갈래: 윤리·정보판별)<br>
+  <b>쉽게 말하면</b>: 초등학생 106명을 대상으로 12주간 디지털 도구를 활용한 비판적 사고 수업을 실험집단에 적용해 보았더니, 통제집단에 비해 미디어 리터러시 점수가 크게 향상되었고(17.6점 상승 vs 대조군 3.5점) 자연과학 학업 성취도와 수업 몰입도 역시 눈에 띄게 좋아졌습니다. 디지털 도구를 단순히 쓰는 것을 넘어 정보의 타당성을 의심하고 따져보게 한 결과 참여도가 훨씬 활발해졌습니다.<br>
+  <b>교실에 주는 시사점</b>: 교과 시간에 디지털 자료를 찾을 때 정보를 곧바로 수용하지 않고 비판적으로 검토하는 발문 루틴을 꾸준히 설계하면 미디어 문해력과 교과 성취도를 동시에 끌어올릴 수 있습니다.
+</p>
+
+<p>
+  <b><a href="https://doi.org/10.34261/jssls.2026.14.3.181">A Teacher’s Self-Study on Elementary Social Studies Media Literacy Instruction Centered on Students’ Lives</a> (유료·도서관 프록시 필요)</b> — Korean Lesson Study Group for Social Studies, 2026. (갈래: 윤리·정보판별)<br>
+  <b>쉽게 말하면</b>: 초등학교 6학년 담임교사가 교과서의 추상적인 규제 위주 미디어 교육에서 벗어나고자, 학생들이 실제 이용하는 SNS 화면과 사용 경험을 수업 제재로 삼아 6차시 사회과 수업을 설계하고 교사 자신의 실천 과정을 스스로 성찰했습니다. 아이들은 친구들의 실제 SNS 이용 사례를 사회과학적 시각으로 분석하면서 미디어 기업과 제도의 책임을 짚어내는 모습을 보였습니다.<br>
+  <b>교실에 주는 시사점</b>: "스마트폰을 줄이자" 식의 훈계형·예방형 생활지도 대신 학생들의 실제 SNS 사용 패턴을 수업 분석 텍스트로 다루면 아이들이 능동적으로 건강한 미디어 환경을 고민하게 만들 수 있습니다. 단, 교사가 의도한 정답으로 학생을 유도하는 '유도 질문'의 함정에 빠지지 않도록 유의해야 합니다.
+</p>
+
+<p>
+  <b><a href="https://dk.um.si/Dokument.php?id=214002&dn=">Creating an original rap song for teaching online safety: an example of using hip-hop pedagogy in primary school education</a></b> — University of Maribor digital library (University of Maribor), 2026. (갈래: 웰빙·안전)<br>
+  <b>쉽게 말하면</b>: 초등학교 4학년을 대상으로 온라인 안전 수칙을 가르치기 위해 직접 랩(Rap) 음악을 만들고 비트를 입혀 45분짜리 힙합 수업을 진행해 보았습니다. 학생들은 리듬과 반복되는 라임을 통해 딱딱하고 지루할 수 있는 인터넷 안전 규칙을 흥미진진하게 체화했습니다.<br>
+  <b>교실에 주는 시사점</b>: 온라인 안전이나 사이버 폭력 예방 교육 시 긴 텍스트 전달 대신 학생들이 좋아하는 랩이나 리듬 구호를 직접 만들어 부르게 하면 저학년·중학년의 규칙 내면화와 집중도를 높일 수 있습니다. 다만 연구자가 지적했듯 4학년 수준에 맞게 가사의 길이와 정보 밀도를 적절히 조절해야 학습 효과를 거둘 수 있습니다.
+</p>
+
+<h2>이론적 배경 후보</h2>
+<p>이번 주 신규 논문들이 서로 독립적인 연구임에도 공통으로 인용한 핵심 선행 문헌입니다. 여러 연구자가 동시에 인용했다는 것은 이 문헌이 초등·K-12 AI 교육 연구를 전개할 때 공유하는 기초 전제임을 의미합니다.</p>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+  <thead>
+    <tr>
+      <th style="padding: 6px;">문헌</th>
+      <th style="padding: 6px;">연도</th>
+      <th style="padding: 6px;">이번 주 공동인용 수</th>
+      <th style="padding: 6px;">어떤 이론적 역할</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 6px;"><a href="https://doi.org/10.1016/j.edurev.2024.100642">A systematic review on how educators teach AI in K-12 education</a></td>
+      <td style="padding: 6px;">2024</td>
+      <td style="padding: 6px;">2</td>
+      <td style="padding: 6px;">K-12 환경에서 교사들이 AI를 가르치는 교수법적 접근과 교육과정 실행 방식을 총체적으로 정리한 핵심 리뷰로, 신규 초등 AI 교육과정 및 리터러시 프레임워크 설계의 표준 준거 틀 역할을 합니다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>국내 동향</h2>
+<p>최근 30일 신규 없음</p>
+
+<h2>KERIS 디지털교육 동향</h2>
+<p>최신호는 여전히 226호입니다: <a href="https://www.keris.or.kr/common/fileDownload.do?fileKey=fe41e5ba73b40764c4b3a3ee074a6d03&dwlTy=pblcte">[통권 226호] 2026 KERIS 디지털교육 글로벌 동향 리포트</a> (13.7MB). 정독하려면 내려받아 eli5.py에 넣으세요.</p></body></html>
